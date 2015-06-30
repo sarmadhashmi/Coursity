@@ -1,9 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"net/http"
-	"io/ioutil"
+	"io/ioutil"	
 )
 
 type Parser struct {
@@ -39,12 +40,28 @@ func parserHandler(w http.ResponseWriter, r *http.Request) {
 	renderTemplate(w, "index", p)
 }
 
+func uploadHandler(w http.ResponseWriter, r *http.Request) {
+	file, handler, err := r.FormFile("file") 
+    if err != nil { 
+    	fmt.Println(err) 
+   	} 
+   	data, err := ioutil.ReadAll(file) 
+   	if err != nil { 
+   		fmt.Println(err) 
+   	} 
+   	err = ioutil.WriteFile("./tmp/" + handler.Filename, data, 0777) 
+   	if err != nil { 
+   		fmt.Println(err) 
+   	} 
+}
+
 
 func main() {
 	p1 := &Parser{University: "mcmaster", Body: []byte("Something about mcmaster here")}
 	p1.save()
 	http.Handle("/js/", http.StripPrefix("/js/", http.FileServer(http.Dir("./js/"))))	
-	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./css/"))))
+	http.Handle("/css/", http.StripPrefix("/css/", http.FileServer(http.Dir("./css/"))))	
 	http.HandleFunc("/parser/", parserHandler)		
+	http.HandleFunc("/upload/",  uploadHandler)
 	http.ListenAndServe(":8080", nil)
 }
