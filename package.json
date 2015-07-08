@@ -1,0 +1,9 @@
+{
+  "name": "Course2Cal",
+  "version": "1.0.0",
+  "dependencies": {
+    "connect-busboy": "0.0.2",
+    "express": "^4.13.1",
+    "multer": "^0.1.8"
+  }
+}
