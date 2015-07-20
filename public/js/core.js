@@ -21,10 +21,16 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				})
 				.progress(function(evt) {
 					var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-		            $scope.message = 'Progress: ' + progressPercentage + '% ' + evt.config.file.name;
+		            $scope.message = 'Uploading and converting';
 				})
 				.success(function(data) {
-					$scope.message = data;
+					var anchor = angular.element('<a/>');
+     				anchor.attr({
+         				href: 'data:attachment/html;charset=utf-8,' + encodeURI(data),
+         				target: '_blank',
+         				download: 'timetable.ics'
+     				})[0].click();
+     				$scope.message = 'Finished.';
 				})
 		}
 	}
