@@ -80,7 +80,7 @@ var calParser  = function (dates, classDetails, start_date, directory){
 	    freq: 'WEEKLY',
 	    byday: dates[i].substring(0,2),
 	    wkst: "MO",
-	    until: new Date(2015,12,25, 8, 30, 0)
+	    until: new Date(2015,11,25, 8, 30, 0)
 	  },
 	  //Location of event, optional. 
 	  location: classDetails[i][4],
