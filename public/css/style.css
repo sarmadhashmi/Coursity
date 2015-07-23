@@ -1,0 +1,14 @@
+.body{
+    background-image: url(../img/Andrew_Classroom_De_La_Salle_University.jpeg);
+    background-size:cover;
+}
+
+#uploadDiv{
+    background: white;
+    border: solid;
+    margin-top:10%;
+}
+
+.uploadFilePartial{
+    width:100%;
+}
