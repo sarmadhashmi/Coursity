@@ -74,13 +74,13 @@ var calParser  = function (dates, classDetails, start_date, directory, callback)
 	  summary: classDetails[i][1],
 	  //Event identifier, Optional, default auto generated 
 	  uid: dates[i] + classDetails[i][3], 
-	  alarms: [15, 10, 5],
+	  alarms: [10],
 	  //Optional if repeating event 
 	  repeating: {
 	    freq: 'WEEKLY',
 	    byday: dates[i].substring(0,2),
 	    wkst: "MO",
-	    until: new Date(2015,11,25, 8, 30, 0)
+	    until: new Date(2015,11,08, 23, 30, 0)
 	  },
 	  //Location of event, optional. 
 	  location: classDetails[i][4],
@@ -127,7 +127,7 @@ var start_end_time = function(classtime,dayString,start_date) {
 		require("datejs");
 		classtime = classtime.toString().split("-")
 		//start_date = [2015,8,7] //when school starts
-		//end_date = [2015,11,25] //when school ends
+		//end_date = [2015,11,08] //when school ends
 		times = []
 		hour = [] //start and stop}
 
