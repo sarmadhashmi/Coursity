@@ -31,7 +31,7 @@ var convert = function(filePath) {
 }
 
 
-var calParser  = function (dates, classDetails, start_date, directory){
+var calParser  = function (dates, classDetails, start_date, directory, callback){
 	//Create a builder 
 	var builder = icalToolkit.createIcsFileBuilder();
  
@@ -102,8 +102,13 @@ var calParser  = function (dates, classDetails, start_date, directory){
 	}
 	//Here is the ics file content. 	
 	var filename = getFileName();
-	fs.writeFile(directory + filename, icsFileContent)	
-	return filename;
+	fs.mkdir(directory, function(err) {
+		if (err && err.code !== 'EEXIST') {
+			return callback(err);
+		}
+		fs.writeFile(directory + filename, icsFileContent)	
+		callback(null, filename);
+	});		
 }
 
 var getFileName = function() {	
@@ -179,9 +184,9 @@ var start_end_time = function(classtime,dayString,start_date) {
 		return times;
 }
 
-var convertToCal = function(filePath, start_date, directory) {
+var convertToCal = function(filePath, start_date, directory, callback) {
 	var converted = convert(filePath);
-	return calParser(converted[0], converted[1], start_date, directory);
+	return calParser(converted[0], converted[1], start_date, directory, callback);
 }
 
 module.exports.convertToCal = convertToCal;

@@ -12,13 +12,14 @@ main.config(['$routeProvider', function($routeProvider) {
 
 
 main.controller('MainController', ['$scope', '$http', 'Upload', function($scope, $http, Upload) {
-
-	$scope.upload = function(files) {	
+	$scope.universities = [{name: 'McMaster', value: 'mcmaster'}, {name:'UOttawa', value: 'uottawa'}];
+	$scope.upload = function(files, university) {	
 		if (files && files.length > 0) {
 			Upload.upload({
 					url: '/upload',
-					file: files[0]				
-				})
+					file: files[0],
+					fields: {'university': $scope.university }
+				}) 
 				.progress(function(evt) {
 					var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
 		            $scope.message = 'Uploading and converting';
@@ -32,6 +33,9 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
      				})[0].click();
      				$scope.message = 'Finished.';
 				})
+				.error(function(data) {
+					$scope.message = data;
+				});
 		}
 	}
 

@@ -3,39 +3,59 @@ var fs = require('fs');
 var express = require('express');
 var multer = require('multer')	
 var parserFactory = require('./parsers/main.js');
+var winston = require('winston');
+var async = require('async');
+
+// Add logging
+winston.add(winston.transports.File, { filename: __dirname + '/logs/main.log' });
 
 var app = express();
 
 app.get('/', function(req, res) {
+	winston.info('User connected: ' + req.connection.remoteAddress);
 	res.sendFile(__dirname + '/public/views/index.html');
 });
-
-
-var fileFilter = function(req, file, cb) {	
-	cb(null, file.mimetype === 'text/html');
-}
-
 var icsFolder = __dirname + '/ics/';
 var tempFolder = __dirname + '/temp/'
 
-app.use(multer({ dest: './temp/', fileFilter: fileFilter}));
+app.use(multer({
+	dest: tempFolder	
+}));
 
-app.post('/upload', function(req, res) {    
+app.post('/upload', function(req, res) {   
+	if (!req.files || req.files.file.mimetype !== 'text/html') {
+		var msg = 'Invalid file type uploaded.';
+		winston.error(msg);
+		return res.status(404).send(msg);
+	}
+
+	var university = req.body.university;
 	var start_date = [2015,8,7];
 	var filename = req.files.file.name;	
 
-
-	// check what uni, get required parser
-	var parser = parserFactory.getParser('mcmaster');	
-	var returnFile = parser(tempFolder + filename, start_date, icsFolder);
-	
-	if (!req.files) {
-		res.sendStatus(404);
-	} else {		
-		res.attachment('timetable.ics');
-		var filestream = fs.createReadStream(icsFolder + returnFile);		
-		filestream.pipe(res);		
-	}	
+	winston.info('Getting parser for ' + university);	
+	async.waterfall([
+		function(callback) {
+			parserFactory.getParser(university, callback);
+		},
+		function(convertToCal, callback) {			
+			convertToCal(tempFolder + filename, start_date, icsFolder, callback);
+		}
+	], function(err, fileName) {
+		if (err) {
+			winston.error(err);
+			res.status(404).send(err);
+		} else if (!fileName) {
+			var msg = 'Invalid university provided or parser not found: ' + university;
+			winston.error(msg);
+			res.status(404).send(msg);
+		} else {		
+			winston.info('Piping file to response: ' + fileName)
+			res.attachment('timetable.ics');
+			var filestream = fs.createReadStream(icsFolder + fileName);		
+			filestream.pipe(res);		
+		}				 
+	});	
 });
 
 
