@@ -1,6 +1,8 @@
 .body{
     background-image: url(../img/Andrew_Classroom_De_La_Salle_University.jpeg);
     background-size:cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 #uploadDiv{
@@ -39,7 +41,18 @@
     margin-top:75px;
     opacity: 0.9;
 }
-
+#howToDiv h2{
+    text-transform: uppercase;
+}
 .uploadFilePartial{
     width:100%;
+}
+
+.table-pic{
+    width: 300px;
+    height: auto;
+}
+
+.modal-backdrop {
+    z-index: -1 !important;
 }

@@ -1,0 +1,75 @@
+<div class="container uploadFilePartial" id="uploadBody">
+	<div class="row">
+		<!-- Separate in to 3 base columns -->
+		<div class="col-sm-4"></div>
+		<div id="uploadDiv" class="col-sm-4 text-center"><h2 style="margin-bottom: 5px;" id ="test">Course2Cal</h2>
+			<p><i>Instantly organize all classes into your personal calendar!</i></p>
+	<form ng-submit="upload(file)" id="timetable-submit" enctype="multipart/form-data">
+		<div class="form-group">
+			<label for="file">Select your university</label>
+			<select ng-model="university">
+				<option ng-repeat="uni in universities" value="{{uni.value}}">{{ uni.name }}</option>
+			</select>
+		</div>
+		<div class="form-group">
+			<label for="file">Upload your timetable</label>
+			<input style="margin:auto; width: 70%" type="file" ngf-select name="html" id="file" ng-model="file">
+		</div>
+		<button type="submit" class="btn btn-default">Submit</button>
+	</form>
+	<p class="message"> {{ message }}</p>
+
+			<div class="row uploadDivContent">
+				<div class="col-sm-4"><a href="index.html"><br>Why Course2Cal?</a></div>
+				<div class="col-sm-4"><a href="index.html"><br>Share</a></div>
+				<div class="col-sm-4"><a href="index.html"><br>Suggestions...</a></div>
+			</div>
+		</div>
+		<div class="col-sm-4"></div>
+	</div>
+
+	<div class="row">
+		<!-- Separate in to 3 base columns -->
+		<div class="col-sm-2"></div>
+		<div id="howToDiv" class="col-sm-8 text-center"><h2>How-to Guide for {{ university}} Students</h2>
+			<section ng-if="university == 'mcmaster'">
+			<table class="table table-hover" style="width: 100%">
+				<tr data-toggle="modal" data-target="#myModal"><td>Step 1: <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%201.PNG"></td><td>This is how we do it</td></tr>
+				<!-- Modal -->
+				<div id="myModal" class="modal fade" role="dialog">
+					<div class="modal-dialog">
+
+						<!-- Modal content-->
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">&times;</button>
+								<h4 class="modal-title">Modal Header</h4>
+							</div>
+							<div class="modal-body">
+								<p>Some text in the modal.</p>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				<tr><td>Step 2: <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%202.PNG"></td><td>This is how we do it</td></tr>
+				<tr><td>Step 3: <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%203.PNG"></td><td>This is how we do it</td></tr>
+				<tr><td>Step 4: <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%204.PNG"></td><td>This is how we do it</td></tr>
+				<tr><td>Step 5: <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%205.PNG"></td><td>This is how we do it</td></tr>
+				<tr><td>Step 6: <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%206.PNG"></td><td>This is how we do it</td></tr>
+				<tr><td>Step 7: <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%207.PNG"></td><td>This is how we do it</td></tr>
+				<tr><td>Step 8: <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%208.PNG"></td><td>This is how we do it</td></tr>
+				<tr><td>Step 9: <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%209.PNG"></td><td>This is how we do it</td></tr>
+				<tr><td>Step 10: <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%2010.PNG"></td><td>This is how we do it</td></tr>
+				<tr><td>Step 11: <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%2011.PNG"></td><td>This is how we do it</td></tr>
+
+			</table>
+			</section>
+
+			<p ng-if="university == 'uottawa'"> Not Supported yet, Coming very soon</p>
+		</div>
+		<div class="col-sm-2"></div>
+	</div>
+</div>

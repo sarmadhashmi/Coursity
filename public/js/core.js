@@ -5,7 +5,7 @@ main.config(['$routeProvider', function($routeProvider) {
 		.when('/',	
 		{
 			controller: 'MainController',
-			templateUrl: 'views/partials/uploadFileForm.html'
+			templateUrl: 'views/partials/homepageLayout.html'
 		})
 		.otherwise({redirectTo: '/'});
 }]);
