@@ -4,9 +4,40 @@
 }
 
 #uploadDiv{
+    background: rgba(255,255,255,.9);
+    border: solid;
+    margin-top:5%;
+    border-color: #6e6e6e;
+    background-image: url(../img/calendar.png);
+    background-size: 250px 250px;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 10px 10px 0px 10px;
+    color: #6e6e6e;
+}
+
+#uploadBody{
+    padding: 50px;
+}
+
+#uploadDiv h2{
+    margin-bottom: 30px;
+}
+
+.uploadDivContent{
+    padding-top: 40px;
+    padding-bottom: 10px;
+}
+
+.uploadDivContent a{
+    color: #6e6e6e;
+}
+#howToDiv{
     background: white;
     border: solid;
-    margin-top:10%;
+    border-color: #6e6e6e;
+    margin-top:75px;
+    opacity: 0.9;
 }
 
 .uploadFilePartial{

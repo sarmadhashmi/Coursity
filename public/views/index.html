@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html lang="en" ng-app="main">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">    
-    <title>Course2Cal</title>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Course2Cal</title>
 
-    <!-- import styles-->
-    <link href="/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/css/style.css" rel="stylesheet">
-  </head>
-  <body class="body">
+  <!-- import styles-->
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+  <link href="/css/style.css" rel="stylesheet">
+</head>
+<body class="body">
 
-  <div class="row">
-    <!-- Separate in to 3 base columns -->
-    <div class="col-sm-4"></div>
-    <div id="uploadDiv" class="col-sm-4 text-center"><h2>Course2Cal</h2>
-      <div ng-view ></div> <!--Inject views into here -->
-
+<div class="row">
+  <!-- Separate in to 3 base columns -->
+  <div class="col-sm-4"></div>
+  <div id="uploadDiv" class="col-sm-4 text-center"><h2 style="margin-bottom: 5px;">Course2Cal</h2>
+    <p><i>Instantly organize all classes into your personal calendar!</i></p>
+    <div ng-view id="uploadBody"></div> <!--Inject views into here -->
+    <div class="row uploadDivContent">
+      <div class="col-sm-4"><a href="index.html"><br>Why Course2Cal?</a></div>
+      <div class="col-sm-4"><a href="index.html"><br>Share</a></div>
+      <div class="col-sm-4"><a href="index.html">Email Suggestions...</a></div>
     </div>
-    <div class="col-sm-4"></div>
   </div>
-  <script src="/js/angular.js"></script>
-  <script src="/js/angular-route.js"></script>
-  <script src="/js/ng-file-upload-shim.min.js"></script>
-  <script src="/js/ng-file-upload.min.js"></script>
-  <script src="/js/core.js"></script>
-  <script src="/js/jquery-2.1.4.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  </body>
+  <div class="col-sm-4"></div>
+</div>
+
+<div class="row">
+  <!-- Separate in to 3 base columns -->
+  <div class="col-sm-2"></div>
+  <div id="howToDiv" class="col-sm-8 text-center"><h2></h2>
+  </div>
+  <div class="col-sm-2"></div>
+</div>
+<script src="/js/angular.js"></script>
+<script src="/js/angular-route.js"></script>
+<script src="/js/ng-file-upload-shim.min.js"></script>
+<script src="/js/ng-file-upload.min.js"></script>
+<script src="/js/core.js"></script>
+<script src="/js/jquery-2.1.4.min.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+</body>
 </html>
