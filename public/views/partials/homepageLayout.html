@@ -35,7 +35,7 @@
 	<div class="row">
 		<!-- Separate in to 3 base columns -->
 		<div class="col-sm-2"></div>
-		<div id="howToDiv" class="col-sm-8 text-center"><h2>How-to Guide for {{ university }}</h2>
+		<div ng-if="university" id="howToDiv" class="col-sm-8 text-center"><h2>How-to Guide for {{ university }}</h2>
 			<section ng-if="university == 'example'">
 				<table class="table table-hover" style="width: 100%">
 					<tr data-toggle="modal" data-target="#example"><td class="table-cell"><h3>Step 1</h3> <img class="table-pic" src="../../img/example.png"></td><td class="table-cell">Right Click the Example Timetable Link above and Click Save Link As... Then upload McMaster Example Timetable.HTML</td></tr>

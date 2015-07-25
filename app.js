@@ -64,8 +64,7 @@ app.post('/upload', function(req, res) {
 			res.status(404).send(msg);	
 		} else {		
 			winston.info('Piping file ' +  fileName + ' to response.')
-			res.attachment('timetable.ics');
-			console.log(icsFolder + fileName);
+			res.attachment('timetable.ics');			
 			var filestream = fs.createReadStream(icsFolder + fileName);	
 			filestream.on('readable', function() {
 				filestream.pipe(res);		
