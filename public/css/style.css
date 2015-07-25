@@ -48,7 +48,11 @@
     width:100%;
 }
 
+.table-cell{
+    width: 50%;
+}
 .table-pic{
-    width: 300px;
+    min-width: 200px;
+    width: 100%;
     height: auto;
 }
