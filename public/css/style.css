@@ -26,6 +26,10 @@
     margin-bottom: 30px;
 }
 
+#uploadDiv h2>sup {
+    font-size: 10px;
+    top:-2em;
+}
 .uploadDivContent{
     padding-top: 40px;
     padding-bottom: 10px;
@@ -56,4 +60,21 @@
     min-width: 200px;
     width: 100%;
     height: auto;
+}
+
+.fileUpload {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+.fileUpload input.upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
 }

@@ -23,27 +23,29 @@ app.use(multer({
 
 app.post('/upload', function(req, res) {   
 	if (!req.files || req.files.file.mimetype !== 'text/html') {
-		var msg = 'Invalid file type uploaded.';
+		var msg = 'Invalid file type uploaded. Only .HTML files';
 		winston.error(msg);
 		return res.status(404).send(msg);
 	}
 
 	var university = req.body.university;
-	//To-Do let user pick date
+	var semester = req.body.semester;
+
+	//Default Values for Dates
 	var start_date = [2015,8,7];
 	var end_date = new Date(2015,11,08, 23, 30, 0);
 
-	/*if (Fall){
+	if (semester === "fall"){
 	start_date = [2015,8,7];
 	end_date = new Date(2015,11,08, 23, 30, 0);
 	}
-	if (Winter){
+	if (semester === "winter"){
 		start_date = [2016,0,7];
-		end_date = new Date(2015,3,21, 23, 30, 0);
-	}*/
-	var filename = req.files.file.name;	
-
-	winston.info('Getting parser for ' + university);	
+		end_date = new Date(2016,3,21, 23, 30, 0);
+	}
+	var filename = req.files.file.name;
+	winston.info('Getting parser for ' + university);
+	winston.info('Getting the timetable for the ' + semester + " Semester");
 	async.waterfall([
 		function(callback) {
 			parserFactory.getParser(university, callback);

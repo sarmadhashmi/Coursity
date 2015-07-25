@@ -2,7 +2,7 @@
 	<div class="row">
 		<!-- Separate in to 3 base columns -->
 		<div class="col-sm-4"></div>
-		<div id="uploadDiv" class="col-sm-4 text-center"><h2 style="margin-bottom: 5px;">Course2Cal</h2>
+		<div id="uploadDiv" class="col-sm-4 text-center"><h2 style="margin-bottom: 5px;">Course2Cal<sup> BETA</sup></h2>
 			<p><i>Instantly organize all classes into your personal calendar!</i></p>
 	<form ng-submit="upload(file)" id="timetable-submit" enctype="multipart/form-data">
 		<div class="form-group">
@@ -11,11 +11,11 @@
 				<option ng-repeat="uni in universities" value="{{uni.value}}">{{ uni.name }}</option>
 			</select>
 			<label>Select Semester</label>
-			<select ng-model="countSelected"
-					ng-options="count.id as count.name for count in countList" ng-change="onchange(countList[countSelected-1])">
+			<select ng-model="semester">
+				<option ng-repeat="sem in semesterList" value="{{sem.value}}">{{ sem.name }}</option>
 			</select>
-
 		</div>
+
 		<div class="form-group">
 			<label for="file">Upload your timetable</label>
 			<input style="margin:auto; width: 70%" type="file" ngf-select name="html" id="file" ng-model="file">
@@ -26,7 +26,7 @@
 
 			<div class="row uploadDivContent">
 				<div class="col-sm-4"><a href="index.html"><br>Why Course2Cal?</a></div>
-				<div class="col-sm-4"><a href="index.html"><br>Share</a></div>
+				<div class="col-sm-4"><a href="../../McMaster Example Timetable.html"><br>Example Schedule</a></div>
 				<div class="col-sm-4"><a href="index.html"><br>Suggestions...</a></div>
 			</div>
 		</div>
@@ -35,12 +35,17 @@
 	<div class="row">
 		<!-- Separate in to 3 base columns -->
 		<div class="col-sm-2"></div>
-		<div id="howToDiv" class="col-sm-8 text-center"><h2>How-to Guide for {{ university}} Students</h2>
+		<div id="howToDiv" class="col-sm-8 text-center"><h2>How-to Guide for {{ university }}</h2>
+			<section ng-if="university == 'example'">
+				<table class="table table-hover" style="width: 100%">
+					<tr data-toggle="modal" data-target="#example"><td class="table-cell"><h3>Step 1</h3> <img class="table-pic" src="../../img/example.png"></td><td class="table-cell">Right Click the Example Timetable Link above and Click Save Link As... Then upload McMaster Example Timetable.HTML</td></tr>
+				</table>
+			</section>
 			<section ng-if="university == 'mcmaster'">
 			<table class="table table-hover" style="width: 100%">
 				<tr data-toggle="modal" data-target="#step1Mac"><td class="table-cell"><h3>Step 1</h3> <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%201.PNG"></td><td class="table-cell">Log into Mosaic and Navigate to Student Center</td></tr>
 				<tr data-toggle="modal" data-target="#step2Mac"><td class="table-cell"><h3>Step 2</h3> <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%202.PNG"></td><td class="table-cell">Click on the Enroll link</td></tr>
-				<tr data-toggle="modal" data-target="#step3Mac"><td class="table-cell"><h3>Step 3</h3> <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%203.PNG"></td><td class="table-cell">Select the semester. Only Fall 2015 is support right now*</td></tr>
+				<tr data-toggle="modal" data-target="#step3Mac"><td class="table-cell"><h3>Step 3</h3> <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%203.PNG"></td><td class="table-cell">Select the semester. <b> {{ semesterList[0].name }} or {{ semesterList[1].name }}</b></td></tr>
 				<tr data-toggle="modal" data-target="#step4Mac"><td class="table-cell"><h3>Step 4</h3> <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%204.PNG"></td><td class="table-cell">Click Weekly Schedule view</td></tr>
 				<tr data-toggle="modal" data-target="#step5Mac"><td class="table-cell"><h3>Step 5</h3> <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%205.PNG"></td><td class="table-cell">Click the little calender icon and select a date that show your whole week calendar. For example Sept 14th, then click Refresh Calendar</td></tr>
 				<tr data-toggle="modal" data-target="#step6Mac"><td class="table-cell"><h3>Step 6</h3> <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%206.PNG"></td><td class="table-cell">Right-click the Save-As</td></tr>
@@ -119,7 +124,7 @@
 			</div>
 			<div class="modal-body">
 				<p><img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%203.PNG"></p>
-				<p>Select the semester. Only Fall 2015 is support right now*</p>
+				<p>Select the semester.</p>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -279,6 +284,26 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" id="test1" class="btn btn-default" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="example" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Step 1</h4>
+			</div>
+			<div class="modal-body">
+				<p><img class="table-pic" src="../../img/example.png"></p>
+				<p>
+					Right Click the Example Timetable Link and Click Save-As. Then upload McMaster Example Timetable.HTML
+				</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
