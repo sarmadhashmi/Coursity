@@ -31,7 +31,7 @@ var convert = function(filePath) {
 }
 
 
-var calParser  = function (dates, classDetails, start_date, directory, callback){
+var calParser  = function (dates, classDetails, start_date,end_date, directory, callback){
 	//Create a builder 
 	var builder = icalToolkit.createIcsFileBuilder();
  
@@ -80,7 +80,7 @@ var calParser  = function (dates, classDetails, start_date, directory, callback)
 	    freq: 'WEEKLY',
 	    byday: dates[i].substring(0,2),
 	    wkst: "MO",
-	    until: new Date(2015,11,08, 23, 30, 0)
+	    until: end_date
 	  },
 	  //Location of event, optional. 
 	  location: classDetails[i][4],
@@ -175,18 +175,17 @@ var start_end_time = function(classtime,dayString,start_date) {
 		if (dayString === "Saturday"){
 			date = date.sat()
 		}
-		if (dayString === "Sunday"){
+		if (dayString === "Sunday") {
 			date = date.sunday()
 		}
-
 		times[0]=  [date.getFullYear(),date.getMonth(),date.getDate(), hour[0] , parseInt(stminute)];
 		times[1] = [date.getFullYear(),date.getMonth(),date.getDate(), hour[1] , parseInt(etminute)];
 		return times;
 }
 
-var convertToCal = function(filePath, start_date, directory, callback) {
+var convertToCal = function(filePath, start_date,end_date, directory, callback) {
 	var converted = convert(filePath);
-	return calParser(converted[0], converted[1], start_date, directory, callback);
+	return calParser(converted[0], converted[1], start_date,end_date, directory, callback);
 }
 
 module.exports.convertToCal = convertToCal;

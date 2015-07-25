@@ -37,6 +37,20 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 					$scope.message = data;
 				});
 		}
-	}
+	};
+	$scope.countList = [
+		{ id: 1, name: 'Fall' },
+		{ id: 2, name: 'Winter' }
+	];
 
+	$scope.onchange = function(id) {
+		var semesterPick = id.name;
+	};
+	$scope.$on('$viewContentLoaded', function ()
+	{
+		<!--Angular JS Page Edits-->
+		$(document).ready(function(){
+		});
+	});
 }]);
+

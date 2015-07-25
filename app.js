@@ -5,7 +5,6 @@ var multer = require('multer')
 var parserFactory = require('./parsers/main.js');
 var winston = require('winston');
 var async = require('async');
-
 // Add logging
 winston.add(winston.transports.File, { filename: __dirname + '/logs/main.log' });
 
@@ -30,7 +29,18 @@ app.post('/upload', function(req, res) {
 	}
 
 	var university = req.body.university;
+	//To-Do let user pick date
 	var start_date = [2015,8,7];
+	var end_date = new Date(2015,11,08, 23, 30, 0);
+
+	/*if (Fall){
+	start_date = [2015,8,7];
+	end_date = new Date(2015,11,08, 23, 30, 0);
+	}
+	if (Winter){
+		start_date = [2016,0,7];
+		end_date = new Date(2015,3,21, 23, 30, 0);
+	}*/
 	var filename = req.files.file.name;	
 
 	winston.info('Getting parser for ' + university);	
@@ -39,7 +49,7 @@ app.post('/upload', function(req, res) {
 			parserFactory.getParser(university, callback);
 		},
 		function(convertToCal, callback) {			
-			convertToCal(tempFolder + filename, start_date, icsFolder, callback);
+			convertToCal(tempFolder + filename, start_date,end_date, icsFolder, callback);
 		}
 	], function(err, fileName) {
 		if (err) {

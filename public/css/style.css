@@ -1,5 +1,5 @@
 .body{
-    background-image: url(../img/Andrew_Classroom_De_La_Salle_University.jpeg);
+    background-image: url(../img/McMaster_University.jpg);
     background-size:cover;
     background-position: center;
     background-attachment: fixed;
@@ -50,6 +50,7 @@
 
 .table-cell{
     width: 50%;
+    vertical-align:middle !important;
 }
 .table-pic{
     min-width: 200px;
