@@ -57,7 +57,6 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 	{
 		<!--Angular JS Page Edits-->
 		$(document).ready(function(){
-			//$(":file").filestyle();
 		});
 	});
 }]);

@@ -126,8 +126,6 @@ var start_end_time = function(classtime,dayString,start_date) {
 		//store the start and end time
 		require("datejs");
 		classtime = classtime.toString().split("-")
-		//start_date = [2015,8,7] //when school starts
-		//end_date = [2015,11,08] //when school ends
 		times = []
 		hour = [] //start and stop}
 

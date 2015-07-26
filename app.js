@@ -8,7 +8,13 @@ var async = require('async');
 var parserFactory = require('./parsers/main.js');
 var semesterConfig = require('./config/semesters.json');
 // Add logging
-winston.add(winston.transports.File, { filename: __dirname + '/logs/main.log' });
+try {
+	fs.mkdirSync('logs');	
+}  catch (e) {
+	//  folder already exists;
+}  finally {
+	winston.add(winston.transports.File, { filename: __dirname + '/logs/main.log' });
+}
 
 var app = express();
 
@@ -20,7 +26,8 @@ var icsFolder = __dirname + '/ics/';
 var tempFolder = __dirname + '/temp/'
 
 app.use(multer({
-	dest: tempFolder	
+	dest: tempFolder,
+	limits: { fileSize: 2097152 }		// 2MB	
 }));
 
 app.post('/upload', function(req, res) {   
