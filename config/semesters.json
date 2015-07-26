@@ -43,5 +43,27 @@
 			"start_date":[2016,5,20],
 			"end_date":[2016,7,5]
 		}
+	},
+  "example": {
+	"fall" : {
+	  "start_date": [2015,8,8],
+	  "end_date":[2015,11,8]
+	},
+	"winter" : {
+	  "start_date":[2016,0,5],
+	  "end_date":[2016,3,8]
+	},
+	"springsummer" : {
+	  "start_date":[2016,4,2],
+	  "end_date":[2016,7,5]
+	},
+	"spring" : {
+	  "start_date":[2016,4,2],
+	  "end_date":[2016,5,17]
+	},
+	"summer" : {
+	  "start_date":[2016,5,20],
+	  "end_date":[2016,7,5]
 	}
+  }
 }

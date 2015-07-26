@@ -73,7 +73,7 @@ var calParser  = function (dates, classDetails, start_date,end_date, directory, 
 	  //Event summary, Required: type String 
 	  summary: classDetails[i][1],
 	  //Event identifier, Optional, default auto generated 
-	  uid: dates[i] + classDetails[i][3], 
+	  //uid: dates[i] + classDetails[i][3],
 	  alarms: [10],
 	  //Optional if repeating event 
 	  repeating: {
