@@ -1,40 +1,39 @@
-<div class="container uploadFilePartial" id="uploadBody">
+<div class="uploadFilePartial" id="homeDiv">
 	<div class="row">
 		<!-- Separate in to 3 base columns -->
 		<div class="col-sm-6"></div>
-		<div class="col-sm-6 text-center title"><h1></h1>
-			<p><i>Instantly organize all classes into your personal calendar!</i></p>
+		<div class="col-sm-6 text-center title homeDiv"><h1></h1>
 			<form ng-submit="upload(file)" id="timetable-submit" enctype="multipart/form-data">
 				<div class="form-group">
-					<label for="file">Select your university</label>
-					<select ng-model="university" id="uniChoose">
+					<div style="padding: 25px;">
+						<p>Select University</p>
+					<select ng-model="university" id="uniChoose" >
+						<option value="" disabled selected>Choose University</option>
 						<option ng-repeat="uni in universities" value="{{uni.value}}">{{ uni.name }}</option>
 					</select>
-					<p>
-						<label class="label">Select Semester</label>
-						<select ng-model="semester" class="turnintodropdown">
-							<option ng-repeat="sem in semesterList" value="{{sem.value}}">{{ sem.name }}</option>
-						</select>
-					</p>
+					</div>
+				<div style="padding-bottom: 15px;">
+					<p>Select Semester</p>
+					<select ng-model="semester" id = "semChoose" ><!--class="turnintodropdown"-->
+						<option value="" disabled selected>Choose Semester</option>
+						<option ng-repeat="sem in semesterList" value="{{sem.value}}">{{ sem.name }}</option>
+					</select>
+				</div>
 				</div>
 
 				<div class="form-group">
-					<label for="file">Upload your timetable</label>
+					<p for="file">Upload timetable HTML <a href="#">(Guide)</a></p>
 					<input style="margin:auto; width: 70%" type="file" ngf-select name="html" id="file" ng-model="file">
 				</div>
-				<button type="submit" class="btn btn-default">Submit</button>
+				<button type="submit" style="background-color:#56793d; border: none; padding: 10px 40px 10px 40px; color: #ffffff" class="btn btn-default submitBtn">SUBMIT</button>
 			</form>
 
 			<p class="message"> {{ message }}</p>
-
-			<div class="row uploadDivContent">
-				<div class="col-sm-4"><a href="#"><br>Why Course2Cal?</a></div>
-				<div class="col-sm-4"><a href="../../McMaster Example Timetable.html"><br>Example Schedule</a></div>
-				<div class="col-sm-4"><a href="#"><br>Suggestions...</a></div>
-			</div>
 		</div>
 	</div>
-	<div class="row">
+</div>
+
+<div class="row" style="height: 700px">
 		<!-- Separate in to 3 base columns -->
 		<div class="col-sm-2"></div>
 		<div ng-if="university" id="howToDiv" class="col-sm-8 text-center"><h2>How-to Guide for {{ university }}</h2>
@@ -54,7 +53,7 @@
 				<tr data-toggle="modal" data-target="#step7Mac"><td class="table-cell"><h3>Step 7</h3> <img class="table-pic" src="../../img/Steps%20to%20Use%20Course2Cal/Step%207.PNG"></td><td class="table-cell">Now you will find your course Calendar HTML-file under a name similar to SA_LEARNER_SERVICES.SSR_SSENRL_SCHD_W.html</td></tr>
 				<tr data-toggle="modal" data-target="#stepGoogleCal"><td class="table-cell"><h3>Add Calendar to Google Calendar</h3> <img class="table-pic" src="../../img/googcal.png"></td>
 					<td class="table-cell">
-						<b>Step 1</b> - Open Google Calendar“ Be sure you are logged into a Gmail Account
+						<b>Step 1</b> - Open Google Calendarï¿½ Be sure you are logged into a Gmail Account
 						<br>
 						<b>Step 2</b> - Just to the right of "Other calendars" on the left sidebar of your Google Calendar you will see a downwards facing arrow. Click on this arrow and then select "Import calendar"
 						<br>
@@ -75,7 +74,7 @@
 		</div>
 		<div class="col-sm-2"></div>
 	</div>
-</div>
+
 
 <!-- Modal Pop-outs for McMaster University-->
 <div id="step1Mac" class="modal fade" role="dialog">
@@ -270,5 +269,21 @@
 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 			</div>
 		</div>
+	</div>
+</div>
+
+<div class="row" id="emailSugg">
+	<div class="col-sm-6"></div>
+	<div class="col-sm-6">
+		<h1>Future Features</h1>
+		<p>Automatically add assignment
+			<br>
+			to calendar
+			<br>
+			Shareable Link
+			<br>
+			Online Schedule Comparer
+			<br>
+			Your Suggested Feature</p>
 	</div>
 </div>

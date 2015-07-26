@@ -1,10 +1,20 @@
-.body{
-    background-image: url(../img/McMaster_University.jpg);
-    background-size:cover;
-    background-position: center;
-    background-attachment: fixed;
+@font-face {
+    font-family: myFirstFont;
+    src: url(../fonts/HelveticaNeue-Light.otf);
+}
+body{
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
 }
 
+.sumbitBtn{
+font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+font-weight: 300;
+    background-color:#56793d;
+    border: none; padding: 10px 40px 10px 40px;
+    color: #ffffff;
+}
 #uploadDiv{
     background: transparent;
     border: solid;
@@ -15,17 +25,39 @@
     background-position: center;
     background-repeat: no-repeat;
     padding: 10px 10px 0px 10px;
-    color: #6e6e6e;
-}
+    color: #ffffff;
 
+}
+#emailSugg{
+    height: 700px;
+    color: #ffffff;
+    padding-top: 15vh;
+    height:700px;
+    background-image: url(../img/emaildiv.jpg);
+    background-size:cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+#emailSugg p{
+    font-size: 24px;
+}
+#homeDiv{
+    color: #ffffff;
+    padding-top: 15vh;
+    height:700px;
+    background-image: url(../img/HOME_BG.jpg);
+    background-size:cover;
+    background-position: center;
+    background-attachment: fixed;
+}
 .title h1 {
-    width: 552px;
-    height: 315px;
-    background: url(http://ihaveaplan.ca/landing/img/adventure.png) no-repeat;
+    width: 350px;
+    height: 200px;
+    background: url(../img/adventure.png) no-repeat;
     overflow: hidden;
     text-indent: 100%;
     white-space: nowrap;
-    margin: 0 0 60px;
+    margin: auto;
 }
 
 #uploadBody{
@@ -157,4 +189,9 @@
 
 .dropdownvisible {
     height: auto;
+}
+
+#uniChoose,#semChoose{
+    font-size: 36px;
+    color: black !important;
 }
