@@ -57,6 +57,13 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 	{
 		<!--Angular JS Page Edits-->
 		$(document).ready(function(){
+			$.getScript("js/select.js")
+				.done(function( script, textStatus ) {
+					console.log( textStatus );
+				})
+				.fail(function( jqxhr, settings, exception ) {
+					$( "div.log" ).text( "Triggered ajaxError handler." );
+				});
 		});
 	});
 }]);
