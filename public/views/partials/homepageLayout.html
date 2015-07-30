@@ -1,4 +1,4 @@
-<div class="uploadFilePartial" id="homeDiv">
+<div class="uploadFilePartial homeWrapper full" id="homeDiv">
 	<div class="row">
 		<!-- Separate in to 3 base columns -->
 		<div class="col-sm-6"></div>
@@ -6,14 +6,14 @@
 			<form ng-submit="upload(file)" id="timetable-submit" enctype="multipart/form-data">
 				<div class="form-group">
 					<div style="padding: 25px;">
-						<p>Select University</p>
+						<p class="choiceLabel">Select University</p>
 					<select ng-model="university" id="uniChoose" >
 						<option value="" disabled selected>Choose University</option>
 						<option ng-repeat="uni in universities" value="{{uni.value}}">{{ uni.name }}</option>
 					</select>
 					</div>
 				<div style="padding-bottom: 15px;">
-					<p>Select Semester</p>
+					<p class="choiceLabel">Select Semester</p>
 					<select ng-model="semester" id = "semChoose" ><!--class="turnintodropdown"-->
 						<option value="" disabled selected>Choose Semester</option>
 						<option ng-repeat="sem in semesterList" value="{{sem.value}}">{{ sem.name }}</option>
@@ -22,21 +22,27 @@
 				</div>
 
 				<div class="form-group">
-					<p for="file">Upload timetable HTML <a href="#">(Guide)</a></p>
+					<p for="file" class="choiceLabel">Upload timetable HTML <a target="_blank" href="../../McMaster%20Example%20Timetable.html" class="choiceLabel">(Example Timetable)</a></p>
 					<input style="margin:auto; width: 70%" type="file" ngf-select name="html" id="file" ng-model="file">
 				</div>
-				<button type="submit" style="background-color:#56793d; border: none; padding: 10px 40px 10px 40px; color: #ffffff" class="btn btn-default submitBtn">SUBMIT</button>
+				<button type="submit" class="btn btn-default submitBtn">SUBMIT</button>
 			</form>
 
 			<p class="message"> {{ message }}</p>
+			<div style="padding-top: 40px">
+			<a href="#" data-scrollto="#section-about" data-easing="easeInOutExpo" data-speed="1250" data-offset="65"  class="one-page-arrow choiceHow">
+				<i class="fa fa-arrow-down fa-3x infinite animated fadeInDown"></i>
+				HOW-TO GUIDE
+			</a>
+			</div>
 		</div>
 	</div>
 </div>
 
-<div class="row" style="height: 700px">
+<div id="howToDiv" class="row" style="height: 700px">
 		<!-- Separate in to 3 base columns -->
 		<div class="col-sm-2"></div>
-		<div ng-if="university" id="howToDiv" class="col-sm-8 text-center"><h2>How-to Guide for {{ university }}</h2>
+		<div ng-if="university" class="col-sm-8 text-center"><h2>How-to Guide for {{ university }}</h2>
 			<section ng-if="university == 'example'">
 				<table class="table table-hover" style="width: 100%">
 					<tr data-toggle="modal" data-target="#example"><td class="table-cell"><h3>Step 1</h3> <img class="table-pic" src="../../img/example.png"></td><td class="table-cell">Right Click the Example Timetable Link above and Click Save Link As... Then upload McMaster Example Timetable.HTML</td></tr>
@@ -287,3 +293,6 @@
 			Your Suggested Feature</p>
 	</div>
 </div>
+<script type="text/javascript">
+
+</script>

@@ -55,15 +55,13 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 
 	$scope.$on('$viewContentLoaded', function ()
 	{
-		<!--Angular JS Page Edits-->
+		 // Angular JS Page Edits
 		$(document).ready(function(){
-			$.getScript("js/select.js")
-				.done(function( script, textStatus ) {
-					console.log( textStatus );
-				})
-				.fail(function( jqxhr, settings, exception ) {
-					$( "div.log" ).text( "Triggered ajaxError handler." );
-				});
+			$('#mainBody').on('change', '#uniChoose', function() {
+				if ($(this).val() == 'mcmaster') {
+					$('#homeDiv').css({"background-image": "url('../img/McMaster_University.jpg')"}).fadeIn("slow");
+				}
+			});
 		});
 	});
 }]);
