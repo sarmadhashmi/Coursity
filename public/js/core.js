@@ -56,10 +56,40 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 	$scope.$on('$viewContentLoaded', function ()
 	{
 		 // Angular JS Page Edits
+		$.getScript( "slick/slick.min.js" )
+			.done(function( script, textStatus ) {
+				console.log( textStatus );
+			})
+			.fail(function( jqxhr, settings, exception ) {
+				$( "div.log" ).text( "Triggered JS handler." );
+			});
 		$(document).ready(function(){
+			$('.single-item').slick({
+				dots: true,
+				infinite: true,
+				speed: 300,
+				slidesToShow: 1,
+				slidesToScroll: 1,
+			});
+		});
+
+		$(document).ready(function(){
+			$("#mcmaster").hide();
+			$("#example").show();
+			$("#uottawa").hide();
 			$('#mainBody').on('change', '#uniChoose', function() {
 				if ($(this).val() == 'mcmaster') {
 					$('#homeDiv').css({"background-image": "url('../img/McMaster_University.jpg')"}).fadeIn("slow");
+					$("#example").hide();
+					$("#mcmaster").show();
+				}
+				if ($(this).val() == 'uottawa') {
+					$('#homeDiv').css({"background-image": "url('../img/McMaster_University.jpg')"}).fadeIn("slow");
+					$("#example").hide();
+					$("#uottawa").show();
+				}
+				if ($(this).val() == 'example') {
+					$("#example").show();
 				}
 			});
 		});
