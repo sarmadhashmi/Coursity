@@ -2,7 +2,7 @@ var main = angular.module('main', ['ngRoute', 'ngFileUpload']);
 
 main.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
-		.when('/',	
+		.when('/',
 		{
 			controller: 'MainController',
 			templateUrl: 'views/partials/homepageLayout.html'
@@ -56,7 +56,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 	$scope.$on('$viewContentLoaded', function ()
 	{
 		 // Angular JS Page Edits
-		$.getScript( "slick/slick.min.js" )
+		$.getScript( "../slick/slick.min.js" )
 			.done(function( script, textStatus ) {
 				console.log( textStatus );
 			})
@@ -92,6 +92,8 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				}
 				if ($(this).val() == 'example') {
 					$("#example").show();
+					$("#uottawa").hide();
+					$("#mcmaster").hide();
 				}
 			});
 		});
