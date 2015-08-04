@@ -10,6 +10,7 @@
   <!--link rel="stylesheet" href="../css/font-awesome.css" type="text/css" /-->
   <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="../css/animation.css" type="text/css" />
   <link rel="stylesheet" type="text/css" href="../css/style.css" />
   <link href="../css/style.css" rel="stylesheet">
   <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -34,36 +35,35 @@
   <div class="row " style="height: auto;">
     <div class="col-sm-6 text-center"><img src="../img/Share%20Icon.png" height="400"  style="margin-top:20px"> </div>
     <div class="col-sm-6"><h2>Share and Compare <br> Schedule with friends</h2>
-      <p>Life is busy, and keeping track of your loved ones'
-      schedules can be tricky. Course2Cal makes calendar
-      sharing easy, even between iPhone and Android, or
+      <p>University is busy, and keeping track of your friends and classmates
+      schedules can be tricky. Course2Cal makes sharing and comparing easy, even between iPhone and Android, or
       between Google Calendar and Outlook.</p>
     </div>
   </div>
   <div class="row" style="height: auto">
     <div class="col-sm-6"><h2>Sync Class Schedule <br> with all devices</h2>
-      <p>Course2Cal works with Google Calendar, iCloud, Outlook, Facebook Events and any other calendar that syncs with your phone.
-      Add an event in Course2Cal and it automatically appears on your web or desktop calendar. It’s that easy.</p>
+      <p>Course2Cal works with Google Calendar, iCloud, Outlook, and any other calendar app that syncs with your phone.
+      Upload your timetable to Course2Cal and it automatically convert the timetable to an iCalendar file. It’s that easy.</p>
     </div>
     <div class="col-sm-6 text-center"><img src="../img/Calendar%20Sync.png"  height="400" style="margin-top:20px"></div>
   </div>
 </div>
 </div>
 <div class="row" id="developed">
-  <div class="row">
+  <div class="row animated ae-animation-slide ">
     <div class="col-sm-12"><h1 class="text-center">Developed By</h1></div>
   </div>
   <div class="col-sm-6 text-center"><img src="../img/Abe-Pic.png"  height="400" style="margin-top:20px">
-  <h2>Abraham Omorogbe</h2>
-    <p>McMaster University Software Engineering Student,<br>
-      Student Developer at Blackberry and Director of<br>
-      Software at Canvas Group Canada</p>
+  <h2><a href="https://ca.linkedin.com/in/abeomor">Abraham Omorogbe</a></h2>
+    <p>McMaster's very own. I am a Software Engineering,<br>
+      and Management Student and Director of<br>
+      Software at <a href="http://www.canvasgroup.ca">Canvas Group Canada</a></p>
   </div>
   <div class="col-sm-6 text-center"><img src="../img/sarmad-pic.png"  height="400" style="margin-top:20px">
-  <h2>Sarmad Hashmi</h2>
+  <h2><a href="https://ca.linkedin.com/pub/sarmad-hashmi/86/278/521">Sarmad Hashmi</h2>
     <p>University of Ottawa Software Engineering<br>
       Student, Student Developer at Blackberry<br>
-      and Web Specalist at UOttawa</p>
+      and Web Specialist at UOttawa</p>
   </div>
 </div>
 <div class="row" id="emailSugg">
@@ -72,11 +72,9 @@
     <h1>Future Features</h1>
     <p>Automatically add assignment
       <br>
-      to calendar
-      <br>
       Shareable Link
       <br>
-      Online Schedule Comparer
+      Online Schedule Comparing
       <br>
       Your Suggested Feature</p>
   </div>
@@ -86,6 +84,10 @@
 <script>
   $(document).ready(function(){
     $('#mainBody').on('change', '#uniChoose', function() {
+      console.log("test");
+    });
+    //TO-DO make animaiton work
+    $( ".col-sm-6" ).fadeIn( 4000, function() {
       console.log("test");
     });
   });

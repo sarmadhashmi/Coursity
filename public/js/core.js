@@ -81,11 +81,13 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				if ($(this).val() == 'mcmaster') {
 					$('#homeDiv').css({"background-image": "url('../img/McMaster_University.jpg')"}).fadeIn("slow");
 					$("#example").hide();
+					$("#uottawa").hide();
 					$("#mcmaster").show();
 				}
 				if ($(this).val() == 'uottawa') {
 					$('#homeDiv').css({"background-image": "url('../img/McMaster_University.jpg')"}).fadeIn("slow");
 					$("#example").hide();
+					$("#mcmaster").hide();
 					$("#uottawa").show();
 				}
 				if ($(this).val() == 'example') {
