@@ -1,5 +1,5 @@
 var main = angular.module('main', ['ngRoute', 'ngFileUpload']);
-
+//var domain = document.URL
 main.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 		.when('/',
@@ -56,13 +56,13 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 	$scope.$on('$viewContentLoaded', function ()
 	{
 		 // Angular JS Page Edits
-		$.getScript( "../slick/slick.min.js" )
+		/*$.getScript( "../slick/slick.min.js" )
 			.done(function( script, textStatus ) {
 				console.log( textStatus );
 			})
 			.fail(function( jqxhr, settings, exception ) {
 				$( "div.log" ).text( "Triggered JS handler." );
-			});
+			});*/
 		$(document).ready(function(){
 			$('.single-item').slick({
 				dots: true,
@@ -70,6 +70,9 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				speed: 300,
 				slidesToShow: 1,
 				slidesToScroll: 1,
+				lazyLoad:'progressive'
+				//autoplay: true,
+				//autoplaySpeed: 1000
 			});
 		});
 

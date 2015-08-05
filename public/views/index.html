@@ -31,9 +31,9 @@
   <script src="/js/jquery-2.1.4.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
   <script src="../js/scotchPanels.js"></script>
-  <script type="text/javascript" src="../slick/slick.min.js"></script>
-</head>
 
+</head>
+<span class="overlay"></span>
 <nav class="navbar navbar-default navbar-fixed-top" id="nav">
   <div class="container">
      <div> <a class="navbar-brand" href="#">
@@ -43,14 +43,14 @@
     </a></div>
   </div>
 </nav>
-<div class="panelize-meeeee" data-containerSelector="body" data-clickSelector=".toggle-panel-1">
+<div style="position: fixed;" class="panelize-meeeee" data-containerSelector="body" data-clickSelector=".toggle-panel-1 ">
   <ul>
-    <a href="#" class="toggle-panel-1 btn btn-danger" style="margin-left: 20px"><i class="fa fa-times"></i></a>
-    <a href="#homeDiv" class="toggle-panel-1"><li>Home</li></a>
-  <a href="#howToDiv" class="toggle-panel-1"><li>How-To</li></a>
-  <a href="#whyC2C" class="toggle-panel-1"><li>Why Course2Cal</li></a>
-  <a href="#developed" class="toggle-panel-1"><li>Developed By</li></a>
-  <a href="#emailSugg" class="toggle-panel-1"><li>Email Suggestions</li></a>
+    <a href="#" class="toggle-panel-1 btn closeBtn" style="margin-left: 20px"><i class="fa fa-times"></i></a>
+    <a href="#/homeDiv" class="menu1"><li>Home</li></a>
+  <a href="#/howToDiv" class="menu1" ><li>How-To</li></a>
+  <a href="#/whyC2C" class="menu1"><li>Why Course2Cal</li></a>
+  <a href="#/developed" class="menu1"><li>Developed By</li></a>
+  <a href="#/emailSugg" class="menu1"><li>Email Suggestions</li></a>
     <hr style="width: 60%; margin: auto">
     <li style="padding-bottom: 0px">Share On</li>
     <li>
@@ -61,7 +61,7 @@
   </ul>
 </div>
 <div id="mainBody" ng-view></div> <!--Inject views into here -->
-<div class="row" id="whyC2C">
+<div class="row" id="/whyC2C">
   <div class="col-sm-12">
   <div class="row " style="height: auto;">
     <div class="col-sm-6 text-center"><img src="../img/Share%20Icon.png" height="400"  style="margin-top:20px"> </div>
@@ -80,7 +80,7 @@
   </div>
 </div>
 </div>
-<div class="row" id="developed">
+<div class="row" id="/developed">
   <div class="row animated ae-animation-slide ">
     <div class="col-sm-12"><h1 class="text-center">Developed By</h1></div>
   </div>
@@ -97,7 +97,7 @@
       and Web Specialist at UOttawa</p>
   </div>
 </div>
-<div class="row" id="emailSugg">
+<div class="row" id="/emailSugg">
   <div class="col-sm-6"></div>
   <div class="col-sm-6">
     <h1 style="padding-top: 40px">Future Features</h1>
@@ -127,19 +127,53 @@
     $( ".col-sm-6" ).fadeIn( 4000, function() {
       console.log("test");
     });
-
     $('.panelize-meeeee').scotchPanel({
       direction: 'right', // Will be overwritten by the Data Attributes
       duration: 300, // Will apply to both
       transition: 'ease',
-      clickSelector: '.toggle-panel .press-link',
+      clickSelector: '.toggle-panel',
       distanceX:"20%",
       enableEscapeKey: true
     });
+
+    $('a').click(function(){
+      $('html, body').animate({
+        scrollTop: $( $.attr(this, 'href') ).offset().top
+      }, 500);
+      return false;
+    });
   });
 
-
-
 </script>
+<script>
+  $(function() {
+    var scotchPanel =  $('.panelize-meeeee').scotchPanel({
+      direction: 'right', // Will be overwritten by the Data Attributes
+      duration: 300, // Will apply to both
+      transition: 'ease',
+      clickSelector: '.toggle-panel',
+      distanceX:"20%",
+      enableEscapeKey: true
+    });
+
+    $('.toggle-panel-1').click(function() {
+      scotchPanel.toggle();
+      return false;
+    });
+
+    $('.overlay').click(function() {
+      // CLOSE ONLY
+      scotchPanel.close();
+    });
+
+    $('.menu1').click(function() {
+      // CLOSE ONLY
+      scotchPanel.close();
+    });
+
+  });
+</script>
+
+<script type="text/javascript" src="../slick/slick.min.js"></script>
 </body>
 </html>

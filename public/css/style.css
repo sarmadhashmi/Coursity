@@ -36,6 +36,22 @@ font-weight: 300;
     background-color: #344821;
     color: #ffffff;
 }
+
+.closeBtn{
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    font-size: 24px;
+    background-color:#56793d;
+    border: none;
+    color: #ffffff;
+    border-radius: 0px !important;
+}
+
+.closeBtn:hover {
+    background-color: #344821;
+    color: #c5c5c5 !important;
+}
+
 #uploadDiv{
     background: transparent;
     border: solid;
@@ -49,7 +65,7 @@ font-weight: 300;
     color: #ffffff;
 
 }
-#emailSugg{
+#\/emailSugg{
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     color: #ffffff;
     padding-top: 50px;
@@ -60,10 +76,10 @@ font-weight: 300;
     background-position: center;
     height:600px;
 }
-#emailSugg p{
+#\/emailSugg p{
     font-size: 24px;
 }
-#homeDiv{
+#\/homeDiv{
     color: #ffffff;
     padding-top: 120px;
     padding-bottom: 50px;
@@ -106,7 +122,7 @@ font-weight: 300;
 .uploadDivContent a{
     color: #6e6e6e;
 }
-#howToDiv{
+#\/howToDiv{
     background-color: #ffffff;
     /*border: solid;
     border-color: #6e6e6e;*/
@@ -115,7 +131,7 @@ font-weight: 300;
     opacity: 0.9;
     height: auto;
 }
-#howToDiv h2{
+#\/howToDiv h2{
     text-transform: uppercase;
 }
 .uploadFilePartial{
@@ -171,13 +187,13 @@ a:focus,a:hover {
     color: #56793d !important;
     text-decoration:none
 }
-#howToDiv li{
+#\/howToDiv li{
     font-size: xx-large;
     list-style: square;
     padding-bottom: 10px;
 }
 
-#howToDiv p{
+#\/howToDiv p{
     font-size: x-large;
 }
 button.slick-prev.slick-arrow{
@@ -193,11 +209,11 @@ button.slick-next.slick-arrow{
 
 }
 
-#howToDiv li>b{
+#\/howToDiv li>b{
     text-transform: uppercase;
 }
 
-#whyC2C{
+#\/whyC2C{
     height: auto;
     background-color: #56793d;
     padding-left: 10%;
@@ -205,18 +221,18 @@ button.slick-next.slick-arrow{
     padding-bottom: 30px;
 }
 @media (max-width:720px){
-    #whyC2C {
+    #\/whyC2C {
         padding-right: 0%;
         padding-left: 0%;
     }
 }
-#whyC2C p{
+#\/whyC2C p{
     font-size: 24px;
     color: white;
     font-weight: lighter;
 }
 
-#whyC2C h2{
+#\/whyC2C h2{
     font-size: 36px;
     line-height: 1.2;
     color: white;
@@ -225,19 +241,19 @@ button.slick-next.slick-arrow{
 }
 
 
-#developed{
+#\/developed{
     height: auto;
     padding-bottom: 50px;
     padding-top: 25px;
 }
 
-#developed p{
+#\/developed p{
     font-size: 18px;
     color: black;
     font-weight: lighter;
 }
 
-#developed h2{
+#\/developed h2{
     font-size: 28px;
     line-height: 1.2;
     color: black;
@@ -268,15 +284,15 @@ button.slick-next.slick-arrow{
     padding: 20px 0px 0px 0px;
 }
 
-#developed a,#howToDiv a, #footer a {
+#\/developed a,#howToDiv a, #footer a {
     color: #56793d;
 }
 
-#developed a:hover{
+#\/developed a:hover{
     color: #2a3a1d !important;
 }
 
-#howToDiv a:hover{
+#\/howToDiv a:hover{
     color: #2a3a1d !important;
 }
 
@@ -316,3 +332,74 @@ button.slick-next.slick-arrow{
     padding: 40px;
 }
 
+/*====================================
+=            PANEL STYLES            =
+====================================*/
+#scotch-panel {
+    background: #444;;
+}
+#scotch-panel ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+#scotch-panel ul li a {
+    display: block;
+    width: 100%;
+    height: 50px;
+    line-height: 50px;
+    background: transparent;
+    color: #fff;
+}
+#scotch-panel ul li a:hover {
+    background: #555;
+}
+
+
+
+.overlay {
+    position: fixed;
+    background: rgba(0, 0, 0, 0.75);
+    width: 100%;
+    height: 100%;
+    display: none;
+    z-index: 999999;
+    -webkit-transition: all 225ms ease;
+    -moz-transition: all 225ms ease;
+    transition: all 225ms ease;
+
+    -webkit-animation-duration: 1s;
+    animation-duration: 1s;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+
+    -webkit-animation-name: fadeIn;
+    animation-name: fadeIn;
+
+    cursor: pointer;
+}
+.scotch-is-showing .overlay {
+    display: block;
+}
+
+
+@-webkit-keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
