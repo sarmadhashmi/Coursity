@@ -79,7 +79,7 @@ font-weight: 300;
 #\/emailSugg p{
     font-size: 24px;
 }
-#\/homeDiv{
+.homeDiv{
     color: #ffffff;
     padding-top: 120px;
     padding-bottom: 50px;
@@ -284,7 +284,7 @@ button.slick-next.slick-arrow{
     padding: 20px 0px 0px 0px;
 }
 
-#\/developed a,#howToDiv a, #footer a {
+#\/developed a,#\/howToDiv a, #footer a {
     color: #56793d;
 }
 

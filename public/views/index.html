@@ -47,7 +47,7 @@
   <ul>
     <a href="#" class="toggle-panel-1 btn closeBtn" style="margin-left: 20px"><i class="fa fa-times"></i></a>
     <a href="#/homeDiv" class="menu1"><li>Home</li></a>
-  <a href="#/howToDiv" class="menu1" ><li>How-To</li></a>
+  <a href="#/howToDiv" id="menu1" ><li>How-To</li></a>
   <a href="#/whyC2C" class="menu1"><li>Why Course2Cal</li></a>
   <a href="#/developed" class="menu1"><li>Developed By</li></a>
   <a href="#/emailSugg" class="menu1"><li>Email Suggestions</li></a>
@@ -166,9 +166,10 @@
       scotchPanel.close();
     });
 
-    $('.menu1').click(function() {
+    $('#menu1').click(function() {
       // CLOSE ONLY
-      scotchPanel.close();
+      scotchPanel.toggle();
+      return false;
     });
 
   });
