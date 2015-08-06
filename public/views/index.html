@@ -9,172 +9,26 @@
   <!-- import styles-->
   <!--link rel="stylesheet" href="../css/font-awesome.css" type="text/css" /-->
   <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="../css/animate.css" type="text/css" />
-  <link rel="stylesheet" href="../css/animation.css" type="text/css" />
-  <link rel="stylesheet" type="text/css" href="../css/style.css" />
-  <link href="../css/style.css" rel="stylesheet">
-  <link href="../css/bootstrap.min.css" rel="stylesheet">
-
-
+  <link rel="stylesheet" href="/css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="/css/animation.css" type="text/css" />  
+  <link href="/css/bootstrap.min.css" rel="stylesheet">  
+  <link rel="stylesheet" type="text/css" href="/slick/slick.css"/>
+  <link href="/slick/slick-theme.css" rel="stylesheet" type="text/css"/>  
+  <link href="/css/style.css"  rel="stylesheet" type="text/css">
+  
+  <script src="/js/jquery-2.1.4.min.js"></script>
   <script src="/js/angular.js"></script>
-  <script src="/js/angular-route.js"></script>
+  <script src="/js/angular-route.js"></script>  
   <script src="/js/ng-file-upload-shim.min.js"></script>
   <script src="/js/ng-file-upload.min.js"></script>
-  <script src="/js/core.js"></script>
-  <script src="/js/jquery-2.1.4.min.js"></script>
-  <script src="/js/bootstrap.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script type="text/javascript" src="/js/pageEdits.js"></script>
-  <link rel="stylesheet" type="text/css" href="../slick/slick.css"/>
-  <link rel="stylesheet" type="text/css" href="../slick/slick-theme.css"/>
-  <link href="../css/style.css" rel="stylesheet">
-  <script src="/js/jquery-2.1.4.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="../js/scotchPanels.js"></script>
+  <script src="/js/core.js"></script>  
+  <script src="/js/bootstrap.min.js"></script>  
+  <script type="text/javascript" src="/js/pageEdits.js"></script>  
+  <script src="/js/scotchPanels.min.js"></script>
+  <script type="text/javascript" src="/slick/slick.min.js"></script>
 
 </head>
-<span class="overlay"></span>
-<nav class="navbar navbar-default navbar-fixed-top" id="nav">
-  <div class="container">
-     <div> <a class="navbar-brand" href="#">
-        <img alt="Brand" src="../img/Logo_Course2Cal.png" height="45px">
-      </a></div>
-      <div id="bars" style="float: right"><a style=" float: right; position: absolute; color: white; padding-top: 15px; float: right" href="#" class="toggle-panel-1"><i class="fa fa-bars fa-3x"></i></a>
-    </a></div>
-  </div>
-</nav>
-<div style="position: fixed;" class="panelize-meeeee" data-containerSelector="body" data-clickSelector=".toggle-panel-1 ">
-  <ul>
-    <a href="#" class="toggle-panel-1 btn closeBtn" style="margin-left: 20px"><i class="fa fa-times"></i></a>
-    <a href="#/homeDiv" class="menu1"><li>Home</li></a>
-  <a href="#/howToDiv" id="menu1" ><li>How-To</li></a>
-  <a href="#/whyC2C" class="menu1"><li>Why Course2Cal</li></a>
-  <a href="#/developed" class="menu1"><li>Developed By</li></a>
-  <a href="#/emailSugg" class="menu1"><li>Email Suggestions</li></a>
-    <hr style="width: 60%; margin: auto">
-    <li style="padding-bottom: 0px">Share On</li>
-    <li>
-      <a href=https://www.facebook.com/sharer/sharer.php?u=www.canvasgroup.ca style="color: #ffffff"><i class="fa fa-facebook-square fa-2x"></i></a>
-      <a href="https://twitter.com/home?status=www.canvasgroup.ca" style="color: #ffffff" ><i class="fa fa-twitter-square fa-2x"></i></a>
-    </li>
-    <li><img alt="Brand" src="../img/Logo_Course2Cal.png" height="60px"></li>
-  </ul>
-</div>
-<div id="mainBody" ng-view></div> <!--Inject views into here -->
-<div class="row" id="/whyC2C">
-  <div class="col-sm-12">
-  <div class="row " style="height: auto;">
-    <div class="col-sm-6 text-center"><img src="../img/Share%20Icon.png" height="400"  style="margin-top:20px"> </div>
-    <div class="col-sm-6"><h2>Share and Compare <br> Schedule with friends</h2>
-      <p>University is busy, and keeping track of your friends and classmates
-      schedules can be tricky. Course2Cal makes sharing and comparing easy, even between iPhone and Android, or
-      between Google Calendar and Outlook.</p>
-    </div>
-  </div>
-  <div class="row" style="height: auto">
-    <div class="col-sm-6"><h2>Sync Class Schedule <br> with all devices</h2>
-      <p>Course2Cal works with Google Calendar, iCloud, Outlook, and any other calendar app that syncs with your phone.
-      Upload your timetable to Course2Cal and it automatically convert the timetable to an iCalendar file. It’s that easy.</p>
-    </div>
-    <div class="col-sm-6 text-center"><img src="../img/Calendar%20Sync.png"  height="400" style="margin-top:20px"></div>
-  </div>
-</div>
-</div>
-<div class="row" id="/developed">
-  <div class="row animated ae-animation-slide ">
-    <div class="col-sm-12"><h1 class="text-center">Developed By</h1></div>
-  </div>
-  <div class="col-sm-6 text-center"><img src="../img/Abe-Pic.png"  height="400" style="margin-top:20px">
-  <h2><a href="https://ca.linkedin.com/in/abeomor">Abraham Omorogbe</a></h2>
-    <p>McMaster Software Engineering,<br>
-      and Management Student and Director of<br>
-      Software at <a href="http://www.canvasgroup.ca">Canvas Group Canada</a></p>
-  </div>
-  <div class="col-sm-6 text-center"><img src="../img/sarmad-pic.png"  height="400" style="margin-top:20px">
-  <h2><a href="https://ca.linkedin.com/pub/sarmad-hashmi/86/278/521">Sarmad Hashmi</a></h2>
-    <p>University of Ottawa Software Engineering<br>
-      Student, Student Developer at Blackberry<br>
-      and Web Specialist at UOttawa</p>
-  </div>
-</div>
-<div class="row" id="/emailSugg">
-  <div class="col-sm-6"></div>
-  <div class="col-sm-6">
-    <h1 style="padding-top: 40px">Future Features</h1>
-    <ul style="font-size: x-large">
-      <br>
-    <li>Automatically add assignment</li>
-    <br>
-    <li> Shareable Link</li>
-      <br>
-    <li> Online Schedule Comparing</li>
-      <br>
-    <li>Your Suggested Feature</li>
-    </ul>
-  </div>
-</div>
-<div id="footer" class="text-center">
-    <a style="color: #ffffff" href="https://www.facebook.com/sharer/sharer.php?u=www.canvasgroup.ca"><i class="fa fa-facebook-square fa-2x"></i></a>
-    <a style="color: #ffffff" href="https://twitter.com/home?status=www.canvasgroup.ca"><i class="fa fa-twitter-square fa-2x"></i></a>
-  <p class="text-center">Designed and Developed by <a href="https://ca.linkedin.com/in/abeomor"> Abraham Omorogbe </a> and <a href="https://ca.linkedin.com/pub/sarmad-hashmi/86/278/521"> Sarmad Hashmi </a></p>
-</div>
-<script>
-  $(document).ready(function(){
-    $('#mainBody').on('change', '#uniChoose', function() {
-      console.log("test");
-    });
-    //TO-DO make animaiton work
-    $( ".col-sm-6" ).fadeIn( 4000, function() {
-      console.log("test");
-    });
-    $('.panelize-meeeee').scotchPanel({
-      direction: 'right', // Will be overwritten by the Data Attributes
-      duration: 300, // Will apply to both
-      transition: 'ease',
-      clickSelector: '.toggle-panel',
-      distanceX:"20%",
-      enableEscapeKey: true
-    });
-
-    $('a').click(function(){
-      $('html, body').animate({
-        scrollTop: $( $.attr(this, 'href') ).offset().top
-      }, 500);
-      return false;
-    });
-  });
-
-</script>
-<script>
-  $(function() {
-    var scotchPanel =  $('.panelize-meeeee').scotchPanel({
-      direction: 'right', // Will be overwritten by the Data Attributes
-      duration: 300, // Will apply to both
-      transition: 'ease',
-      clickSelector: '.toggle-panel',
-      distanceX:"20%",
-      enableEscapeKey: true
-    });
-
-    $('.toggle-panel-1').click(function() {
-      scotchPanel.toggle();
-      return false;
-    });
-
-    $('.overlay').click(function() {
-      // CLOSE ONLY
-      scotchPanel.close();
-    });
-
-    $('#menu1').click(function() {
-      // CLOSE ONLY
-      scotchPanel.toggle();
-      return false;
-    });
-
-  });
-</script>
-
-<script type="text/javascript" src="../slick/slick.min.js"></script>
+<body>
+  <div id="mainBody" ng-view></div> <!--Inject views into here -->
 </body>
 </html>

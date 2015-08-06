@@ -8,7 +8,6 @@ html, body {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
     overflow-x: hidden;
-
 }
 .homeWrapper {
    /* min-height: 100vh;*/
@@ -126,9 +125,9 @@ font-weight: 300;
     background-color: #ffffff;
     /*border: solid;
     border-color: #6e6e6e;*/
+    width:100%;
     padding-top:75px;
-    padding-bottom:50px;
-    opacity: 0.9;
+    padding-bottom:50px;    
     height: auto;
 }
 #\/howToDiv h2{
@@ -242,6 +241,7 @@ button.slick-next.slick-arrow{
 
 
 #\/developed{
+    background-color: #B8DBFF;
     height: auto;
     padding-bottom: 50px;
     padding-top: 25px;
@@ -258,30 +258,6 @@ button.slick-next.slick-arrow{
     line-height: 1.2;
     color: black;
     font-weight: bolder;
-}
-
-.panelize-meeeee{
-    background-color: black;
-    color: #FFFFFF;
-}
-
-.panelize-meeeee ul>a>li{
-    color: #FFFFFF;
-}
-
-.panelize-meeeee li{
-     list-style: none;
-     text-align: center;
-     padding: 20px;
- }
-
-.panelize-meeeee ul>a>li:hover{
-   background-color: whitesmoke;
-    color: #56793d !important;
-}
-
-.panelize-meeeee ul{
-    padding: 20px 0px 0px 0px;
 }
 
 #\/developed a,#\/howToDiv a, #footer a {
@@ -312,12 +288,11 @@ button.slick-next.slick-arrow{
     color:white !important;
 }
 
-#nav{
-    position:fixed;
+#nav {    
     -webkit-transform: translate3d(0, 0, 0);
     height:65px;
     opacity: 0.9;
-    background-color: #56793d ;
+    background-color: #56793d;
     margin-bottom: 0px;
     border: none;
     border-radius: 0px;
@@ -332,55 +307,85 @@ button.slick-next.slick-arrow{
     padding: 40px;
 }
 
+a {
+    text-decoration: none !important;
+    -webkit-transition: all 225ms ease;
+    -moz-transition: all 225ms ease;
+    transition: all 225ms ease;
+}
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99999999;
+    background: #222;
+    height: 50px;
+}
+header a {
+    color: #777;
+}
+header a:hover {
+    color: #fff;
+}
+header .logo {
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+}
+header .toggle-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 25px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background: #333;
+}
+
+
 /*====================================
 =            PANEL STYLES            =
 ====================================*/
+
 #scotch-panel {
-    background: #444;;
+  display: none;
 }
-#scotch-panel ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+
+#site-wrapper {
+  padding-top: 50px;
+}
+
+#site-wrapper .scotch-panel-canvas {
+  z-index: 99999;
+}
+
+#fixed-nav {
+    background: #444;
+    position: fixed;
+    height: 100%; 
+    top: 0;
+    right: 0;
+    width: 15%;
+    padding-top: 50px;     
+}
+#fixed-nav ul {
+    list-style: none;    
     text-align: center;
+    z-index: -99999;
 }
-#scotch-panel ul li a {
+
+#fixed-nav ul li a {
     display: block;
-    width: 100%;
-    height: 50px;
+    width:100%;
     line-height: 50px;
     background: transparent;
     color: #fff;
 }
-#scotch-panel ul li a:hover {
+#fixed-nav ul li a:hover {
     background: #555;
-}
-
-
-
-.overlay {
-    position: fixed;
-    background: rgba(0, 0, 0, 0.75);
-    width: 100%;
-    height: 100%;
-    display: none;
-    z-index: 999999;
-    -webkit-transition: all 225ms ease;
-    -moz-transition: all 225ms ease;
-    transition: all 225ms ease;
-
-    -webkit-animation-duration: 1s;
-    animation-duration: 1s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-
-    -webkit-animation-name: fadeIn;
-    animation-name: fadeIn;
-
-    cursor: pointer;
-}
-.scotch-is-showing .overlay {
-    display: block;
 }
 
 

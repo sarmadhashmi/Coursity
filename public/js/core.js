@@ -70,13 +70,30 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				speed: 300,
 				slidesToShow: 1,
 				slidesToScroll: 1,
-				lazyLoad:'progressive'
+				lazyLoad:'ondemand'
 				//autoplay: true,
 				//autoplaySpeed: 1000
 			});
-		});
 
-		$(document).ready(function(){
+			var scotchPanel =  $('#scotch-panel').scotchPanel({
+		        containerSelector: '#site-wrapper',
+		        direction: 'right',
+		        duration: 300,
+		        transition: 'ease',
+		        clickSelector: '.toggle-panel',
+		        distanceX: '10%',		        
+		        enableEscapeKey: true		      	      
+   			});	
+
+		    $('#navClose').click(function() {
+		    	scotchPanel.close();
+		    	return false;
+		    });
+
+		    $('.menu1').click(function() {		      		    	
+		      	scotchPanel.toggle();
+		    });
+
 			$("#mcmaster").hide();
 			$("#example").show();
 			$("#uottawa").hide();
