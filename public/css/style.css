@@ -68,13 +68,13 @@ font-weight: 300;
 #\/emailSugg{
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     color: #ffffff;
-    padding-top: 50px;
-    padding-bottom: 50px;
+    padding-top: 75px;
+    padding-bottom: 75px;
     background-image: url(../img/emaildiv.jpg);
     /*background-color: #004444;*/
     background-size:cover;
     background-position: center;
-    height:600px;
+    height:auto;
 }
 #\/emailSugg p{
     font-size: 24px;
