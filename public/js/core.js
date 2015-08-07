@@ -39,12 +39,15 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 		            $scope.message = 'Uploading and converting';
 				})
 				.success(function(data) {
-					var anchor = angular.element('<a/>');
-     				anchor.attr({
-         				href: 'data:attachment/html;charset=utf-8,' + encodeURI(data),
-         				target: '_blank',
-         				download: 'timetable.ics'
-     				})[0].click();
+					var anchor = angular.element('<a><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download</a>');
+     				anchor.attr({     					
+         				href: '/ics/' + data,
+         				target: '_blank'             			     			
+     				});
+     				anchor.addClass('btn');     				     				     				
+     				anchor.addClass('submitBtn');          				
+     				var div = angular.element(document).find('#downloadDiv').eq(0);
+     				div.append(anchor);
      				$scope.message = 'Finished.';
 				})
 				.error(function(data) {

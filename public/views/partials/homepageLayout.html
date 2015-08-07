@@ -30,7 +30,9 @@
 <div class="uploadFilePartial homeWrapper homeDiv full" id="homeDiv">
 	<div class="row">
 		<!-- Separate in to 3 base columns -->
-		<div class="col-sm-6"></div>
+		<div class="col-sm-6 text-center title">
+			<div id="downloadDiv" style="padding-top:25%;"></div>
+		</div>
 		<div class="col-sm-6 text-center title"><h1></h1>
 			<form ng-submit="upload(file)" id="timetable-submit" enctype="multipart/form-data">
 				<div class="form-group">
@@ -55,9 +57,8 @@
 					<input style="margin:auto; width: 70%" type="file" ngf-select name="html" id="file" ng-model="file">
 				</div>
 				<button type="submit" class="btn btn-default submitBtn">SUBMIT</button>
-			</form>
-
-			<p class="message"> {{ message }}</p>
+			</form>			
+			<p class="message"> {{ message }}</p>			
 			<div style="padding-top: 40px">
 			<a href="#howToDiv" id="goToHowTo" class="one-page-arrow choiceHow">
 				<i class="fa fa-arrow-down fa-3x infinite animated fadeInDown"></i>

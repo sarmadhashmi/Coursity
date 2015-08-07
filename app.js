@@ -14,11 +14,16 @@ var config = require('./config/config.json');
 
 // Add logging
 try {
-	fs.mkdirSync('logs');	
-}  catch (e) {
+	fs.mkdirSync('logs');					
+}  catch (e) {	
 	//  folder already exists;
 }  finally {
 	winston.add(winston.transports.File, { filename: __dirname + '/logs/main.log' });
+}
+try {
+	fs.mkdirSync('public/ics');
+} catch (e) {
+	// folder already exists
 }
 
 // emailer
@@ -33,11 +38,6 @@ var transporter = nodemailer.createTransport({
 // middleware
 var app = express();
 app.use(bodyParser.json());
-app.use(multer({
-	dest: tempFolder,
-	limits: { fileSize: 2097152 }		// 2MB	
-}));
-
 
 app.get('/', function(req, res) {
 	winston.info('User connected: ' + req.connection.remoteAddress || 'localhost');
@@ -66,7 +66,10 @@ app.post('/feedback', function(req, res) {
 	});
 });
 
-app.post('/upload', function(req, res) {   
+app.post('/upload', multer({
+	dest: tempFolder,
+	limits: { fileSize: 2097152 }		// 2MB	
+}), function(req, res) {   
 	if (!req.files || req.files.file.mimetype !== 'text/html') {
 		var msg = 'Invalid file type uploaded. Only .HTML files';
 		winston.error(msg);
@@ -109,8 +112,10 @@ app.post('/upload', function(req, res) {
 			winston.info('Piping file ' +  fileName + ' to response.')
 			res.attachment('timetable.ics');			
 			var filestream = fs.createReadStream(icsFolder + fileName);	
-			filestream.on('readable', function() {
-				filestream.pipe(res);		
+			var icsFile = filename.replace('.html', '.ics');
+			var writeStream = fs.createWriteStream(__dirname + '/public/ics/' + icsFile);
+			filestream.pipe(writeStream).on('finish', function() {
+				res.status(200).send(icsFile);
 			});
 		}				 
 	});	
