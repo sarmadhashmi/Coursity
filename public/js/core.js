@@ -73,8 +73,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				} else {
 					$("header").css("background-color", "transparent");
 					$("header").css("transition", "background-color 0.5s");
-					$('#sidebar-wrapper').css('top', '0px');
-					$('#sidebar-wrapper').css('transition', 'top 0.5s');
+					$('#sidebar-wrapper').css('top', '0px');					
 
 				}
 				})
@@ -91,11 +90,6 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				//autoplaySpeed: 1000
 			});
 
-		   // Closes the sidebar menu
-		    $("#menu-close").click(function(e) {
-		        e.preventDefault();
-		        $("#sidebar-wrapper").toggleClass("active");
-		    });
 		    // Opens the sidebar menu
 		    $("#menu-toggle").click(function(e) {
 		        e.preventDefault();
