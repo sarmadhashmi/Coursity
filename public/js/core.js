@@ -53,6 +53,15 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 		}
 	};
 
+	$scope.feedback = function() {					
+		$http.post('/feedback', { "email": $scope.email, "message": $scope.messageFeedback })
+		.success(function(data, status, headers, config) {
+    		$scope.feedbackMessage = 'Thank you!';
+		}).error(function(data, status, headers, config) {			
+    		$scope.feedbackMessage = data;
+		});
+	};
+
 	$scope.$on('$viewContentLoaded', function ()
 	{
 		 // Angular JS Page Edits

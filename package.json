@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "dependencies": {
     "async": "^1.4.0",
+    "body-parser": "^1.13.3",
     "cheerio": "^0.19.0",
     "connect-busboy": "0.0.2",
     "datejs": "0.0.2",
@@ -10,6 +11,8 @@
     "ical-toolkit": "^1.0.9",
     "moment": "^2.10.3",
     "multer": "^0.1.8",
+    "nodemailer": "^1.4.0",
+    "validator": "^4.0.2",
     "winston": "^1.0.1"
   }
 }

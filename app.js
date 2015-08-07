@@ -4,9 +4,14 @@ var express = require('express');
 var multer = require('multer')	
 var winston = require('winston');
 var async = require('async');
+var nodemailer = require('nodemailer');
+var bodyParser = require('body-parser');
+var validator = require('validator');
 
 var parserFactory = require('./parsers/main.js');
 var semesterConfig = require('./config/semesters.json');
+var config = require('./config/config.json');
+
 // Add logging
 try {
 	fs.mkdirSync('logs');	
@@ -16,19 +21,50 @@ try {
 	winston.add(winston.transports.File, { filename: __dirname + '/logs/main.log' });
 }
 
-var app = express();
-
-app.get('/', function(req, res) {
-	winston.info('User connected: ' + req.connection.remoteAddress);
-	res.sendFile(__dirname + '/public/views/index.html');
+// emailer
+var transporter = nodemailer.createTransport({
+    service: config.type,
+    auth: {
+        user: config.user,
+        pass: config.pass
+    }
 });
-var icsFolder = __dirname + '/ics/';
-var tempFolder = __dirname + '/temp/'
 
+// middleware
+var app = express();
+app.use(bodyParser.json());
 app.use(multer({
 	dest: tempFolder,
 	limits: { fileSize: 2097152 }		// 2MB	
 }));
+
+
+app.get('/', function(req, res) {
+	winston.info('User connected: ' + req.connection.remoteAddress || 'localhost');
+	res.sendFile(__dirname + '/public/views/index.html');
+});
+var icsFolder = __dirname + '/ics/';
+var tempFolder = __dirname + '/temp/';
+
+
+app.post('/feedback', function(req, res) {		
+	if (!validator.isEmail(req.body.email)) {		
+		return res.status(404).send('Invalid email entered.');
+	}
+	transporter.sendMail({
+	    from: req.body.email,
+	    to: 'course2cal@gmail.com',
+	    subject: 'Feedback from ' + req.body.email,
+	    text: req.body.message
+	}, function(err, info) {
+		if (err) {
+			winston.error(err);
+			return res.status(404).send(err);
+		}		
+		winston.info('Recieved feedback from ' + req.body.email);
+		return res.status(200).send('Sent.')
+	});
+});
 
 app.post('/upload', function(req, res) {   
 	if (!req.files || req.files.file.mimetype !== 'text/html') {
