@@ -71,7 +71,7 @@ font-weight: 300;
     padding-top: 75px;
     padding-bottom: 75px;
     background-image: url(../img/emaildiv.jpg);
-    /*background-color: #004444;*/
+    background-color: #504239;
     background-size:cover;
     background-position: center;
     height:auto;
@@ -261,6 +261,10 @@ button.slick-next.slick-arrow{
     font-weight: bolder;
 }
 
+#developed img{
+    height: 400px;
+}
+
 #developed a,#howToDiv a, #footer a {
     color: #56793d;
 }
@@ -399,9 +403,29 @@ header .logo {
 }
 
 .sidebar-nav li a:hover {
-    text-decoration: none;
-    color: #fff;
-    background: rgba(255,255,255,0.2);
+            text-decoration: none;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.2);
+        }
+@media (max-width:500px){
+    #fixed-nav{
+        width: 40%;
+    }
+    #developed img{
+        height: 200px;
+    }
+
+    #whyC2C img{
+         height: 300px;
+     }
+
+    #emailSugg img{
+        height: 300px;
+    }
+
+    #howToDiv img{
+        height: 300px;
+    }
 }
 
 .sidebar-nav li a:active,
@@ -461,3 +485,4 @@ header .logo {
 .row{
     margin: 0px !important;
 }
+
