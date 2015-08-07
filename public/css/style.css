@@ -79,6 +79,10 @@ font-weight: 300;
 #emailSugg p{
     font-size: 24px;
 }
+
+.emailText{
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+}
 .homeDiv{
     color: #ffffff;
     padding-top: 110px;
@@ -156,13 +160,13 @@ font-weight: 300;
 .choiceLabel{
     font-size: 14px;
     color: #FFFFFF;
-    font-weight: 700;
+    font-weight: 400;
 }
 
 .choiceLabel a:hover{
     font-size: 14px;
     color: #56793d;
-    font-weight: 700;
+    font-weight: 400;
 }
 .one-page-arrow i {
     -webkit-animation-duration: 1.5s !important;

@@ -1,5 +1,5 @@
 <header>
-  <div class="container-fluid">
+  <div class="container">
   	<div class="row">	     
   		<div class="col-md-12">
 	        <a href="#/" class="logo"><img alt="Brand" src="../img/Logo_Course2Cal.png" height="50px"></a>	      	      	
@@ -59,7 +59,7 @@
 
 			<p class="message"> {{ message }}</p>
 			<div style="padding-top: 40px">
-			<a href="#/howToDiv" data-scrollto="#howToDiv" data-easing="easeInOutExpo" data-speed="1250" data-offset="65"  class="one-page-arrow choiceHow">
+			<a href="#howToDiv" id="goToHowTo" class="one-page-arrow choiceHow">
 				<i class="fa fa-arrow-down fa-3x infinite animated fadeInDown"></i>
 				HOW-TO GUIDE
 			</a>
@@ -206,7 +206,7 @@
   </div>
 </div>
 <div class="row" id="emailSugg">
-  <div class="col-sm-6" style="text-align:center;">
+  <div class="col-sm-6 emailText" style="text-align:center;">
   	<h1 style="padding-top: 20px">Got any suggestions or comments?</h1>
   		<form ng-submit="feedback()" id="feedback-submit">
 				<div class="form-group">
@@ -215,7 +215,7 @@
 						<input style="width:70%" type="text" ng-model="email" required />
 					
 					</div>
-				<div style="padding-bottom: 15px;">
+				<div  style="padding-bottom: 15px;">
 					<p class="choiceLabel">Your Feedback</p>			
 					<textarea maxlength="250" style="width:70%" rows="10" type="text" ng-model="messageFeedback" required />
 				</div>				

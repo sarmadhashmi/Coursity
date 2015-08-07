@@ -105,7 +105,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 		        $("#sidebar-wrapper").toggleClass("active");
 		    });
 
-		    $('.menu1').click(function(e) {
+		    $('.menu1, #goToHowTo').click(function(e) {
 		    	e.preventDefault();
 		    	$('html,body').animate({
                         scrollTop: $($(this).attr('href')).offset().top
