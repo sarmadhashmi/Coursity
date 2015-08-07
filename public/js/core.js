@@ -67,11 +67,14 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 
 			$(this).scroll(function() {
 				var st = $(this).scrollTop();
-				if (st > 200) {
+				if (st > 300) {
 					$("header").css("background-color", "#56793d");
+					$('#sidebar-wrapper').css('top', '70px');
 				} else {
 					$("header").css("background-color", "transparent");
 					$("header").css("transition", "background-color 0.5s");
+					$('#sidebar-wrapper').css('top', '0px');
+					$('#sidebar-wrapper').css('transition', 'top 0.5s');
 
 				}
 				})
@@ -88,24 +91,23 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				//autoplaySpeed: 1000
 			});
 
-			var scotchPanel =  $('#scotch-panel').scotchPanel({
-		        containerSelector: '#site-wrapper',
-		        direction: 'right',
-		        duration: 300,
-		        transition: 'ease',
-		        clickSelector: '.toggle-panel',
-		        distanceX: '40%',
-		        enableEscapeKey: true		      	      
-   			});	
-
-		    $('#navClose').click(function() {
-		    	scotchPanel.close();
-		    	return false;
+		   // Closes the sidebar menu
+		    $("#menu-close").click(function(e) {
+		        e.preventDefault();
+		        $("#sidebar-wrapper").toggleClass("active");
+		    });
+		    // Opens the sidebar menu
+		    $("#menu-toggle").click(function(e) {
+		        e.preventDefault();
+		        $("#sidebar-wrapper").toggleClass("active");
 		    });
 
-		    $('.menu1').click(function() {		      		    	
-		      	scotchPanel.toggle();
-		    });
+		    $('.menu1').click(function(e) {
+		    	e.preventDefault();
+		    	$('html,body').animate({
+                        scrollTop: $($(this).attr('href')).offset().top
+                    }, 500);                    
+            });
 
 			$("#mcmaster").hide();
 			$("#example").show();

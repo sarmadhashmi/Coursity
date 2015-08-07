@@ -3,7 +3,7 @@
     src: url(../fonts/HelveticaNeue-Light.otf);
 }
 html, body {
-    height: 100%;
+    height: auto;
     margin: 0;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
@@ -65,7 +65,7 @@ font-weight: 300;
     color: #ffffff;
 
 }
-#\/emailSugg{
+#emailSugg{
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     color: #ffffff;
     padding-top: 75px;
@@ -76,7 +76,7 @@ font-weight: 300;
     background-position: center;
     height:auto;
 }
-#\/emailSugg p{
+#emailSugg p{
     font-size: 24px;
 }
 .homeDiv{
@@ -122,7 +122,7 @@ font-weight: 300;
 .uploadDivContent a{
     color: #6e6e6e;
 }
-#\/howToDiv{
+#howToDiv{
     background-color: #ffffff;
     /*border: solid;
     border-color: #6e6e6e;*/
@@ -131,7 +131,7 @@ font-weight: 300;
     padding-bottom:50px;    
     height: auto;
 }
-#\/howToDiv h2{
+#howToDiv h2{
     text-transform: uppercase;
 }
 .uploadFilePartial{
@@ -187,13 +187,13 @@ a:focus,a:hover {
     color: #56793d !important;
     text-decoration:none
 }
-#\/howToDiv li{
+#howToDiv li{
     font-size: xx-large;
     list-style: square;
     padding-bottom: 10px;
 }
 
-#\/howToDiv p{
+#howToDiv p{
     font-size: x-large;
 }
 button.slick-prev.slick-arrow{
@@ -209,11 +209,11 @@ button.slick-next.slick-arrow{
 
 }
 
-#\/howToDiv li>b{
+#howToDiv li>b{
     text-transform: uppercase;
 }
 
-#\/whyC2C{
+#whyC2C{
     height: auto;
     background-color: #56793d;
     padding-left: 10%;
@@ -221,18 +221,18 @@ button.slick-next.slick-arrow{
     padding-bottom: 30px;
 }
 @media (max-width:720px){
-    #\/whyC2C {
+    #whyC2C {
         padding-right: 0%;
         padding-left: 0%;
     }
 }
-#\/whyC2C p{
+#whyC2C p{
     font-size: 24px;
     color: white;
     font-weight: lighter;
 }
 
-#\/whyC2C h2{
+#whyC2C h2{
     font-size: 36px;
     line-height: 1.2;
     color: white;
@@ -241,35 +241,35 @@ button.slick-next.slick-arrow{
 }
 
 
-#\/developed{
+#developed{
     background-color: whitesmoke;
     height: auto;
     padding-bottom: 50px;
     padding-top: 25px;
 }
 
-#\/developed p{
+#developed p{
     font-size: 18px;
     color: black;
     font-weight: lighter;
 }
 
-#\/developed h2{
+#developed h2{
     font-size: 28px;
     line-height: 1.2;
     color: black;
     font-weight: bolder;
 }
 
-#\/developed a,#\/howToDiv a, #footer a {
+#developed a,#howToDiv a, #footer a {
     color: #56793d;
 }
 
-#\/developed a:hover{
+#developed a:hover{
     color: #2a3a1d !important;
 }
 
-#\/howToDiv a:hover{
+#howToDiv a:hover{
     color: #2a3a1d !important;
 }
 
@@ -341,7 +341,7 @@ header .logo {
     height: 50px;
     line-height: 50px;
 }
-header .toggle-panel {
+#menu-toggle {
     position: absolute;
     top: 0;
     right: 0;
@@ -353,62 +353,90 @@ header .toggle-panel {
     background: #56793d;
 }
 
-header .toggle-panel:hover {
+#menu-toggle:hover {
     transition: background 1s;
     background: #444;
 }
 
 
-/*====================================
-=            PANEL STYLES            =
-====================================*/
+/* Side Menu */
 
-#scotch-panel {
-  display: none;
-}
-
-#site-wrapper {
-  /*padding-top: 50px;*/
-}
-
-#site-wrapper .scotch-panel-canvas {
-  z-index: 99999;
-}
-
-#fixed-nav {
-    background: #444;
-    position: fixed;
-    height: 100%; 
-    top: 0;
-    right: 0;
-    width: 40%;
-    padding-top: 80px;
-}
-
-@media (max-width:500px){
-    #fixed-nav{
-        width: 40%;
-    }
-}
-#fixed-nav ul {
-    list-style: none;    
+#sidebar-wrapper {
     text-align: center;
-    font-size: large;
-    z-index: -99999;
-    padding: 0px;
+    z-index: 1000;
+    position: fixed;    
+    right: 0;
+    width: 250px;
+    height: 100%;
+    margin-right: -250px;
+    overflow-y: auto;
+    background: #222;
+    -webkit-transition: all 0.4s ease 0s;
+    -moz-transition: all 0.4s ease 0s;
+    -ms-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
 }
 
-#fixed-nav ul li a {
+.sidebar-nav {
+    position: absolute;
+    top: 0;
+    width: 250px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    text-indent: 20px;
+    line-height: 40px;
+}
+
+.sidebar-nav li a {
     display: block;
-    width:100%;
-    line-height: 50px;
-    background: transparent;
-    color: #fff;
-}
-#fixed-nav ul li a:hover {
-    background: #555;
+    text-decoration: none;
+    color: #999;
 }
 
+.sidebar-nav li a:hover {
+    text-decoration: none;
+    color: #fff;
+    background: rgba(255,255,255,0.2);
+}
+
+.sidebar-nav li a:active,
+.sidebar-nav li a:focus {
+    text-decoration: none;
+}
+
+.sidebar-nav > .sidebar-brand {
+    height: 55px;
+    font-size: 18px;
+    line-height: 55px;
+}
+
+.sidebar-nav > .sidebar-brand a {
+    color: #999;
+}
+
+.sidebar-nav > .sidebar-brand a:hover {
+    color: #fff;
+    background: none;
+}
+
+#sidebar-wrapper.active {
+    right: 250px;
+    width: 250px;
+    -webkit-transition: all 0.4s ease 0s;
+    -moz-transition: all 0.4s ease 0s;
+    -ms-transition: all 0.4s ease 0s;
+    -o-transition: all 0.4s ease 0s;
+    transition: all 0.4s ease 0s;
+}
+
+.toggle {
+    margin: 5px 5px 0 0;
+}
 
 @-webkit-keyframes fadeIn {
     0% {
