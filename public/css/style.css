@@ -328,7 +328,13 @@ header a {
     color: #fff;
 }
 header a:hover {
-    color: #fff;
+    transition: color 0.5s;
+    color: #e2ffb5 !important;
+}
+
+header a:enabled {
+    transition: color 0.5s;
+    color: #fff !important;
 }
 header .logo {
     display: inline-block;
@@ -344,7 +350,12 @@ header .toggle-panel {
     height: 50px;
     line-height: 50px;
     text-align: center;
-    background: #375128;
+    background: #56793d;
+}
+
+header .toggle-panel:hover {
+    transition: background 1s;
+    background: #444;
 }
 
 
@@ -370,12 +381,19 @@ header .toggle-panel {
     height: 100%; 
     top: 0;
     right: 0;
-    width: 20%;
+    width: 40%;
     padding-top: 80px;
+}
+
+@media (max-width:500px){
+    #fixed-nav{
+        width: 40%;
+    }
 }
 #fixed-nav ul {
     list-style: none;    
     text-align: center;
+    font-size: large;
     z-index: -99999;
     padding: 0px;
 }

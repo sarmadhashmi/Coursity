@@ -94,7 +94,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 		        duration: 300,
 		        transition: 'ease',
 		        clickSelector: '.toggle-panel',
-		        distanceX: '20%',
+		        distanceX: '40%',
 		        enableEscapeKey: true		      	      
    			});	
 
