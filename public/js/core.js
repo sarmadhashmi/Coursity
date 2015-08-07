@@ -90,17 +90,19 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				}
 				})
 
-
-			$('.single-item').slick({
+			setTimeout(function(){ $('.single-item').slick({
 				dots: true,
 				infinite: true,
 				speed: 300,
 				slidesToShow: 1,
 				slidesToScroll: 1,
-				lazyLoad:'ondemand'
+				lazyLoad:'ondemand',
+				mobileFirst:true
 				//autoplay: true,
 				//autoplaySpeed: 1000
-			});
+			}); }, 500);
+
+
 
 		    // Opens the sidebar menu
 		    $("#menu-toggle").click(function(e) {

@@ -10,14 +10,7 @@ html, body {
     width: auto;
     /*overflow-x: hidden;*/
 }
-.homeWrapper {
-   /* min-height: 100vh;*/
-    /*position:relative*/
-}
 .full{
-    /*position:absolute;
-    top:0;
-    left:0;*/
     width:100%;
     height: auto;
 }
@@ -329,7 +322,8 @@ header {
     z-index: 99999999;
     background: transparent;
     height: 75px;
-    padding: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
 
 }
 header a {
