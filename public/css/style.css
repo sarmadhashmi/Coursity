@@ -7,7 +7,8 @@ html, body {
     margin: 0;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
-    overflow-x: hidden;
+    width: auto;
+    /*overflow-x: hidden;*/
 }
 .homeWrapper {
    /* min-height: 100vh;*/
@@ -80,7 +81,7 @@ font-weight: 300;
 }
 .homeDiv{
     color: #ffffff;
-    padding-top: 120px;
+    padding-top: 110px;
     padding-bottom: 50px;
     height:100%;
     width: 100%;
@@ -241,7 +242,7 @@ button.slick-next.slick-arrow{
 
 
 #\/developed{
-    background-color: #B8DBFF;
+    background-color: whitesmoke;
     height: auto;
     padding-bottom: 50px;
     padding-top: 25px;
@@ -291,7 +292,6 @@ button.slick-next.slick-arrow{
 #nav {    
     -webkit-transform: translate3d(0, 0, 0);
     height:65px;
-    opacity: 0.9;
     background-color: #56793d;
     margin-bottom: 0px;
     border: none;
@@ -319,11 +319,13 @@ header {
     left: 0;
     width: 100%;
     z-index: 99999999;
-    background: #222;
-    height: 50px;
+    background: transparent;
+    height: 75px;
+    padding: 15px;
+
 }
 header a {
-    color: #777;
+    color: #fff;
 }
 header a:hover {
     color: #fff;
@@ -342,7 +344,7 @@ header .toggle-panel {
     height: 50px;
     line-height: 50px;
     text-align: center;
-    background: #333;
+    background: #375128;
 }
 
 
@@ -355,7 +357,7 @@ header .toggle-panel {
 }
 
 #site-wrapper {
-  padding-top: 50px;
+  /*padding-top: 50px;*/
 }
 
 #site-wrapper .scotch-panel-canvas {
@@ -368,13 +370,14 @@ header .toggle-panel {
     height: 100%; 
     top: 0;
     right: 0;
-    width: 15%;
-    padding-top: 50px;     
+    width: 20%;
+    padding-top: 80px;
 }
 #fixed-nav ul {
     list-style: none;    
     text-align: center;
     z-index: -99999;
+    padding: 0px;
 }
 
 #fixed-nav ul li a {
@@ -407,4 +410,8 @@ header .toggle-panel {
     100% {
         opacity: 1;
     }
+}
+
+.row{
+    margin: 0px !important;
 }

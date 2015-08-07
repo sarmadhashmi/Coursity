@@ -64,6 +64,19 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				$( "div.log" ).text( "Triggered JS handler." );
 			});*/
 		$(document).ready(function(){
+
+			$(this).scroll(function() {
+				var st = $(this).scrollTop();
+				if (st > 200) {
+					$("header").css("background-color", "#56793d");
+				} else {
+					$("header").css("background-color", "transparent");
+					$("header").css("transition", "background-color 0.5s");
+
+				}
+				})
+
+
 			$('.single-item').slick({
 				dots: true,
 				infinite: true,
@@ -81,7 +94,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 		        duration: 300,
 		        transition: 'ease',
 		        clickSelector: '.toggle-panel',
-		        distanceX: '10%',		        
+		        distanceX: '20%',
 		        enableEscapeKey: true		      	      
    			});	
 
