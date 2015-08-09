@@ -386,11 +386,12 @@ header .logo {
     width: 250px;
     margin: 0;
     padding: 0;
+    padding-top: 90px;
     list-style: none;
 }
 
 .sidebar-nav li {
-    text-indent: 20px;
+    /*text-indent: 20px;*/
     line-height: 40px;
 }
 
@@ -424,6 +425,14 @@ header .logo {
     #howToDiv img{
         height: 300px;
     }
+
+    .paddingEmail{
+        padding-left: 40px !important;
+    }
+}
+
+.paddingEmail{
+    padding-left: 100px;
 }
 
 .sidebar-nav li a:active,
@@ -486,4 +495,15 @@ header .logo {
 
 input[type=text], textarea {
     color:black;
+}
+
+.owl-carousel.item img{
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+#howToDiv img{
+    height: 400px;
+    width: 100%;
 }

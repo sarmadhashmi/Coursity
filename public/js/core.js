@@ -81,28 +81,32 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				var st = $(this).scrollTop();
 				if (st > 300) {
 					$("header").css("background-color", "#56793d");
-					$('#sidebar-wrapper').css('top', '70px');
+					$('#sidebar-wrapper').css('top', '0px');
 				} else {
 					$("header").css("background-color", "transparent");
 					$("header").css("transition", "background-color 0.5s");
 					$('#sidebar-wrapper').css('top', '0px');					
 
 				}
-				})
+				});
 
-			setTimeout(function(){ $('.single-item').slick({
-				dots: true,
-				infinite: true,
-				speed: 300,
-				slidesToShow: 1,
-				slidesToScroll: 1,
-				lazyLoad:'ondemand',
-				mobileFirst:true
-				//autoplay: true,
-				//autoplaySpeed: 1000
-			}); }, 500);
+			$(".owl-carousel").owlCarousel({
 
+				navigation : true, // Show next and prev buttons
+				slideSpeed : 300,
+				paginationSpeed : 400,
+				singleItem:true,
+				paginationNumbers:true,
+				navigationText:["prev","next"]
 
+				// "singleItem:true" is a shortcut for:
+				// items : 1,
+				// itemsDesktop : false,
+				// itemsDesktopSmall : false,
+				// itemsTablet: false,
+				// itemsMobile : false
+
+			});
 
 		    // Opens the sidebar menu
 		    $("#menu-toggle").click(function(e) {
@@ -110,7 +114,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 		        $("#sidebar-wrapper").toggleClass("active");
 		    });
 
-		    $('.menu1, #goToHowTo').click(function(e) {
+		    $('.logo, .menu1, #goToHowTo').click(function(e) {
 		    	e.preventDefault();
 		    	$('html,body').animate({
                         scrollTop: $($(this).attr('href')).offset().top
@@ -129,12 +133,13 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 					$("#mcmaster").show();
 				}
 				if ($(this).val() == 'uottawa') {
-					$('.homeDiv').css({"background-image": "url('../img/McMaster_University.jpg')"}).fadeIn("slow");
+					$('.homeDiv').css({"background-image": "url('../img/taberet.jpg')"}).fadeIn("slow");
 					$("#example").hide();
 					$("#mcmaster").hide();
 					$("#uottawa").show();
 				}
 				if ($(this).val() == 'example') {
+					$('.homeDiv').css({"background-image": "url('../img/HOME_BG.jpg')"}).fadeIn("slow");
 					$("#example").show();
 					$("#uottawa").hide();
 					$("#mcmaster").hide();
