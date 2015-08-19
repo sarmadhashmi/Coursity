@@ -127,7 +127,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 			$('#mainBody').on('change', '#uniChoose', function() {
 				//window.location.anchor("#unichoose");
 				if ($(this).val() == 'mcmaster') {
-					$('.homeDiv').css({"background-image": "url('../img/McMaster_University.jpg')"}).fadeIn("slow");
+					$('.homeDiv').css({"background-image": "url('../img/HOME_BG.jpg')"}).fadeIn("slow");
 					$("#example").hide();
 					$("#uottawa").hide();
 					$("#mcmaster").show();
@@ -139,7 +139,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 					$("#uottawa").show();
 				}
 				if ($(this).val() == 'example') {
-					$('.homeDiv').css({"background-image": "url('../img/HOME_BG.jpg')"}).fadeIn("slow");
+					$('.homeDiv').css({"background-image": "url('../img/University_of_Otago.jpg')"}).fadeIn("slow");
 					$("#example").show();
 					$("#uottawa").hide();
 					$("#mcmaster").hide();

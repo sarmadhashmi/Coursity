@@ -78,11 +78,11 @@ font-weight: 300;
 }
 .homeDiv{
     color: #ffffff;
-    padding-top: 110px;
+    padding-top: 30px;
     padding-bottom: 50px;
     height:100%;
     width: 100%;
-    background-image: url(../img/HOME_BG.jpg);
+    background-image: url(../img/University_of_Otago.jpg);
     background-size:cover;
     background-position: center;
     /*background-attachment: fixed;*/
