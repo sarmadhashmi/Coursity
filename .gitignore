@@ -1,0 +1,5 @@
+logs/
+node_modules/
+ics/
+temp/
+config/config.json
