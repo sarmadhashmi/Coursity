@@ -123,6 +123,6 @@ app.post('/upload', multer({
 
 
 app.use(express.static(__dirname + '/public'));
-app.listen(3000, function() {	
-	winston.info("Started server at http://localhost:3000.");
+app.listen(80, function() {
+	winston.info("Started server at http://localhost:80.");
 });
