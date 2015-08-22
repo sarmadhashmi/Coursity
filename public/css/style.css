@@ -406,6 +406,12 @@ header .logo {
             color: #fff;
             background: rgba(255, 255, 255, 0.2);
         }
+
+#captcha{
+    padding-bottom: 10px;
+    width:50%;
+    margin:auto;
+}
 @media (max-width:500px){
     #fixed-nav{
         width: 40%;
@@ -429,7 +435,12 @@ header .logo {
     .paddingEmail{
         padding-left: 40px !important;
     }
+    #captcha{
+        width:200px !important;
+        margin:0 !important;
+    }
 }
+
 
 .paddingEmail{
     padding-left: 100px;

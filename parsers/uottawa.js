@@ -54,7 +54,7 @@ var calParser  = function (dates, classDetails, start_date,end_date, directory, 
 	 * */
 	 
 	//Name of calander 'X-WR-CALNAME' tag. 
-	builder.calname = 'Course 2 Cal';
+	builder.calname = 'Coursity';
 	  for (i = 0; i < classDetails.length; i++) { 
 	//Add events
 	start = start_end_time(classDetails[i][2],dates[i], start_date)[0];

@@ -35,27 +35,30 @@
 		<div class="col-sm-6 text-center title"><h1></h1>
 			<form ng-submit="upload(file)" id="timetable-submit" enctype="multipart/form-data">
 				<div class="form-group">
-					<div style="padding: 25px;">
+					<div style="padding: 5px;">
 						<p class="choiceLabel">Select University</p>
 					<select ng-model="university" id="uniChoose" >
 						<option value="" disabled selected>Choose University</option>
 						<option ng-repeat="uni in universities" value="{{uni.value}}">{{ uni.name }}</option>
 					</select>
 					</div>
-				<div style="padding-bottom: 15px;">
+				<div style="padding-bottom: 0px;">
 					<p class="choiceLabel">Select Semester</p>
-					<select ng-model="semester" id = "semChoose" ><!--class="turnintodropdown"-->
+					<select ng-model="semester" id = "semChoose" >
 						<option value="" disabled selected>Choose Semester</option>
 						<option ng-repeat="sem in semesterList" value="{{sem.value}}">{{ sem.name }}</option>
 					</select>
 				</div>
 				</div>
-
-				<div class="form-group">
+				<div class="form-group" style="padding-bottom: 0px;">
 					<p for="file" class="choiceLabel">Upload timetable HTML <a target="_blank" href="../../McMaster%20Example%20Timetable.html" class="choiceLabel">(Example Timetable)</a></p>
 					<input style="margin:auto; width: 70%" type="file" ngf-select name="html" id="file" ng-model="file">
 				</div>
-				<button type="submit" class="btn btn-default submitBtn">SUBMIT</button>
+				<div style="padding: 5px;">
+					<p class="choiceLabel">Your Email (<b>Optional</b>, Calendar file will be emailed)</p>
+					<input style="width:70%" type="text" ng-model="calEmail" placeholder="example@placeholder.com" />
+				</div>
+				<button type="submit" id="submitButton" class="btn btn-default submitBtn">SUBMIT</button>
 			</form>			
 			<p class="message"> {{ message }}</p>
 			<div id="downloadDiv" style="padding-top:5%;"></div>
@@ -84,24 +87,24 @@
 			<div class="item">
 				<li><b>How To Guide for {{ university }} University</b></li>
 				<img src="../../img/Steps%20to%20Use%20Course2Cal/New_Step1.PNG">
-				<p><b>Step 1: </b>Click this <a href="https://csprd.mcmaster.ca/psc/prcsprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SCHD_W.GBL">link</a> and Log in using your Mosaic credentials,
+				<p><b>Step 1: </b><b>Use Google Chrome or Firefox (Safari Not Supported Yet)</b>Click this <a target="_blank" href="https://csprd.mcmaster.ca/psc/prcsprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SCHD_W.GBL">link</a> and Log in using your Mosaic credentials,
 					The link will lead you to your weekly Schedule. If you are already log into Mosaic,
-					your timetable will appear instead of a the login page above. <a href="https://csprd.mcmaster.ca/psc/prcsprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SCHD_W.GBL">Link to Weekly Timetable</a></p>
+					your timetable will appear instead of a the login page above. <a target="_blank" href="https://csprd.mcmaster.ca/psc/prcsprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SCHD_W.GBL">Link to Weekly Timetable</a></p>
 			</div>
 			<div class="item">
 				<li><b>How To Guide for {{ university }} University</b></li>
 				<img src="../../img/Steps%20to%20Use%20Course2Cal/New_Step2.PNG">
-				<p><b>Step 2: </b>Click the little calender icon and select a date that show your whole week calendar. For example Sept 14th, then click Refresh Calendar</p>
+				<p><b>Step 2: </b>Click the little calender icon and select a date that show your <b>whole week calendar</b> (*important). For example <b>Sept 14th</b>, then click Refresh Calendar</p>
 			</div>
 			<div class="item">
 				<li><b>How To Guide for {{ university }} University</b></li>
-				<img src="../../img/Steps%20to%20Use%20Course2Cal/New_Step3.PNG">
-				<p><b>Step 3: </b>Right-click the Save-As.</p>
+				<img src="../../img/Steps%20to%20Use%20Course2Cal/New_Step3.png">
+				<p><b>Step 3: </b>Right-click the the page and click Save-As.. and Save the webpage as <b>"Webpage,Complete"</b> (*important)</p>
 			</div>
-			<div>
+			<div class="item">
 				<li><b>How To Guide for {{ university }} University</b></li>
 				<img src="../../img/Steps%20to%20Use%20Course2Cal/New_Step4.PNG">
-				<p><b>Step 4: </b>Go to the location the file was save in. Upload this .HTML file to Coursity (use choose file button above) and get you iCalendar file</p>
+				<p><b>Step 4: </b>Go to the location the file was saved. Upload the .HTML(usually Weekly Schedule.html) file to Coursity (use choose file button above) and get you iCalendar file</p>
 			</div>
 		<div class="item">
 			<li><b>Add Calendar to Google Calendar</b></li>
@@ -229,18 +232,20 @@
   <div class="col-sm-6 emailText" style="text-align:center;">
   	<h1 style="padding-top: 20px">Got any suggestions or comments?</h1>
   		<form ng-submit="feedback()" id="feedback-submit">
-				<div class="form-group">
+				<div class="form-group" style="margin-bottom: 5px;">
 					<div style="padding: 25px;">
 						<p class="choiceLabel">Your Email</p>
 						<input style="width:70%" type="text" ng-model="email" required />
 					
 					</div>
-				<div  style="padding-bottom: 15px;">
+				<div  style="padding-bottom: 5px;">
 					<p class="choiceLabel">Your Feedback</p>			
-					<textarea maxlength="250" style="width:70%" rows="10" type="text" ng-model="messageFeedback" required />
+					<textarea maxlength="250" style="width:70%; height: 70px" rows="10" type="text" ng-model="messageFeedback" required />
 				</div>				
-				</div>								
+				</div>
+				<div id="captcha" class="g-recaptcha" data-sitekey="6LcmqgsTAAAAAOurJBiOM3XrH_uh6_7OWM_OTOMi"></div>
 				<button type="submit" class="btn btn-default submitBtn">SUBMIT</button>
+
 		</form>		
 		<p class="message"> {{ feedbackMessage }}</p>
   </div>

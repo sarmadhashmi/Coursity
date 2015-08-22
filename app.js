@@ -7,11 +7,13 @@ var async = require('async');
 var nodemailer = require('nodemailer');
 var bodyParser = require('body-parser');
 var validator = require('validator');
-
+var $ = require('jquery');
+var https = require('https');
+var os = require("os")
 var parserFactory = require('./parsers/main.js');
 var semesterConfig = require('./config/semesters.json');
 var config = require('./config/config.json');
-
+var wellknown = require('nodemailer-wellknown');
 // Add logging
 try {
 	fs.mkdirSync('logs');					
@@ -40,6 +42,7 @@ var app = express();
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
+	//console.log(req.get('host'));
 	winston.info('User connected: ' + req.connection.remoteAddress || 'localhost');
 	res.sendFile(__dirname + '/public/views/index.html');
 });
@@ -51,19 +54,52 @@ app.post('/feedback', function(req, res) {
 	if (!validator.isEmail(req.body.email)) {		
 		return res.status(404).send('Invalid email entered.');
 	}
-	transporter.sendMail({
-	    from: req.body.email,
-	    to: 'course2cal@gmail.com',
-	    subject: 'Feedback from ' + req.body.email,
-	    text: req.body.message
-	}, function(err, info) {
-		if (err) {
-			winston.error(err);
-			return res.status(404).send(err);
-		}		
-		winston.info('Recieved feedback from ' + req.body.email);
-		return res.status(200).send('Sent.')
+
+	verifyRecaptcha(req.body.recaptcha, function(success) {
+		console.log(success);
+		winston.info('Captcha result ' + success);
+		if (success) {
+			transporter.sendMail({
+				from: req.body.email,
+				to: 'coursitycal@gmail.com',
+				subject: 'Feedback from ' + req.body.email,
+				text: req.body.message
+			}, function(err, info) {
+				if (err) {
+					winston.error(err);
+					return res.status(404).send(err);
+				}
+				winston.info('Recieved feedback from ' + req.body.email);
+				return res.status(200).send('Sent.')
+			});
+		} else {
+			return res.status(404).send('Enter CAPTCHA');
+		}
 	});
+
+
+
+
+// Helper function to make API call to recatpcha and check response
+	function verifyRecaptcha(key, callback) {
+		var SECRET = "6LcmqgsTAAAAAEcRIq40M7mCD5WeExBFmrijaGX-";
+		https.get("https://www.google.com/recaptcha/api/siteverify?secret=" + SECRET + "&response=" + key, function(res) {
+			var data = "";
+			//console.log(res);
+			res.on('data', function (chunk) {
+				data += chunk.toString();
+			});
+			res.on('end', function() {
+				try {
+					var parsedData = JSON.parse(data);
+					console.log(parsedData.success);
+					callback(parsedData.success);
+				} catch (e) {
+					callback(false);
+				}
+			});
+		});
+	}
 });
 
 app.post('/upload', multer({
@@ -77,7 +113,8 @@ app.post('/upload', multer({
 	}
 
 	var university = req.body.university;
-	var semester = req.body.semester;	
+	var semester = req.body.semester;
+	var calEmail = req.body.calEmail;
 	var filename = req.files.file.name;
 
 	var config, start_date, end_date;
@@ -108,17 +145,48 @@ app.post('/upload', multer({
 			var msg = 'Invalid university provided or parser not found: ' + university;
 			winston.error(msg);
 			res.status(404).send(msg);	
-		} else {		
-			winston.info('Piping file ' +  fileName + ' to response.')
-			res.attachment('timetable.ics');			
-			var filestream = fs.createReadStream(icsFolder + fileName);	
-			var icsFile = filename.replace('.html', '.ics');
+		} else {
+			winston.info('Piping file ' + fileName + ' to response.');
+			res.attachment('timetable.ics');
+			var filestream = fs.createReadStream(icsFolder + fileName);
+			filenameSplit = filename.split(".");
+			var icsFile = filenameSplit[0] + '.ics';
 			var writeStream = fs.createWriteStream(__dirname + '/public/ics/' + icsFile);
-			filestream.pipe(writeStream).on('finish', function() {
+			filestream.pipe(writeStream).on('finish', function () {
+				winston.info("File was saved as " + icsFile);
 				res.status(200).send(icsFile);
 			});
-		}				 
-	});	
+			console.log(req.get('host') + "/public/ics/" + icsFile );
+
+			if (calEmail){
+			transporter.sendMail({
+				from: 'coursitycal@gmail.com',
+				to: calEmail,
+				subject: 'Your Weekly Schedule',
+				html: "<p>Hi,</p> <p>Find a how to guide attached and this is your Calendar file</p>" + "<a href= 'http://" + req.get('host') + "/ics/" + icsFile + "'> Timetable Link</a><p>Cheers, <br> Coursity Team</p>",
+				attachments: [
+					{   // utf-8 string as an attachment
+						filename: "Timetable.ics",
+						//TODO store the ics in the ics folder with the hash name, not someHash
+						path: __dirname + "/public/ics/" + icsFile
+					},
+					{   // utf-8 string as an attachment
+						filename: "How_to_Guide_for_Coursity.docx",
+						path: __dirname + "/public/Step_for_Coursity.docx"
+					}
+
+				]
+			}, function (err, info) {
+				if (err) {
+					winston.error(err);
+					return res.status(404).send(err);
+				}
+				winston.info('Sent ics file to ' + calEmail);
+				//return res.status(200).send('Sent.')
+			});
+			}
+		}
+	});
 });
 
 

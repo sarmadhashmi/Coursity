@@ -32,7 +32,8 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 					file: files[0],
 					fields: {
 						'university': $scope.university, 
-						'semester': $scope.semester
+						'semester': $scope.semester,
+						'calEmail': $scope.calEmail,
 					}
 				}) 
 				.progress(function(evt) {					
@@ -40,14 +41,20 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				})
 				.success(function(data) {
 					var anchor = angular.element('<a><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download</a>');
-     				anchor.attr({     					
+					anchor.attr({
          				href: '/ics/' + data,
          				target: '_blank'             			     			
      				});
      				anchor.addClass('btn');     				     				     				
-     				anchor.addClass('submitBtn');          				
+     				anchor.addClass('submitBtn');
+					anchor.addClass("btn-default");
      				var div = angular.element(document).find('#downloadDiv').eq(0);
-     				div.append(anchor);
+					//$("#downloadDiv" ).empty();
+					$( "#submitButton" ).remove();
+					//$( "#submitButton" ).prop('disabled', true);
+					div.append(anchor);
+					var refresh = angular.element('<p><a href="javascript:window.location.reload()" id="refresh" class="choiceLabel">Click to submit another schedule</a></p>');
+					div.append (refresh);
      				$scope.message = 'Finished.';
 				})
 				.error(function(data) {
@@ -56,8 +63,8 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 		}
 	};
 
-	$scope.feedback = function() {					
-		$http.post('/feedback', { "email": $scope.email, "message": $scope.messageFeedback })
+	$scope.feedback = function() {
+		$http.post('/feedback', { "email": $scope.email, "message": $scope.messageFeedback, "recaptcha": document.getElementById("g-recaptcha-response").value })
 		.success(function(data, status, headers, config) {
     		$scope.feedbackMessage = 'Thank you!';
 		}).error(function(data, status, headers, config) {			
@@ -76,7 +83,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				$( "div.log" ).text( "Triggered JS handler." );
 			});*/
 		$(document).ready(function(){
-
+			$.getScript( "https://www.google.com/recaptcha/api.js" )
 			$(this).scroll(function() {
 				var st = $(this).scrollTop();
 				if (st > 300) {
