@@ -52,9 +52,27 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 					//$("#downloadDiv" ).empty();
 					$( "#submitButton" ).remove();
 					//$( "#submitButton" ).prop('disabled', true);
+
 					div.append(anchor);
-					var refresh = angular.element('<p><a href="javascript:window.location.reload()" id="refresh" class="choiceLabel">Click to submit another schedule</a></p>');
-					div.append (refresh);
+					var share = angular.element('<p style="margin-top:10px;" id="share">Share link with friends or Share on Social Media <b>(Link is only stored for a limited time)</b>: </p>');
+					div.append(share);
+					div.append('www.coursity.me/ics/' + data);
+					var social1 = angular.element('<a style="color: #ffffff; padding: 5px;"><i class="fa fa-facebook-square fa-2x"></i></a>');
+					var social2 = angular.element('<a style="color: #ffffff; padding: 5px;"><i class="fa fa-twitter-square fa-2x"></i></a>');
+					social1.attr({
+						href: 'https://www.facebook.com/sharer/sharer.php?u=www.coursity.me/ics/' + data,
+						target: '_blank'
+					});
+
+					social2.attr({
+						href: 'https://twitter.com/home?status=Hey!%20just%20added%20my%20course%20schedule%20to%20my%20devices%20using%20Coursity!%20Check%20it%20out%20www.coursity.me/ics/' + data + " and%20check%20out%20the%20site%20at%20www.coursity.me",
+						target: '_blank'
+					});
+					div.append(social1);
+					div.append(social2);
+					var refresh = angular.element('<p style="margin-top:10px;"><a href="javascript:window.location.reload()" id="refresh" class="choiceLabel"><b style="font-size: 24px">Click to submit another schedule</b></a></p>');
+
+					div.append(refresh);
      				$scope.message = 'Finished.';
 				})
 				.error(function(data) {
@@ -83,7 +101,8 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				$( "div.log" ).text( "Triggered JS handler." );
 			});*/
 		$(document).ready(function(){
-			$.getScript( "https://www.google.com/recaptcha/api.js" )
+			$.getScript( "https://www.google.com/recaptcha/api.js" );
+			$.getScript( "/dropzone.js");
 			$(this).scroll(function() {
 				var st = $(this).scrollTop();
 				if (st > 300) {
@@ -92,7 +111,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				} else {
 					$("header").css("background-color", "transparent");
 					$("header").css("transition", "background-color 0.5s");
-					$('#sidebar-wrapper').css('top', '0px');					
+					$('#sidebar-wrapper').css('top', '0px');
 
 				}
 				});

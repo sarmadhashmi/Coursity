@@ -78,7 +78,7 @@ font-weight: 300;
 }
 .homeDiv{
     color: #ffffff;
-    padding-top: 30px;
+    padding-top: 10px;
     padding-bottom: 50px;
     height:100%;
     width: 100%;
@@ -88,6 +88,12 @@ font-weight: 300;
     /*background-attachment: fixed;*/
     -webkit-transition: width 2s; /* Safari */
     transition: background-image 0.5s;
+}
+
+@media (max-width:600px){
+    #small-logo{
+        display: none;
+    }
 }
 .title h1 {
     width: 350px;

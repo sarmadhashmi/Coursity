@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>jsonp test</title>
+<script src="http://code.jquery.com/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript">
+    $(function(){
+        $('#select_link').click(function(e){
+            e.preventDefault();
+            console.log('select_link clicked');
+            var request = $.ajax({
+                url: 'https://csprd.mcmaster.ca/psc/prcsprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SCHD_W.GBL',
+                method: "POST",
+                data: {},
+                dataType: "html",
+                crossDomain: true,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('Authorization', 'Basic ' + window.btoa(unescape(encodeURIComponent("omorogoa" + ':' + "Pass?Africa300"))))
+                }
+            });
+
+            request.done(function( msg ) {
+                console.log(msg);
+            });
+
+            request.fail(function( jqXHR, textStatus ) {
+                console.log( "Request failed: " + textStatus );
+            });
+        });
+    });
+</script>
+</head>
+<body>
+<div id="select_div"><a href="#" id="select_link">Test</a></div>
+</body>
+</html>

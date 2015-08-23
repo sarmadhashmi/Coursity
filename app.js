@@ -56,7 +56,7 @@ app.post('/feedback', function(req, res) {
 	}
 
 	verifyRecaptcha(req.body.recaptcha, function(success) {
-		console.log(success);
+		//console.log(success);
 		winston.info('Captcha result ' + success);
 		if (success) {
 			transporter.sendMail({
@@ -85,14 +85,12 @@ app.post('/feedback', function(req, res) {
 		var SECRET = "6LcmqgsTAAAAAEcRIq40M7mCD5WeExBFmrijaGX-";
 		https.get("https://www.google.com/recaptcha/api/siteverify?secret=" + SECRET + "&response=" + key, function(res) {
 			var data = "";
-			//console.log(res);
 			res.on('data', function (chunk) {
 				data += chunk.toString();
 			});
 			res.on('end', function() {
 				try {
 					var parsedData = JSON.parse(data);
-					console.log(parsedData.success);
 					callback(parsedData.success);
 				} catch (e) {
 					callback(false);
@@ -156,7 +154,7 @@ app.post('/upload', multer({
 				winston.info("File was saved as " + icsFile);
 				res.status(200).send(icsFile);
 			});
-			console.log(req.get('host') + "/public/ics/" + icsFile );
+			winston.info("File was saved here: " + req.get('host') + "/public/ics/" + icsFile );
 
 			if (calEmail){
 			transporter.sendMail({
@@ -167,7 +165,6 @@ app.post('/upload', multer({
 				attachments: [
 					{   // utf-8 string as an attachment
 						filename: "Timetable.ics",
-						//TODO store the ics in the ics folder with the hash name, not someHash
 						path: __dirname + "/public/ics/" + icsFile
 					},
 					{   // utf-8 string as an attachment
