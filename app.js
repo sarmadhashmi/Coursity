@@ -14,6 +14,7 @@ var parserFactory = require('./parsers/main.js');
 var semesterConfig = require('./config/semesters.json');
 var config = require('./config/config.json');
 var wellknown = require('nodemailer-wellknown');
+var RateLimit = require('express-rate-limit');
 // Add logging
 try {
 	fs.mkdirSync('logs');					
@@ -35,6 +36,16 @@ var transporter = nodemailer.createTransport({
         user: config.user,
         pass: config.pass
     }
+});
+
+// rate limiter
+var limiter = RateLimit({
+        // window, delay, and max apply per-ip unless global is set to true 
+        windowMs: 3600000, // miliseconds - how long to keep records of requests in memory -- set to 1 hour
+        delayMs: 1000, // milliseconds - base delay applied to the response - multiplied by number of recent hits from user's IP 
+        max: 50, // max number of recent connections during `window` miliseconds before (temporarily) bocking the user. 
+        global: false, // if true, IP address is ignored and setting is applied equally to all requests 
+        message: 'What the hell man, why you tryin to make so many requests?'
 });
 
 // middleware
@@ -100,10 +111,15 @@ app.post('/feedback', function(req, res) {
 	}
 });
 
-app.post('/upload', multer({
+app.use('/upload', limiter);
+app.use('/upload', multer({
 	dest: tempFolder,
-	limits: { fileSize: 2097152 }		// 2MB	
-}), function(req, res) {   
+	limits: {
+		fileSize: 2097152 // 2MB
+	}
+}))
+
+app.post('/upload', function(req, res) {   
 	if (!req.files || req.files.file.mimetype !== 'text/html') {
 		var msg = 'Invalid file type uploaded. Only .HTML files';
 		winston.error(msg);

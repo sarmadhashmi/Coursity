@@ -37,6 +37,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 					}
 				}) 
 				.progress(function(evt) {					
+					$( "#submitButton" ).prop('disabled', true);
 		            $scope.message = 'Uploading and converting';
 				})
 				.success(function(data) {
@@ -48,10 +49,9 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
      				anchor.addClass('btn');     				     				     				
      				anchor.addClass('submitBtn');
 					anchor.addClass("btn-default");
-     				var div = angular.element(document).find('#downloadDiv').eq(0);
-					//$("#downloadDiv" ).empty();
-					$( "#submitButton" ).remove();
-					//$( "#submitButton" ).prop('disabled', true);
+					$("#downloadDiv" ).empty();
+     				var div = angular.element(document).find('#downloadDiv').eq(0);					
+					$( "#submitButton" ).prop('disabled', false);
 
 					div.append(anchor);
 					var share = angular.element('<p style="margin-top:10px;" id="share">Share link with friends or Share on Social Media <b>(Link is only stored for a limited time)</b>: </p>');
@@ -70,9 +70,6 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 					});
 					div.append(social1);
 					div.append(social2);
-					var refresh = angular.element('<p style="margin-top:10px;"><a href="javascript:window.location.reload()" id="refresh" class="choiceLabel"><b style="font-size: 24px">Click to submit another schedule</b></a></p>');
-
-					div.append(refresh);
      				$scope.message = 'Finished.';
 				})
 				.error(function(data) {

@@ -8,6 +8,7 @@
     "connect-busboy": "0.0.2",
     "datejs": "0.0.2",
     "express": "^4.13.1",
+    "express-rate-limit": "^1.0.3",
     "ical-toolkit": "^1.0.9",
     "jquery": "^1.0.1",
     "moment": "^2.10.3",
