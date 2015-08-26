@@ -73,6 +73,9 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
      				$scope.message = 'Finished.';
 				})
 				.error(function(data) {
+					if (data === 'No events found in your schedule, try again and make sure you follow the steps correctly'){
+						$( "#submitButton" ).prop('disabled', false);
+					}
 					$scope.message = data;
 				});
 		}
@@ -149,32 +152,43 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 			$("#Ottawa-Vid").hide();
 			$("#example").show();
 			$("#uottawa").hide();
+			$("#video").hide();
 			$('#mainBody').on('change', '#uniChoose', function() {
 				//window.location.anchor("#unichoose");
 				if ($(this).val() == 'mcmaster') {
-					$('.homeDiv').css({"background-image": "url('../img/HOME_BG.jpg')"}).fadeIn("slow");
+					$('#homeDiv').fadeOut(500, function() {
+						$('#homeDiv').css({"background-image": "url('../img/HOME_BG.jpg')"}).fadeIn();
+					});
+
 					$("#example").hide();
 					$("#uottawa").hide();
 					$("#Ottawa-Vid").hide();
 					$("#mcmaster").show();
 					$("#Mac-Vid").show();
+					$("#video").show();
 				}
 				if ($(this).val() == 'uottawa') {
-					$('.homeDiv').css({"background-image": "url('../img/taberet.jpg')"}).fadeIn("slow");
+					$('#homeDiv').fadeOut(500, function() {
+						$('#homeDiv').css({"background-image": "url('../img/taberet.jpg')"}).fadeIn();
+					});
 					$("#example").hide();
 					$("#mcmaster").hide();
 					$("#Mac-Vid").hide();
 					$("#uottawa").show();
 					$("#Ottawa-Vid").show();
+					$("#video").show();
 
 				}
 				if ($(this).val() == 'example') {
-					$('.homeDiv').css({"background-image": "url('../img/University_of_Otago.jpg')"}).fadeIn("slow");
+					$('#homeDiv').fadeOut(500, function() {
+						$('#homeDiv').css({"background-image": "url('../img/University_of_Otago.jpg')"}).fadeIn();
+					});
 					$("#example").show();
 					$("#uottawa").hide();
 					$("#mcmaster").hide();
 					$("#Mac-Vid").hide();
 					$("#Ottawa-Vid").hide();
+					$("#video").hide();
 				}
 			});
 		});
