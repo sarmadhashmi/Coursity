@@ -145,6 +145,8 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
             });
 
 			$("#mcmaster").hide();
+			$("#Mac-Vid").hide();
+			$("#Ottawa-Vid").hide();
 			$("#example").show();
 			$("#uottawa").hide();
 			$('#mainBody').on('change', '#uniChoose', function() {
@@ -153,19 +155,26 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 					$('.homeDiv').css({"background-image": "url('../img/HOME_BG.jpg')"}).fadeIn("slow");
 					$("#example").hide();
 					$("#uottawa").hide();
+					$("#Ottawa-Vid").hide();
 					$("#mcmaster").show();
+					$("#Mac-Vid").show();
 				}
 				if ($(this).val() == 'uottawa') {
 					$('.homeDiv').css({"background-image": "url('../img/taberet.jpg')"}).fadeIn("slow");
 					$("#example").hide();
 					$("#mcmaster").hide();
+					$("#Mac-Vid").hide();
 					$("#uottawa").show();
+					$("#Ottawa-Vid").show();
+
 				}
 				if ($(this).val() == 'example') {
 					$('.homeDiv').css({"background-image": "url('../img/University_of_Otago.jpg')"}).fadeIn("slow");
 					$("#example").show();
 					$("#uottawa").hide();
 					$("#mcmaster").hide();
+					$("#Mac-Vid").hide();
+					$("#Ottawa-Vid").hide();
 				}
 			});
 		});

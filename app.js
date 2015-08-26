@@ -142,7 +142,6 @@ app.post('/upload', function(req, res) {
 		winston.error(msg);
 		return res.status(404).send(msg);
 	}
-
 	winston.info('Getting parser for ' + university + ' for semester  ' + semester);	
 	async.waterfall([
 		function(callback) {
@@ -168,8 +167,24 @@ app.post('/upload', function(req, res) {
 			var writeStream = fs.createWriteStream(__dirname + '/public/ics/' + icsFile);
 			filestream.pipe(writeStream).on('finish', function () {
 				winston.info("File was saved as " + icsFile);
-				res.status(200).send(icsFile);
+				var icsContentChecker;
+				fs.readFile("public/ics/" + icsFile, 'utf8', function (err,data) {
+					if (err) {
+						return console.log(err);
+					}
+					icsContentChecker = data.indexOf("BEGIN:VEVENT") > -1;
+					if (!icsContentChecker){
+					var msg = 'No events found in your schedule, try again and make sure you follow the steps correctly';
+					winston.error(msg);
+					    res.status(404).send(msg);
+					}
+					else{
+						res.status(200).send(icsFile);
+					}
+				});
 			});
+
+
 			winston.info("File was saved here: " + req.get('host') + "/public/ics/" + icsFile );
 
 			if (calEmail){
