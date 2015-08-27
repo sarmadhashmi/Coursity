@@ -41,8 +41,7 @@ var transporter = nodemailer.createTransport({
 // rate limiter
 var limiter = RateLimit({
         // window, delay, and max apply per-ip unless global is set to true 
-        windowMs: 3600000, // miliseconds - how long to keep records of requests in memory -- set to 1 hour
-        delayMs: 1000, // milliseconds - base delay applied to the response - multiplied by number of recent hits from user's IP 
+        windowMs: 3600000, // miliseconds - how long to keep records of requests in memory -- set to 1 hour        
         max: 50, // max number of recent connections during `window` miliseconds before (temporarily) bocking the user. 
         global: false, // if true, IP address is ignored and setting is applied equally to all requests 
         message: 'What the hell man, why you tryin to make so many requests?'
@@ -57,7 +56,7 @@ app.get('/', function(req, res) {
 	winston.info('User connected: ' + req.connection.remoteAddress || 'localhost');
 	res.sendFile(__dirname + '/public/views/index.html');
 });
-var icsFolder = __dirname + '/ics/';
+var icsFolder = __dirname + '/public/ics/';
 var tempFolder = __dirname + '/temp/';
 
 
@@ -148,9 +147,15 @@ app.post('/upload', function(req, res) {
 			parserFactory.getParser(university, callback);
 		},
 		function(convertToCal, callback) {						
-			convertToCal(tempFolder + filename, start_date, end_date, icsFolder, callback);
-		}
-	], function(err, fileName) {
+			var icsFile = filename.split(".")[0] + ".ics";
+			convertToCal(tempFolder + filename, start_date, end_date, icsFolder, icsFile, callback);
+		},
+		function(fileName, callback) {
+			fs.unlink(tempFolder + filename, function() {
+				callback(null, fileName);
+			});
+		},
+	], function(err, fileName) {		
 		if (err) {
 			winston.error(err);
 			res.status(404).send(err);
@@ -158,67 +163,57 @@ app.post('/upload', function(req, res) {
 			var msg = 'Invalid university provided or parser not found: ' + university;
 			winston.error(msg);
 			res.status(404).send(msg);	
-		} else {
-			winston.info('Piping file ' + fileName + ' to response.');
-			res.attachment('timetable.ics');
-			var filestream = fs.createReadStream(icsFolder + fileName);
-			filenameSplit = filename.split(".");
-			var icsFile = filenameSplit[0] + '.ics';
-			var writeStream = fs.createWriteStream(__dirname + '/public/ics/' + icsFile);
-			filestream.pipe(writeStream).on('finish', function () {
-				winston.info("File was saved as " + icsFile);
-				var icsContentChecker;
-				fs.readFile("public/ics/" + icsFile, 'utf8', function (err,data) {
-					if (err) {
-						return console.log(err);
-					}
-					icsContentChecker = data.indexOf("BEGIN:VEVENT") > -1;
-					if (!icsContentChecker){
-					var msg = 'No events found in your schedule, try again and make sure you follow the steps correctly';
-					winston.error(msg);
-					    res.status(404).send(msg);
-					}
-					else{
-						res.status(200).send(icsFile);
-					}
-				});
-			});
-
-
-			winston.info("File was saved here: " + req.get('host') + "/public/ics/" + icsFile );
-
-			if (calEmail){
-			transporter.sendMail({
-				from: 'coursitycal@gmail.com',
-				to: calEmail,
-				subject: 'Your Weekly Schedule',
-				html: "<p>Hi,</p> <p>Find a how to guide attached and this is your Calendar file</p>" + "<a href= 'http://" + req.get('host') + "/ics/" + icsFile + "'> Timetable Link</a><p>Cheers, <br> Coursity Team</p>",
-				attachments: [
-					{   // utf-8 string as an attachment
-						filename: "Timetable.ics",
-						path: __dirname + "/public/ics/" + icsFile
-					},
-					{   // utf-8 string as an attachment
-						filename: "How_to_Guide_for_Coursity.docx",
-						path: __dirname + "/public/Step_for_Coursity.docx"
-					}
-
-				]
-			}, function (err, info) {
+		} else {			
+			winston.info('Piping file ' + fileName + ' to response.');													
+			fs.readFile(icsFolder + fileName, 'utf8', function (err,data) {
 				if (err) {
-					winston.error(err);
 					return res.status(404).send(err);
-				}
-				winston.info('Sent ics file to ' + calEmail);
-				//return res.status(200).send('Sent.')
-			});
+				}					
+				var icsContentChecker = data.indexOf("BEGIN:VEVENT") > -1;					
+				if (!icsContentChecker) {						
+					fs.unlink(icsFolder + fileName, function(err) {
+						if (!err) {
+							winston.info("File deleted: " + fileName);
+						}
+						var msg = 'No events found in your schedule, try again and make sure you follow the steps correctly';
+						winston.error(msg);
+				    	res.status(404).send(msg);
+					});						
+				} else {						
+						if (calEmail){
+							transporter.sendMail({
+								from: 'coursitycal@gmail.com',
+								to: calEmail,
+								subject: 'Your Weekly Schedule',
+								html: "<p>Hi,</p> <p>Find a how to guide attached and this is your Calendar file</p>" + "<a href= 'http://" + req.get('host') + "/ics/" + fileName + "'> Timetable Link</a><p>Cheers, <br> Coursity Team</p>",
+								attachments: [
+									{   // utf-8 string as an attachment
+										filename: "Timetable.ics",
+										path: __dirname + "/public/ics/" + fileName
+									},
+									{   // utf-8 string as an attachment
+										filename: "How_to_Guide_for_Coursity.docx",
+										path: __dirname + "/public/Step_for_Coursity.docx"
+									}
+
+								]
+							}, function (err, info) {
+								if (err) {
+									winston.error(err);					
+								}
+								winston.info('Sent ics file to ' + calEmail);
+								//return res.status(200).send('Sent.')
+							});
+						}
+						res.status(200).send(fileName);
+					}									
+				});		
 			}
-		}
 	});
 });
 
 
 app.use(express.static(__dirname + '/public'));
-app.listen(80, function() {
+app.listen(3000, function() {
 	winston.info("Started server at http://localhost:80.");
 });

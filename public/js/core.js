@@ -12,6 +12,7 @@ main.config(['$routeProvider', function($routeProvider) {
 
 
 main.controller('MainController', ['$scope', '$http', 'Upload', function($scope, $http, Upload) {
+	
 	$scope.universities = [
 		{name: 'Example', value: 'example'},
 		{name: 'McMaster', value: 'mcmaster'}, 
@@ -73,9 +74,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
      				$scope.message = 'Finished.';
 				})
 				.error(function(data) {
-					if (data === 'No events found in your schedule, try again and make sure you follow the steps correctly'){
-						$( "#submitButton" ).prop('disabled', false);
-					}
+					$("#submitButton").prop('disabled', false);
 					$scope.message = data;
 				});
 		}
@@ -102,7 +101,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 			});*/
 		$(document).ready(function(){
 			$.getScript( "https://www.google.com/recaptcha/api.js" );
-			$.getScript( "/dropzone.js");
+			$.getScript( "./dropzone.js");
 			$(this).scroll(function() {
 				var st = $(this).scrollTop();
 				if (st > 300) {
@@ -147,49 +146,23 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
                     }, 500);                    
             });
 
-			$("#mcmaster").hide();
-			$("#Mac-Vid").hide();
-			$("#Ottawa-Vid").hide();
-			$("#example").show();
-			$("#uottawa").hide();
-			$("#video").hide();
+		    $('#video').hide();
+			$('.howTo, .howToVideo').hide();
+			$("#example").show();			
 			$('#mainBody').on('change', '#uniChoose', function() {
-				//window.location.anchor("#unichoose");
-				if ($(this).val() == 'mcmaster') {
-					$('#homeDiv').fadeOut(500, function() {
-						$('#homeDiv').css({"background-image": "url('../img/HOME_BG.jpg')"}).fadeIn();
-					});
-
-					$("#example").hide();
-					$("#uottawa").hide();
-					$("#Ottawa-Vid").hide();
-					$("#mcmaster").show();
-					$("#Mac-Vid").show();
+				var uni = $(this).val();				
+				$('#homeDiv').fadeOut(300, function() {
+					$('#homeDiv').css({
+						"background-image": "url('../img/" + uni + ".jpg')"
+					}).fadeIn(400);
+				});
+				$('.howTo').hide();
+				$('#' + uni).show();
+				if (uni == 'mcmaster' || uni == 'uottawa') {					
+					$(".howToVideo").hide();
+					$("#" + uni + "-video").show();
 					$("#video").show();
-				}
-				if ($(this).val() == 'uottawa') {
-					$('#homeDiv').fadeOut(500, function() {
-						$('#homeDiv').css({"background-image": "url('../img/taberet.jpg')"}).fadeIn();
-					});
-					$("#example").hide();
-					$("#mcmaster").hide();
-					$("#Mac-Vid").hide();
-					$("#uottawa").show();
-					$("#Ottawa-Vid").show();
-					$("#video").show();
-
-				}
-				if ($(this).val() == 'example') {
-					$('#homeDiv').fadeOut(500, function() {
-						$('#homeDiv').css({"background-image": "url('../img/University_of_Otago.jpg')"}).fadeIn();
-					});
-					$("#example").show();
-					$("#uottawa").hide();
-					$("#mcmaster").hide();
-					$("#Mac-Vid").hide();
-					$("#Ottawa-Vid").hide();
-					$("#video").hide();
-				}
+				}				
 			});
 		});
 	});
