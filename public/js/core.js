@@ -37,7 +37,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 						'calEmail': $scope.calEmail,
 					}
 				}) 
-				.progress(function(evt) {					
+				.progress(function(evt) {
 					$( "#submitButton" ).prop('disabled', true);
 		            $scope.message = 'Uploading and converting';
 				})
@@ -107,10 +107,14 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				if (st > 300) {
 					$("header").css("background-color", "#56793d");
 					$('#sidebar-wrapper').css('top', '0px');
+					$('#small-logo').show();
+
 				} else {
 					$("header").css("background-color", "transparent");
 					$("header").css("transition", "background-color 0.5s");
 					$('#sidebar-wrapper').css('top', '0px');
+					$('#small-logo').hide();
+
 
 				}
 				});
@@ -162,7 +166,9 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 					$(".howToVideo").hide();
 					$("#" + uni + "-video").show();
 					$("#video").show();
-				}				
+				}else{
+					$("#video").hide();
+				}
 			});
 		});
 	});

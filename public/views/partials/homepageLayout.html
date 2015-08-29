@@ -3,7 +3,7 @@
   	<div class="row">
   		<div class="col-md-12">
 	        <a href="#homeDiv" class="logo"><img id="small-logo" alt="Brand" src="../img/Logo_Course2Cal.png" height="50px"></a>
-	        <a href="#" id="menu-toggle" style="float:right;"><i class="fa fa-bars"></i></a>
+	        <a href="#" id="menu-toggle" style="float:left;"><i class="fa fa-bars"></i></a>
 	  	</div>
 	  </div>
 	</div>
@@ -27,18 +27,18 @@
     </ul>
 </nav>
 
-<div class="uploadFilePartial homeWrapper homeDiv full" id="homeDiv">
+<div class="uploadFilePartial  homeWrapper homeDiv" id="homeDiv">
 	<div class="row">
 		<!-- Separate in to 3 base columns -->
 		<div class="col-sm-6" style="padding-top: 15%;">
 			<div id="video" class="video-container">
-				<!--iframe id="mcmaster-video" class="howToVideo" src="https://www.youtube.com/embed/Af6xxFNbbBE" frameborder="0" allowfullscreen></iframe>
-				<iframe id="uottawa-video" class="howToVideo" src="https://www.youtube.com/embed/Af6xxFNbbBE" frameborder="0" allowfullscreen></iframe-->
+				<iframe id="mcmaster-video" class="howToVideo" src="https://www.youtube.com/embed/leqb6AEYsQ8" frameborder="0" allowfullscreen></iframe>
+				<iframe id="uottawa-video" class="howToVideo" src="https://www.youtube.com/embed/Mpjadz_Mvn4" frameborder="0" allowfullscreen></iframe>
 			</div>
 		</div>
 		<div id="upload" class="col-sm-6 text-center title"><h1></h1>
 
-			<p style="width: 100%; margin:auto;"><p class="choiceLabel">Use Coursity to put all your lectures, labs, and more into your phone's calendar!* </br> <span style="font-size:14px;">*or you can use it to import it to your laptop, please don't kill us for just saying phone</span></p>
+			<p style="width: 100%; margin:auto;"><p class="choiceLabel">Use Coursity to put all your lectures, labs, and more into your phone's calendar!* </br> <span style="font-size:14px;">*or your laptop's calendar, please don't sue us for only saying phone</span></p>
 
 			<form ng-submit="upload(file)" class="dropzone" id="timetable-submit" enctype="multipart/form-data">
 				<div class="form-group">
@@ -68,7 +68,7 @@
 				<button type="submit" id="submitButton" class="btn btn-default submitBtn">SUBMIT</button>
 			</form>			
 			<p class="message"> {{ message }}</p>
-			<div id="downloadDiv" style="padding-top:5%;"></div>
+			<div id="downloadDiv" style="padding-top:5px;"></div>
 			<div style="padding-top: 40px">
 			<a href="#howToDiv" id="goToHowTo" class="one-page-arrow choiceHow">
 				<i class="fa fa-arrow-down fa-3x infinite animated fadeInDown"></i>
@@ -98,7 +98,7 @@
 					<br>
 					<b>Use Google Chrome or Firefox</b> (Safari Not Supported Yet) on a <b>Desktop/Laptop</b>. Click this <a target="_blank" href="https://csprd.mcmaster.ca/psc/prcsprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SCHD_W.GBL">link</a> and Log in using your Mosaic credentials,
 					The link will lead you to your weekly Schedule. If you are already log into Mosaic,
-					your timetable will appear instead of the login page above. <a target="_blank" href="https://csprd.mcmaster.ca/psc/prcsprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SCHD_W.GBL">Link to Weekly Timetable</a></p>
+					your timetable will appear instead of the login page above.<b><a target="_blank" href="https://csprd.mcmaster.ca/psc/prcsprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSR_SSENRL_SCHD_W.GBL">Link to Weekly Timetable</a></b></p>
 			</div>
 			<div class="item">
 				<li><b>How To Guide for {{ university }} University</b></li>
@@ -143,7 +143,7 @@
 			<div class="item">
 				<li><b>How To Guide for {{ university }}</b></li>
 				<img src="../../img/uottawasteps/step1.png">
-				<p><b>Step 1: </b>http://www.uottawa.ca/en/students</p>
+				<p><b>Step 1: </b> Login to uoZone at <a target="_blank" href="http://www.uottawa.ca/en/students">http://www.uottawa.ca/en/students</a></p>
 			</div>
 
 			<div class="item">
@@ -163,7 +163,7 @@
 				<img src="../../img/uottawasteps/Step4.png">
 				<p><b>Step 4: </b>Select a week that falls into the semester that you want the calendar for and contains all the courses that you're taking in the week.
 					For example: The schedule for the week of September 20th would fall in the fall semester.
-					The sechedule for the week of January 20th would fall in the winter semester.</p>
+					The schedule for the week of January 20th would fall in the winter semester.</p>
 			</div>
 
 			<div class="item">

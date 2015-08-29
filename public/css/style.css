@@ -1,24 +1,19 @@
-@font-face {
-    font-family: myFirstFont;
-    src: url(../fonts/HelveticaNeue-Light.otf);
-}
+
 html, body {
     height: auto;
     margin: 0;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 300;
+    font-family: 'Roboto', sans-serif;
     width: auto;
     min-width: 366px;
-    /*overflow-x: hidden;*/
+    /*overflow-x: hidden;
+    font-weight: 500;
+    */
 }
 .full{
     width:100%;
     height: auto;
 }
-
 .submitBtn{
-font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-font-weight: 300;
     font-size: 24px;
     background-color:#56793d;
     border: none; padding: 10px 40px 10px 40px;
@@ -32,8 +27,6 @@ font-weight: 300;
 }
 
 .closeBtn{
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 300;
     font-size: 24px;
     background-color:#56793d;
     border: none;
@@ -60,7 +53,6 @@ font-weight: 300;
 
 }
 #emailSugg{
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     color: #ffffff;
     padding-top: 75px;
     padding-bottom: 75px;
@@ -75,13 +67,13 @@ font-weight: 300;
 }
 
 .emailText{
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+
 }
 
 #upload {
-    background: rgba(98, 201, 47, 0.2);    
     border-radius: 10px;
     min-height: 900px;
+    font-size: 15px !important;
 }
 
 .homeDiv{
@@ -98,11 +90,10 @@ font-weight: 300;
     -webkit-transition: width 0.5s; /* Safari */    
 }
 
-@media (max-width:600px){
     #small-logo{
         display: none;
     }
-}
+
 .title h1 {
     width: 350px;
     height: 200px;
@@ -164,15 +155,12 @@ font-weight: 300;
     color: #666666 !important;
 }
 
-.choiceLabel{    
-    font-family: 'Abel', sans-serif;
-    font-size: 19px;
+.choiceLabel{
     color: #FFFFFF;
-    font-weight: 450;
+    font-weight: 400;
 }
 
 .choiceLabel a:hover{
-    font-size: 19px;
     color: #56793d;
     font-weight: 400;
 }
@@ -201,8 +189,9 @@ a:focus,a:hover {
 }
 #howToDiv li{
     font-size: xx-large;
-    list-style: square;
+    list-style: none;
     padding-bottom: 10px;
+    text-align: center;
 }
 
 #howToDiv p{
@@ -357,11 +346,12 @@ header .logo {
     display: inline-block;
     height: 50px;
     line-height: 50px;
+    float:right;
 }
 #menu-toggle {
     position: absolute;
     top: 0;
-    right: 0;
+    left: 0;
     font-size: 25px;
     width: 50px;
     height: 50px;
@@ -382,10 +372,10 @@ header .logo {
     text-align: center;
     z-index: 1000;
     position: fixed;
-    right: 0;
+    left: 0;
     width: 250px;
     height: 100%;
-    margin-right: -250px;
+    margin-left: -250px;
     overflow-y: auto;
     background: #222;
     -webkit-transition: all 0.4s ease 0s;
@@ -482,7 +472,7 @@ header .logo {
 }
 
 #sidebar-wrapper.active {
-    right: 250px;
+    left: 250px;
     width: 250px;
     -webkit-transition: all 0.4s ease 0s;
     -moz-transition: all 0.4s ease 0s;
