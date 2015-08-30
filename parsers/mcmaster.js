@@ -12,10 +12,10 @@ var convert = function(filePath) {
 	var courseInfo = [];
 	var courseInfoMatch= [];
 	var days = [];
-	var re = /([A-Z]+\s\d\w{2}\d\s[-]\s\w{3})([A-Za-z]*)(\d{1,2}[:]\d{2}[A-Z]*\s[-]\s\d{0,2}[:]\d{2}(?:(?:A|P)M)?)(\w.*)/;	//reg ex to find the course data
+	var re = /([A-Z]+\s\d\w{2}\d\w*\s[-]\s\w{3})([A-Za-z]*)(\d{1,2}[:]\d{2}[A-Z]*\s[-]\s\d{0,2}[:]\d{2}(?:(?:A|P)M)?)(\w.*)/;	//reg ex to find the course data
 	//  Output SFWRENG 3BB4 - T02Tutorial2:30PM - 4:20PMJohn Hodgins Engineer Bldg A102
 	//Example of the reg ex and the groups it matched
-	// group 1 = SFWRENG 3BB4 - T02
+	// group 1 = SFWRENG 3BB4A - T02
 	// group 2 = Tutorial
 	// group 3 = 2:30PM - 4:20AM
 	// group 4 = John Hodgins Engineer Bldg A102
@@ -26,7 +26,6 @@ var convert = function(filePath) {
 	  courseInfo[i] = $(this).text(); //store the string data of the cell details
 	  courseInfoMatch[i] = re.exec(courseInfo[i]); //Match the details with the regualar exp
 	});
-
 	return [days, courseInfoMatch]
 }
 
