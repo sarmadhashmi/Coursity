@@ -16,7 +16,7 @@ var config = require('./config/config.json');
 var wellknown = require('nodemailer-wellknown');
 var RateLimit = require('express-rate-limit');
 // Metrics stuff
-var metricsFile = './metrics.json'
+var metricsFile = __dirname + '/metrics.json'
 fs.readFile(metricsFile, function (err, data) {		
 	if (err) { 
 		fs.writeFile(metricsFile, '{}');
