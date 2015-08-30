@@ -15,6 +15,28 @@ var semesterConfig = require('./config/semesters.json');
 var config = require('./config/config.json');
 var wellknown = require('nodemailer-wellknown');
 var RateLimit = require('express-rate-limit');
+// Metrics stuff
+var metricsFile = './metrics.json'
+fs.readFile(metricsFile, function (err, data) {		
+	if (err) { 
+		fs.writeFile(metricsFile, '{}');
+	}
+});
+
+var metricsIncrement = function(metricsName, callback) {
+	fs.readFile(metricsFile, function (err, data) {    	
+    	var json = JSON.parse(data);    	
+    	if (json.hasOwnProperty(metricsName)) {
+    		json[metricsName]++;
+    	} else {
+    		json[metricsName] = 1;
+    	}
+    	fs.writeFile(metricsFile, JSON.stringify(json, null, 4), function(err) {
+    		if (callback) callback();
+    	});
+	});		
+}
+
 // Add logging
 try {
 	fs.mkdirSync('logs');					
@@ -41,11 +63,13 @@ var transporter = nodemailer.createTransport({
 // rate limiter
 var limiter = RateLimit({
         // window, delay, and max apply per-ip unless global is set to true 
-        windowMs: 3600000, // miliseconds - how long to keep records of requests in memory -- set to 1 hour        
+        windowMs: 1800000, // miliseconds - how long to keep records of requests in memory -- set to 30 minutes
         max: 50, // max number of recent connections during `window` miliseconds before (temporarily) bocking the user. 
         global: false, // if true, IP address is ignored and setting is applied equally to all requests 
         message: 'What the hell man, why you tryin to make so many requests?'
 });
+
+
 
 // middleware
 var app = express();
@@ -121,6 +145,7 @@ app.use('/upload', multer({
 app.post('/upload', function(req, res) {   
 	if (!req.files || req.files.file.mimetype !== 'text/html') {
 		var msg = 'Invalid file type uploaded. Only .HTML files';
+		metricsIncrement('invalid_file_uploaded');
 		winston.error(msg);
 		return res.status(404).send(msg);
 	}
@@ -138,6 +163,7 @@ app.post('/upload', function(req, res) {
 		end_date = new Date(end_date[0], end_date[1], end_date[2], 23, 30, 0);
 	} else {
 		var msg = 'Invalid university or semester provided';
+		metricsIncrement('invalid_uni_provided');
 		winston.error(msg);
 		return res.status(404).send(msg);
 	}
@@ -161,6 +187,7 @@ app.post('/upload', function(req, res) {
 			res.status(404).send(err);
 		} else if (!fileName) {
 			var msg = 'Invalid university provided or parser not found: ' + university;
+			metricsIncrement('no_parser_found');
 			winston.error(msg);
 			res.status(404).send(msg);	
 		} else {			
@@ -178,6 +205,7 @@ app.post('/upload', function(req, res) {
 						var msg = 'No events found in your schedule, try again and make sure you follow the steps correctly';
 						winston.error(msg);
 				    	res.status(404).send(msg);
+				    	metricsIncrement('no_events_found');
 					});						
 				} else {						
 						if (calEmail){
@@ -202,10 +230,12 @@ app.post('/upload', function(req, res) {
 									winston.error(err);					
 								}
 								winston.info('Sent ics file to ' + calEmail);
+								metricsIncrement('sent_to_email');
 								//return res.status(200).send('Sent.')
 							});
 						}
-						res.status(200).send(fileName);
+						res.status(200).send(fileName);						
+						metricsIncrement('NUMBER_OF_PEOPLE_THAT_USED_APP_AND_COMPLETED_PROCESS');
 					}									
 				});		
 			}
