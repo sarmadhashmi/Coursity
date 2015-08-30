@@ -235,7 +235,7 @@ app.post('/upload', function(req, res) {
 							});
 						}
 						res.status(200).send(fileName);						
-						metricsIncrement('NUMBER_OF_PEOPLE_THAT_USED_APP_AND_COMPLETED_PROCESS');
+						metricsIncrement(university + '_completed');
 					}									
 				});		
 			}
