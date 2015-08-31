@@ -202,9 +202,12 @@ app.post('/upload', function(req, res) {
 						if (!err) {
 							winston.info("File deleted: " + fileName);
 						}
-						var msg = 'No events found in your schedule, try again and make sure you follow the steps correctly';
+						var msg = 'No events found in your schedule, try again and make sure you follow the steps correctly and';
+						if (university === 'mcmaster'){
+							msg = msg + " Use the Calendar link in the HOW-TO Section below"
+						}
 						winston.error(msg);
-				    	res.status(404).send(msg);
+						res.status(404).send(msg);
 				    	metricsIncrement('no_events_found');
 					});						
 				} else {						

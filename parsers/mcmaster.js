@@ -8,6 +8,124 @@ var convert = function(filePath) {
 	    	ignoreWhitespace: true
 		});
 
+	/**
+	 * The beginning chunk of this code, takes in a McMaster Timetable HTML, and remakes the Calender so
+	 * all the classes are only 1 hour chunks. This solves the issue that cause class to be inserts in the
+	 * wrong day. Now one can be sure that the timetable has 7 columns and 22 rows.
+	 */
+
+	var count = 0;
+	var HTMLstring = []; //An array of the HTML string (i.e <tag>Stuff</tag>)
+	var HTMLobject = []; //An Array of the HTML object (DOM)
+	$$ = require('cheerio'); //cheerio parser used to turn HTML string to a DOM object
+	$$$ = require('cheerio');
+	//var times = {"8:00AM":0, "9:00AM":1,"10:00AM":2,"11:00AM":3,"12:00PM":4,"1:00PM":5,"2:00PM":6,"3:00PM":7,"4:00PM":8,"5:00PM":9,"6:00PM":10}
+// find where the class are, they are stored in table > #WEEKLY_SCHED_HTMLAREA > .SSSTEXTWEEKLY
+	$('#WEEKLY_SCHED_HTMLAREA').find('tr').each(function(i, elem) {
+		HTMLstring[i] = $(this).html();
+		HTMLobject[i] = $$(HTMLstring[i]);
+	});
+	var parts = [];
+	var index;
+	var classIndex = [];
+	var content = "";
+	var ClassOccupiedCells;
+
+	//Split the HTML string into an array of [rows][cells], it has 22 rows (times of the week) and 7 cells (days of the week)
+	/*
+	 * At the end of these for loops, the result will look something like
+	 * HTMLstring =
+	 *   '<td class="SSSWEEKLYTIMEBACKGROUND" rowspan="2"><span class="SSSTEXTWEEKLYTIME">8:00AM</span></td><td class="SSSWEEKLYLTLINE"> </td><td class="SSSWEEKLYLTLINE"> </td><td class="SSSWEEKLYLTLINE"> </td><td class="SSSWEEKLYLTLINE"> </td><td class="SSSWEEKLYLTLINE"> </td><td class="SSSWEEKLYLTLINE"> </td><td class="SSSWEEKLYLTLINE"> </td>',
+	 '<td class="PSLEVEL3GRID"> </td><td class="PSLEVEL3GRID"> </td><td class="PSLEVEL3GRID"> </td><td class="PSLEVEL3GRID"> </td><td class="PSLEVEL3GRID"> </td><td class="PSLEVEL3GRID"> </td><td class="PSLEVEL3GRID"> </td>',
+	 * parts[][] =
+	 *  [[ '<td class="SSSWEEKLYTIMEBACKGROUND" rowspan="2"><span class="SSSTEXTWEEKLYTIME">8:00AM</span></td>',
+	 '<td class="SSSWEEKLYLTLINE"> </td>',
+	 '<td class="SSSWEEKLYLTLINE"> </td>',
+	 '<td class="SSSWEEKLYLTLINE"> </td>',
+	 '<td class="SSSWEEKLYLTLINE"> </td>',
+	 '<td class="SSSWEEKLYLTLINE"> </td>',
+	 '<td class="SSSWEEKLYLTLINE"> </td>',
+	 '<td class="SSSWEEKLYLTLINE"> </td>',
+	 '' ],[.....],[.....]]
+	 * */
+	for (i = 0; i < HTMLstring.length; i++){
+		parts[i]= HTMLstring[i].split('</td>');
+
+		//add the closing tag back into the cells
+		for (j=0; j < parts[i].length-1; j++){
+			parts[i][j] = parts[i][j].toString() + "</td>"
+		}
+	}
+
+	// Basically it finds te time of every class and makes a list of all your classes that are over an hour long.
+
+	for (i = 0; i < parts.length; i++){
+		for (j = 0; j < parts[i].length; j++){
+
+			if (parts[i][j].indexOf('class="SSSTEXTWEEKLY"') > -1){
+				time = parts[i][j].split("<br>")[2].split("-")[0].split(":") + "," + parts[i][j].split("<br>")[2].split("-")[1].split(":"); //find the time and get the different to see how long the class is
+				start_end_class = time.split(",");
+				diff = start_end_class[2]-start_end_class[0];
+				if (diff>1 || diff < -11){
+					classIndex.push(i)
+				}
+			}
+		}
+	}
+	var nextRow = classIndex[0]; //the first occurrence of a class more than an 1 hour long
+	var rowSpan;
+
+	// It checks every row for all the cells that have class, then it checks for all the classes with rowspan > 2
+	// (class that are more that an hour) and breaks the timeslot up into hours chunks
+
+	for (i = 0; i < HTMLstring.length; i++){
+		ClassOccupiedCells = HTMLobject[i].find('.SSSTEXTWEEKLY').parent()[0];
+		if (ClassOccupiedCells){
+			//check is there are any other event in the row (ClassOccupiedCells)
+			while (ClassOccupiedCells.next){
+				//check if it has the row span attribute
+				if (ClassOccupiedCells.attribs.rowspan) {
+					rowSpan = ClassOccupiedCells.attribs.rowspan;
+					//while the span is greater that 2, you should append the evens to the slot below
+					while (rowSpan > 2) {
+						data = ClassOccupiedCells.children[0].children[0].data;
+
+						// Find the index of the class that is longer than one hour, so it can append a cell to the
+						// rows below
+						function getIndex() {
+							count = 0;
+							for (j = 0; j < parts[i].length - 1; j++) {
+								if (parts[i][j].indexOf(data) > -1) {
+									index = count
+								}
+								count = count + 1;
+							}
+							return index;
+						}
+						//it skips 2 rows because 1 row is only 30mins, and we need to split the class up into 1 hours chunks
+
+						nextRow = nextRow + 2;
+						if (rowSpan > 2) {
+							parts[nextRow].splice(getIndex(), 0, '<td class="BUFFER"> </td>');
+						}
+						rowSpan = rowSpan - 2;//The rowspan is alway multiples of 2, keep dividing the number the split it evenly
+
+					}
+				}
+				ClassOccupiedCells = ClassOccupiedCells.next;
+			}
+		}
+	}
+
+	// Turns all the rows back into table rows
+	for (i = 0; i < parts.length; i++){
+		content = content + "<tr>" + parts[i].join("") + "</tr>"
+	}
+
+	// Turn all the rows into a table
+	content = "<table>" + content + "</table>";
+	// Makes sure all the classes are only 1 hour chunks
+	content = content.replace(/rowspan="\d"/gi, 'rowspan="2"');
 
 	var courseInfo = [];
 	var courseInfoMatch= [];
@@ -21,13 +139,13 @@ var convert = function(filePath) {
 	// group 4 = John Hodgins Engineer Bldg A102
 
 	// find where the class are, they are stored in table > #WEEKLY_SCHED_HTMLAREA > .SSSTEXTWEEKLY
-	$('#WEEKLY_SCHED_HTMLAREA').find('.SSSTEXTWEEKLY').each(function(i, elem) {
-	  days[i] = $(this).closest('table').find('th')[$(this).parent().index()+1].children[0].data; //found on github, this find the cell header,which is the weekday
-	  courseInfo[i] = $(this).text(); //store the string data of the cell details
+	$$$(content).find('.SSSTEXTWEEKLY').each(function(i, elem) {
+	  days[i] = $$$(this).closest('table').find('th')[$(this).parent().index()+1].children[0].data; //found on github, this find the cell header,which is the weekday
+	  courseInfo[i] = $$$(this).text(); //store the string data of the cell details
 	  courseInfoMatch[i] = re.exec(courseInfo[i]); //Match the details with the regualar exp
 	});
 	return [days, courseInfoMatch]
-}
+};
 
 
 var calParser  = function (dates, classDetails, start_date,end_date, directory, filename, callback){
