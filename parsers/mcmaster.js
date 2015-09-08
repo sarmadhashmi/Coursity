@@ -66,7 +66,7 @@ var convert = function(filePath) {
 				time = parts[i][j].split("<br>")[2].split("-")[0].split(":") + "," + parts[i][j].split("<br>")[2].split("-")[1].split(":"); //find the time and get the different to see how long the class is
 				start_end_class = time.split(",");
 				diff = start_end_class[2]-start_end_class[0];
-				if (diff>1 || diff < -11){
+				if (diff>1 || diff<0 && diff > -11){
 					classIndex.push(i)
 				}
 			}
@@ -74,6 +74,7 @@ var convert = function(filePath) {
 	}
 	var nextRow = classIndex[0]; //the first occurrence of a class more than an 1 hour long
 	var rowSpan;
+	var counter = 0;
 
 	// It checks every row for all the cells that have class, then it checks for all the classes with rowspan > 2
 	// (class that are more that an hour) and breaks the timeslot up into hours chunks
@@ -82,12 +83,13 @@ var convert = function(filePath) {
 		ClassOccupiedCells = HTMLobject[i].find('.SSSTEXTWEEKLY').parent()[0];
 		if (ClassOccupiedCells){
 			//check is there are any other event in the row (ClassOccupiedCells)
-			while (ClassOccupiedCells.next){
+			while (ClassOccupiedCells){
 				//check if it has the row span attribute
 				if (ClassOccupiedCells.attribs.rowspan) {
 					rowSpan = ClassOccupiedCells.attribs.rowspan;
 					//while the span is greater that 2, you should append the evens to the slot below
-					while (rowSpan > 2) {
+					if (rowSpan > 2){
+						while (rowSpan > 2) {
 						data = ClassOccupiedCells.children[0].children[0].data;
 
 						// Find the index of the class that is longer than one hour, so it can append a cell to the
@@ -105,12 +107,13 @@ var convert = function(filePath) {
 						//it skips 2 rows because 1 row is only 30mins, and we need to split the class up into 1 hours chunks
 
 						nextRow = nextRow + 2;
-						if (rowSpan > 2) {
-							parts[nextRow].splice(getIndex(), 0, '<td class="BUFFER"> </td>');
-						}
+						parts[nextRow].splice(getIndex(), 0, '<td class="BUFFER"> </td>');
 						rowSpan = rowSpan - 2;//The rowspan is alway multiples of 2, keep dividing the number the split it evenly
 
 					}
+					counter = counter + 1;
+					nextRow = classIndex[counter]
+				}
 				}
 				ClassOccupiedCells = ClassOccupiedCells.next;
 			}
