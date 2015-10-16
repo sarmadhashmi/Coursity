@@ -27,7 +27,9 @@ var convert = function(filePath) {
 	});
 	var parts = [];
 	var index;
-	var classIndex = [];
+	var classRowIndex = [];
+	var classColIndex = [];
+	var classIndexDetails = [];
 	var content = "";
 	var ClassOccupiedCells;
 
@@ -67,59 +69,34 @@ var convert = function(filePath) {
 				start_end_class = time.split(",");
 				diff = start_end_class[2]-start_end_class[0];
 				if (diff>1 || diff<0 && diff > -11){
-					classIndex.push(i)
+					classRowIndex.push(i);
+					classColIndex.push(j);
+					classIndexDetails.push(parts[i][j])
 				}
 			}
 		}
 	}
-	var nextRow = classIndex[0]; //the first occurrence of a class more than an 1 hour long
-	var rowSpan;
-	var counter = 0;
-
+	console.log("new parser")
 	// It checks every row for all the cells that have class, then it checks for all the classes with rowspan > 2
 	// (class that are more that an hour) and breaks the timeslot up into hours chunks
 
-	for (i = 0; i < HTMLstring.length; i++){
-		ClassOccupiedCells = HTMLobject[i].find('.SSSTEXTWEEKLY').parent()[0];
-		if (ClassOccupiedCells){
-			//check is there are any other event in the row (ClassOccupiedCells)
-			while (ClassOccupiedCells){
-				//check if it has the row span attribute
-				if (ClassOccupiedCells.attribs.rowspan) {
-					rowSpan = ClassOccupiedCells.attribs.rowspan;
-					//while the span is greater that 2, you should append the evens to the slot below
-					if (rowSpan > 2){
-						while (rowSpan > 2) {
-						data = ClassOccupiedCells.children[0].children[0].data;
-
-						// Find the index of the class that is longer than one hour, so it can append a cell to the
-						// rows below
-						function getIndex() {
-							count = 0;
-							for (j = 0; j < parts[i].length - 1; j++) {
-								if (parts[i][j].indexOf(data) > -1) {
-									index = count
-								}
-								count = count + 1;
-							}
-							return index;
-						}
-						//it skips 2 rows because 1 row is only 30mins, and we need to split the class up into 1 hours chunks
-
-						nextRow = nextRow + 2;
-						parts[nextRow].splice(getIndex(), 0, '<td class="BUFFER"> </td>');
-						rowSpan = rowSpan - 2;//The rowspan is alway multiples of 2, keep dividing the number the split it evenly
-
-					}
-					counter = counter + 1;
-					nextRow = classIndex[counter]
-				}
-				}
-				ClassOccupiedCells = ClassOccupiedCells.next;
-			}
+	var rowCounter = 0;
+	var findRowspan,rowSpanValue,rowSpanIntValue;
+	for (i = 0; i < classRowIndex.length; i++){
+		//find the word rowspan, and check how large the cell is.
+		findRowspan = classIndexDetails[i].search("rowspan=\"");
+		//remove the word rowspan and ="(8 chars)
+		rowSpanValue = classIndexDetails[i].slice(findRowspan+9,findRowspan+11);
+		rowSpanIntValue = parseInt(rowSpanValue);
+		while (rowSpanIntValue > 2) {
+			//it skips 2 rows because 1 row is only 30mins, and we need to split the class up into 1 hours chunks
+			rowCounter = rowCounter + 2;
+			nextRow = classRowIndex[i] +rowCounter;
+			parts[nextRow].splice(classColIndex[i], 0, '<td class="BUFFER"> </td>');
+			rowSpanIntValue = rowSpanIntValue - 2; //The rowspan is alway multiples of 2, keep dividing the number the split it evenly
 		}
+		rowCounter = 0
 	}
-
 	// Turns all the rows back into table rows
 	for (i = 0; i < parts.length; i++){
 		content = content + "<tr>" + parts[i].join("") + "</tr>"
