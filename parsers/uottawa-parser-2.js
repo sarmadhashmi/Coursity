@@ -1,14 +1,11 @@
-
-
-
-_locationRegex = /\b[A-Z]{3,5}\s[A-Z0-9]{4}\b/;
-_courseRegex = /\b[A-Z]{3}[1-9]{1}[0-9]{3}[A-Z]?\b/;
-_courseRegexLookAhead = /(?=\b[A-Z]{3}[1-9]{1}[0-9]{3}[A-Z]?\b)/g;
-_timeRegexLookAhead = /(?=\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+[0-9]{1,2}:[0-9]{2}\s+to\s+[0-9]{2}:[0-9]{2}\s+[A-Za-z]*\b)/g;
-_timeRegex = /\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+([0-9]{1,2}:[0-9]{2})\s+to\s+([0-9]{2}:[0-9]{2})\s+([A-Za-z]*)\b/;
-_professorRegex = /\b(([A-Za-z.])*\s([A-Za-z.])*)+\b/;
-_semesterRegex = /([0-9]{2}\s[A-Z]{1}[a-z]{2,8})\sto\s([0-9]{2}\s[A-Z]{1}[a-z]{2,8})\s([0-9]{4})/; 
-_dateRegex = /\b[0-9]{2}\s[A-Z]{1}[a-z]{2,8}\b/g;
+var _locationRegex = /\b[A-Z]{3,5}\s[A-Z0-9]{4}\b/;
+var _courseRegex = /\b[A-Z]{3}[1-9]{1}[0-9]{3}[A-Z]?\b/;
+var _courseRegexLookAhead = /(?=\b[A-Z]{3}[1-9]{1}[0-9]{3}[A-Z]?\b)/g;
+var _timeRegexLookAhead = /(?=\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+[0-9]{1,2}:[0-9]{2}\s+to\s+[0-9]{2}:[0-9]{2}\s+[A-Za-z]*\b)/g;
+var _timeRegex = /\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+([0-9]{1,2}:[0-9]{2})\s+to\s+([0-9]{2}:[0-9]{2})\s+([A-Za-z]*)\b/;
+var _professorRegex = /\b(([A-Za-z.])*\s([A-Za-z.])*)+\b/;
+var _semesterRegex = /([0-9]{2}\s[A-Z]{1}[a-z]{2,8})\sto\s([0-9]{2}\s[A-Z]{1}[a-z]{2,8})\s([0-9]{4})/; 
+var _dateRegex = /\b[0-9]{2}\s[A-Z]{1}[a-z]{2,8}\b/g;
 
 function parse(text) {
   var timetable = [];
@@ -49,3 +46,5 @@ var fs = require('fs')
       if (err) throw err;
       console.log(parse(data));
   });
+
+module.exports.parse = parse;
