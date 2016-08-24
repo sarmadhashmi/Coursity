@@ -1,3 +1,7 @@
+var fs = require('fs');
+var icalToolkit = require('ical-toolkit');
+var moment = require('moment');
+
 var parse = function parse(text){
     var _wsRegex = /\s+/;
     var _ampm = /:\d{2}[aAPp][mM]/;
@@ -83,6 +87,10 @@ var parse = function parse(text){
 
             if (!locationProfPair || !time || !semester) continue;
 
+            function pad(n) {
+                return (n.toString().length < 2) ? ("0" + n) : n;
+            }
+
             var where = locationProfPair[1];
             var professor = locationProfPair[2];
             var days = time[1].replace(_dayRegex, function myFunction(x){return _weekdays[x] + ",";})
@@ -91,13 +99,13 @@ var parse = function parse(text){
             for (var k = 0; k < daysArray.length ; k++) {
                 var obj = {};
                 var startTimeSplit = convertTo24Hour(time[2]).split(":")
-                var startTimeObj = {'hour': parseInt(startTimeSplit[0], 10), 'minute': parseInt(startTimeSplit[1], 10)};
+                var startTimeObj = {'hour': pad(parseInt(startTimeSplit[0], 10)), 'minute': pad(parseInt(startTimeSplit[1], 10))};
                 var endTimeSplit = convertTo24Hour(time[3]).split(":")
-                var endTimeObj = {'hour': parseInt(endTimeSplit[0], 10), 'minute': parseInt(endTimeSplit[1], 10)};
-                var semesterStart = new Date(semester[1]);
-                var semesterEnd = new Date(semester[2]);
-                var semesterStartObj = { year: semesterStart.getFullYear(), month: semesterStart.getMonth(), day: semesterStart.getDate()};
-                var semesterEndObj = { year: semesterEnd.getFullYear(), month: semesterEnd.getMonth(), day: semesterEnd.getDate()};
+                var endTimeObj = {'hour': pad(parseInt(endTimeSplit[0], 10)), 'minute': pad(parseInt(endTimeSplit[1], 10))};
+                var semesterStartSplit = semester[1].split("/");
+                var semesterEndSplit = semester[2].split("/");
+                var semesterStartObj = { year: semesterStartSplit[0], month: semesterStartSplit[1], day: semesterStartSplit[2]};
+                var semesterEndObj = { year: semesterEndSplit[0], month: semesterEndSplit[1], day: semesterEndSplit[2]};
                 var courseSplit = course[1].split(" ");
                 obj['course_code_faculty'] = courseSplit[0];
                 obj['course_code_number'] = courseSplit[1];
@@ -115,15 +123,117 @@ var parse = function parse(text){
                 timetable.push(obj);
             }}
     }
+
     return timetable;
 
 };
-var fs = require('fs')
-    , filename = process.argv[2];
-fs.readFile(filename, 'utf8', function(err, data) {
-    if (err) throw err;
-    console.log(parse(data));
-});
+var calParser  = function (timetable, directory, filename, callback){
+    //Create a builder
+    var builder = icalToolkit.createIcsFileBuilder();
 
-module.exports.parse = parse;
+    /*
+     * Settings (All Default values shown below. It is optional to specify)
+     * */
+    builder.spacers = true; //Add space in ICS file, better human reading. Default: true
+    builder.NEWLINE_CHAR = '\r\n'; //Newline char to use.
+    builder.throwError = false; //If true throws errors, else returns error when you do .toString() to generate the file contents.
+    builder.ignoreTZIDMismatch =  false; //If TZID is invalid, ignore or not to ignore!
 
+    //Cal timezone 'X-WR-TIMEZONE' tag. Optional. We recommend it to be same as tzid.
+    builder.timezone = 'america/new_york';
+
+    //Time Zone ID. This will automatically add VTIMEZONE info.
+    builder.tzid = 'america/new_york';
+
+    /**
+     * Build ICS
+     * */
+
+        //Name of calander 'X-WR-CALNAME' tag.
+    builder.calname = 'Coursity';
+    for (i = 0; i < timetable.length; i++) {
+        //Add events
+
+        start_date = [timetable[i]["semester_start"]["year"],timetable[i]["semester_start"]["month"],timetable[i]["semester_start"]["day"]] ;
+        end_date = [timetable[i]["semester_end"]["year"],timetable[i]["semester_end"]["month"],timetable[i]["semester_end"]["day"]];
+        start_time = [timetable[i]["start_time"]["hour"],timetable[i]["start_time"]["minute"],"00"];
+        end_time = [timetable[i]["end_time"]["hour"],timetable[i]["end_time"]["minute"],"00"];
+        //console.log(timetable[i]["day"].toUpperCase().substring(0,2));
+        builder.events.push({
+
+            //Event start time, Required: type Date()
+            start: moment.utc(new Date(start_date.join("-")+ "T" + start_time.join(":") )).day(timetable[i]["day"]).toDate(),
+
+            //start: new Date(start[0],start[1],start[2],start[3],start[4]), //start_end_time(classDetails[i][3],dates[i])[0],
+
+            //Event end time, Required: type Date()
+            end: moment.utc(new Date(start_date.join("-")+ "T" + end_time.join(":") )).day(timetable[i]["day"]).toDate(),
+            //end: new Date(end[0],end[1],end[2],end[3],end[4]), //start_end_time(classDetails[i][3],dates[i])[1],
+
+            //Event summary, Required: type String
+            summary: timetable[i]["course_code_faculty"] + " " + timetable[i]["course_code_number"] + " " + timetable[i]["course_name"] ,
+            //Event identifier, Optional, default auto generated
+            //uid: dates[i] + classDetails[i][3],
+            alarms: [10],
+            //Optional if repeating event
+            repeating: {
+                freq: 'WEEKLY',
+                byday: timetable[i]["day"].toUpperCase().substring(0,2),
+                wkst: "MO",
+                until: moment.utc(new Date(end_date.join("-")+ "T" + end_time.join(":") )).toDate()
+            },
+            //Location of event, optional.
+            location: timetable[i]["where"],
+            //Optional, floating time.
+            floating: true,
+            //Optional description of event.
+            description: timetable[i]["course_code_faculty"] + " " + timetable[i]["course_code_number"] + " " + timetable[i]["course_number"]  + " " + timetable[i]["course_name"]
+
+        });
+    }
+
+    //Try to build
+    var icsFileContent = builder.toString();
+   console.log(icsFileContent);
+/*
+    //Check if there was an error (Only required if yu configured to return error, else error will be thrown.)
+    if (icsFileContent instanceof Error) {
+        console.log('Returned Error, you can also configure to throw errors!');
+        //handle error
+    }
+    //Here is the ics file content.
+    fs.mkdir(directory, function(err) {
+        if (err && err.code !== 'EEXIST') {
+            return callback(err);
+        }
+        fs.writeFile(directory + filename, icsFileContent)
+        callback(null, filename);
+    });*/
+}
+
+
+var convertToCal = function(filePath, start_date,end_date, directory, filename, callback) {
+
+    var timetable = parse(text);
+    console.log(timetable);
+    console.log(calParser(timetable));
+    //return calParser(timetable, directory, filename, callback);
+};
+
+var timetable = Ajaxfunc(parse)
+function Ajaxfunc(cb){
+   var http = require('http');
+    http.get({
+        host: 'localhost',
+        port: 8000,
+        path: '/Courses_RAW.txt',
+        method: 'GET'
+    }, function(response) {
+        response.setEncoding('utf8')
+        response.on('data', function(data){
+            timetable = cb(data);
+            calParser(timetable);
+        });
+    });
+}
+module.exports.convertToCal = convertToCal;
