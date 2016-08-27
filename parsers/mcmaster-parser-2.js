@@ -1,4 +1,29 @@
-var parse = function parse(text){
+var ics = require('./ics-builder');
+var fs = require('fs')
+    , filename = process.argv[2];
+
+/**
+ * Takes in any time and converts it from a 12HR format to the 24HR format for 7:00PM is 19:00 etc
+ * @param {String} time
+ * @return {String} 24HR formatted time
+ */
+function convertTo24Hour(time) {
+    var hours = parseInt(time.substr(0, 2));
+    if(time.indexOf('AM') != -1 && hours == 12) {
+        time = time.replace('12', '0');
+    }
+    if(time.indexOf('PM')  != -1 && hours < 12) {
+        time = time.replace(hours, (hours + 12));
+    }
+    return time.replace(/(AM|PM)/, '');
+}
+
+/**
+ * Takes in the raw data of timetable and get all the important details including, course name, professor, times etc.
+ * @param {String} text
+ * @return {Object/JSON} timetable
+ */
+function parse(text){
     var _wsRegex = /\s+/;
     var _ampm = /:\d{2}[aAPp][mM]/;
     var _courseTitleLookAhead = /(?=\b(?:\w{2,}\ \w{1,5})\ -\ (?:[^\r\n]+)\b)/g;
@@ -17,109 +42,69 @@ var parse = function parse(text){
     var _sectionTypeRegex = /(\d+)\s+([A-Z]{1}\d+)\s+(?=Lecture|Tutorial|Laboratory)([A-Za-z]{3,}\b)/;
     var _dayRegex = /(Mo)|(Tu)|(We)|(Th)|(Fr)|(Sa)|(Su)/g;
     var _weekdays = {"Mo":"Monday","Tu":"Tuesday","We":"Wednesday","Th":"Thursday","Fr":"Friday","Sa":"Saturday","Su":"Sunday"};
-
-    function convertTo24Hour(time) {
-        var hours = parseInt(time.substr(0, 2));
-        if(time.indexOf('AM') != -1 && hours == 12) {
-            time = time.replace('12', '0');
-        }
-        if(time.indexOf('PM')  != -1 && hours < 12) {
-            time = time.replace(hours, (hours + 12));
-        }
-        return time.replace(/(AM|PM)/, '');
-    }
-
     var timetable = [];
+    // Breaks all the courses up. Looks at all the detail after a course name
     var courses = text.split(_courseTitleLookAhead);
+
     for (var i = 0; i < courses.length; i++) {
         var courseText = courses[i];
         var course = _courseTitleRegex.exec(courseText);
+        // Breaks all classes up, looks at all the details after the Course Code or time in a course
         var classes = courseText.split(_timeDayPairOrCourseCodeLookAhead);
+
         if (!course) continue;
+
         var currentSection = _sectionTypeRegex.exec(courseText);
-        //console.log(classes);
 
         for (var j = 0; j < classes.length; j++) {
             var locationProfPair = _locationProfPair.exec(classes[j]);
             var time = _timeDayPairRegex.exec(classes[j]);
             var semester = _semesterPairRegex.exec(classes[j]);
             var section = _sectionTypeRegex.exec(classes[j]);
-            currentSection = section ? section : currentSection; // Check is the current classes segment is a section if it is update the current Section
+            // Check is the current classes segment is a section if it is update the current Section
+            currentSection = section ? section : currentSection;
 
             if (!locationProfPair || !time || !semester) continue;
 
             var where = locationProfPair[1];
             var professor = locationProfPair[2];
-            var days = time[1].replace(_dayRegex, function myFunction(x){return _weekdays[x] + ",";});
+            // Changes McMasters MoTuWe format to full weekdays
+            var days = time[1].replace(_dayRegex, function fullWeekday(x){return _weekdays[x] + ",";});
             var daysArray = days.substring(0, days.length-1).split(",");
 
             for (var k = 0; k < daysArray.length ; k++) {
-                var obj = {};
                 var startTimeSplit = convertTo24Hour(time[2]).split(":");
                 var startTimeObj = {'hour': parseInt(startTimeSplit[0], 10), 'minute': parseInt(startTimeSplit[1], 10)};
                 var endTimeSplit = convertTo24Hour(time[3]).split(":");
                 var endTimeObj = {'hour': parseInt(endTimeSplit[0], 10), 'minute': parseInt(endTimeSplit[1], 10)};
                 var sem_start = new Date(semester[1]);
                 var sem_end = new Date(semester[2]);
-
                 var semesterStartObj = { year: sem_start.getFullYear(), month: sem_start.getMonth(), day: sem_start.getDate()};
                 var semesterEndObj = { year: sem_end.getFullYear(), month: sem_end.getMonth(), day: sem_end.getDate()};
                 var courseSplit = course[1].split(" ");
-                obj['course_code_faculty'] = courseSplit[0];
-                obj['course_code_number'] = courseSplit[1];
-                obj['course_number'] = currentSection[1];
-                obj['course_name'] = course[2];
-                obj['semester_start'] = semesterStartObj;
-                obj['semester_end'] = semesterEndObj;
-                obj['where'] = where;
-                obj['professor'] = professor;
-                obj['day'] = daysArray[k];
-                obj['start_time'] = startTimeObj;
-                obj['end_time'] = endTimeObj;
-                obj['class_section'] = currentSection[2];
-                obj['class_type'] = currentSection[3];
-                timetable.push(obj);
+                timetable.push({
+                'course_code_faculty' : courseSplit[0],
+                'course_code_number' : courseSplit[1],
+                'course_number' : currentSection[1],
+                'course_name' : course[2],
+                'semester_start' : semesterStartObj,
+                'semester_end' : semesterEndObj,
+                'where' : where,
+                'professor': professor,
+                'day' : daysArray[k],
+                'start_time' : startTimeObj,
+                'end_time' : endTimeObj,
+                'class_section' : currentSection[2],
+                'class_type' : currentSection[3]
+                });
             }}
     }
-
     return timetable;
+}
 
-};
-
-
-var ics = require('./ics-builder');
-var fs = require('fs')
-    , filename = process.argv[2];
 fs.readFile(filename, 'utf8', function(err, data) {
     if (err) throw err;
     console.log(ics.buildICS(parse(data)));
 });
 
-
-//
-//var convertToCal = function(filePath, start_date,end_date, directory, filename, callback) {
-//
-//    var timetable = parse(text);
-//    console.log(timetable);
-//    console.log(calParser(timetable));
-//    //return calParser(timetable, directory, filename, callback);
-//};
-
-//var timetable = Ajaxfunc(parse)
-//function Ajaxfunc(cb){
-//   var http = require('http');
-//    http.get({
-//        host: 'localhost',
-//        port: 8000,
-//        path: '/Courses_RAW.txt',
-//        method: 'GET'
-//    }, function(response) {
-//        response.setEncoding('utf8')
-//        response.on('data', function(data){
-//            timetable = cb(data);
-//            calParser(timetable);
-//        });
-//    });
-//}
-//module.exports.convertToCal = convertToCal;
 module.exports.parse = parse;
