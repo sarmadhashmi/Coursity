@@ -83,19 +83,19 @@ function parse(text){
                 var semesterEndObj = { year: sem_end.getFullYear(), month: sem_end.getMonth(), day: sem_end.getDate()};
                 var courseSplit = course[1].split(" ");
                 timetable.push({
-                'course_code_faculty' : courseSplit[0],
-                'course_code_number' : courseSplit[1],
-                'course_number' : currentSection[1],
-                'course_name' : course[2],
-                'semester_start' : semesterStartObj,
-                'semester_end' : semesterEndObj,
-                'where' : where,
-                'professor': professor,
-                'day' : daysArray[k],
-                'start_time' : startTimeObj,
-                'end_time' : endTimeObj,
-                'class_section' : currentSection[2],
-                'class_type' : currentSection[3]
+                    'course_code_faculty' : courseSplit[0],
+                    'course_code_number' : courseSplit[1],
+                    'course_number' : currentSection[1],
+                    'course_name' : course[2],
+                    'semester_start' : semesterStartObj,
+                    'semester_end' : semesterEndObj,
+                    'where' : where,
+                    'professor': professor,
+                    'day' : daysArray[k],
+                    'start_time' : startTimeObj,
+                    'end_time' : endTimeObj,
+                    'class_section' : currentSection[2],
+                    'class_type' : currentSection[3]
                 });
             }}
     }
