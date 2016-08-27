@@ -102,9 +102,16 @@ function parse(text){
     return timetable;
 }
 
-fs.readFile(filename, 'utf8', function(err, data) {
-    if (err) throw err;
-    console.log(ics.buildICS(parse(data)));
-});
+var convertToCal = function(rawTimetable, directory, filename, callback){
+    fs.mkdir(directory, function(err) {
+        if (err && err.code !== 'EEXIST') {
+            return callback(err);
+        }
+        var icsFileContent = ics.buildICS(parse(rawTimetable));
+        fs.writeFile(directory + filename, icsFileContent);
+        callback(null, filename);
+    });
+};
 
-module.exports.parse = parse;
+module.exports.convertToCal =  convertToCal;
+

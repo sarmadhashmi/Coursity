@@ -39,8 +39,8 @@
 		<div id="upload" class="col-sm-6 text-center title"><h1></h1>
 
 			<p style="width: 100%; margin:auto;"><p class="choiceLabel">Use Coursity to put all your lectures, labs, and more into your phone's calendar!* </br> <span style="font-size:14px;">*or your laptop's calendar, please don't sue us for only saying phone</span></p>
-
-			<form ng-submit="upload(file)" class="dropzone" id="timetable-submit" enctype="multipart/form-data">
+			<!--upload(file)-->
+			<form ng-submit="processTimetable()" class="dropzone" id="timetable-submit" enctype="multipart/form-data">
 				<div class="form-group">
 					<div style="padding: 5px;">
 						<p class="choiceLabel">Select University</p>
@@ -49,18 +49,13 @@
 						<option ng-repeat="uni in universities" value="{{uni.value}}">{{ uni.name }}</option>
 					</select>
 					</div>
-				<div style="padding-bottom: 0px;">
-					<p class="choiceLabel">Select Semester</p>
-					<select ng-model="semester" id = "semChoose" >
-						<option value="" disabled selected>Choose Semester</option>
-						<option ng-repeat="sem in semesterList" value="{{sem.value}}">{{ sem.name }}</option>
-					</select>
-				</div>
 				</div>
 				<div class="form-group" style="padding-bottom: 0px;">
-					<p for="file" class="choiceLabel">Upload timetable HTML <a target="_blank" href="../../McMaster%20Example%20Timetable.html" class="choiceLabel">(Example Timetable)</a></p>
-					<input style="margin:auto; width: 70%" type="file" ngf-select name="html" id="file" ng-model="file">
+					<p class="choiceLabel">Paste in Timetable</p>
+					<!--input style="margin:auto; width: 70%" type="file" ng-select name="html" id="file" ng-model="file"-->
+					<textarea style="width:70%; height: 70px" rows="20" type="text" ng-model="rawTimetable" placeholder="Schedule" />
 				</div>
+
 				<div style="padding: 5px;">
 					<p class="choiceLabel">Your Email (<b>Optional</b>, Calendar file will be emailed)</p>
 					<input style="width:70%" type="text" ng-model="calEmail" placeholder="example@placeholder.com" />
