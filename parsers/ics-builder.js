@@ -50,7 +50,7 @@ function buildICS(timetable) {
         until: semester_end
       },
       location: curr['where'],
-      description: curr['course_code_faculty'] + " " + curr['course_code_number'] +  " " +  curr['course_name']
+      description: curr['course_code_faculty'] + " " + curr['course_code_number'] + " " +  curr['course_name']
     });
   }
   return builder.toString();
