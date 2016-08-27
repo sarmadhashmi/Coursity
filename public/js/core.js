@@ -80,11 +80,56 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 		}
 	};
 
+	$scope.processTimetable = function() {
+		$http.post('/processTimetable',
+			{
+				'university': $scope.university,
+				'calEmail': $scope.calEmail,
+				"rawTimetable" : $scope.rawTimetable
+			})
+			.success(function(data) {
+				var anchor = angular.element('<a><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download</a>');
+				anchor.attr({
+					href: '/ics/' + data,
+					target: '_blank'
+				});
+				anchor.addClass('btn');
+				anchor.addClass('submitBtn');
+				anchor.addClass("btn-default");
+				$("#downloadDiv" ).empty();
+				var div = angular.element(document).find('#downloadDiv').eq(0);
+				$( "#submitButton" ).prop('disabled', false);
+
+				div.append(anchor);
+				var share = angular.element('<p style="margin-top:10px;" id="share">Share link with friends or Share on Social Media <b>(Link is only stored for a limited time)</b>: </p>');
+				div.append(share);
+				div.append('www.coursity.me/ics/' + data);
+				var social1 = angular.element('<a style="color: #ffffff; padding: 5px;"><i class="fa fa-facebook-square fa-2x"></i></a>');
+				var social2 = angular.element('<a style="color: #ffffff; padding: 5px;"><i class="fa fa-twitter-square fa-2x"></i></a>');
+				social1.attr({
+					href: 'https://www.facebook.com/sharer/sharer.php?u=www.coursity.me/ics/' + data,
+					target: '_blank'
+				});
+
+				social2.attr({
+					href: 'https://twitter.com/home?status=Hey!%20just%20added%20my%20course%20schedule%20to%20my%20devices%20using%20Coursity!%20Check%20it%20out%20www.coursity.me/ics/' + data + " and%20check%20out%20the%20site%20at%20www.coursity.me",
+					target: '_blank'
+				});
+				div.append(social1);
+				div.append(social2);
+				$scope.message = 'Finished.';
+			})
+			.error(function(data) {
+				$("#submitButton").prop('disabled', false);
+				$scope.message = data;
+			});
+	};
+
 	$scope.feedback = function() {
 		$http.post('/feedback', { "email": $scope.email, "message": $scope.messageFeedback, "recaptcha": document.getElementById("g-recaptcha-response").value })
 		.success(function(data, status, headers, config) {
     		$scope.feedbackMessage = 'Thank you!';
-		}).error(function(data, status, headers, config) {			
+		}).error(function(data, status, headers, config) {
     		$scope.feedbackMessage = data;
 		});
 	};

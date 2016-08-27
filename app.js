@@ -245,6 +245,92 @@ app.post('/upload', function(req, res) {
 	});
 });
 
+app.post('/processTimetable', function(req, res) {
+
+	var university = req.body.university;
+	var calEmail = req.body.calEmail;
+	var rawTimetable = req.body.rawTimetable;
+	//TODO - Hash the filename to make sure we can save over 10,000 ics with no collisions
+	var filename = "001";
+
+	winston.info('Getting parser for ' + university);
+	async.waterfall([
+		function(callback) {
+			parserFactory.getParser2(university, callback);
+		},
+		function(convertToCal, callback) {
+			var icsFile = filename + ".ics";
+			convertToCal(rawTimetable, icsFolder, icsFile, callback);
+		},
+		function(fileName, callback) {
+			fs.unlink(tempFolder + filename, function() {
+				callback(null, fileName);
+			});
+		},
+	], function(err, fileName) {
+		if (err) {
+			winston.error(err);
+			res.status(404).send(err);
+		} else if (!fileName) {
+			var msg = 'Invalid university provided or parser not found: ' + university;
+			metricsIncrement('no_parser_found');
+			winston.error(msg);
+			res.status(404).send(msg);
+		} else {
+			winston.info('Piping file ' + fileName + ' to response.');
+			fs.readFile(icsFolder + fileName, 'utf8', function (err,data) {
+				if (err) {
+					return res.status(404).send(err);
+				}
+				var icsContentChecker = data.indexOf("BEGIN:VEVENT") > -1;
+				if (!icsContentChecker) {
+					fs.unlink(icsFolder + fileName, function(err) {
+						if (!err) {
+							winston.info("File deleted: " + fileName);
+						}
+						var msg = 'No events found in your schedule, try again and make sure you follow the steps correctly and';
+						if (university === 'mcmaster'){
+							msg = msg + " Use the Calendar link in the HOW-TO Section below"
+						}
+						winston.error(msg);
+						res.status(404).send(msg);
+						metricsIncrement('no_events_found');
+					});
+				} else {
+					if (calEmail){
+						transporter.sendMail({
+							from: 'coursitycal@gmail.com',
+							to: calEmail,
+							subject: 'Your Weekly Schedule',
+							html: "<p>Hi,</p> <p>Find a how to guide attached and this is your Calendar file</p>" + "<a href= 'http://" + req.get('host') + "/ics/" + fileName + "'> Timetable Link</a><p>Cheers, <br> Coursity Team</p>",
+							attachments: [
+								{   // utf-8 string as an attachment
+									filename: "Timetable.ics",
+									path: __dirname + "/public/ics/" + fileName
+								},
+								{   // utf-8 string as an attachment
+									filename: "How_to_Guide_for_Coursity.docx",
+									path: __dirname + "/public/Step_for_Coursity.docx"
+								}
+
+							]
+						}, function (err, info) {
+							if (err) {
+								winston.error(err);
+							}
+							winston.info('Sent ics file to ' + calEmail);
+							metricsIncrement('sent_to_email');
+							//return res.status(200).send('Sent.')
+						});
+					}
+					res.status(200).send(fileName);
+					metricsIncrement(university + '_completed');
+				}
+			});
+		}
+	});
+});
+
 
 app.use(express.static(__dirname + '/public'));
 app.listen(80, function() {
