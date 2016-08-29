@@ -23,7 +23,7 @@ function convertTo24Hour(time) {
  * MM/DD/YYYY is the format the javascript object reads or YYYY/MM/DD
  * @param {String} startDate
  * @param {String} endDate
- * @return {String Array} [startDate,endDate]  woth format MM/DD/YYYY or YYYY/MM/DD
+ * @return {String Array} [startDate, endDate]  with format MM/DD/YYYY or YYYY/MM/DD
  */
 function fixDateFormat(sem_start, sem_end) {
     if (sem_start.indexOf('-') > -1) {
@@ -41,28 +41,25 @@ function fixDateFormat(sem_start, sem_end) {
     endDay = parseInt(endDateSplit[1]);
     endYear = parseInt(endDateSplit[2]);
 
-    // This means the format is YYYY/MM/DD, because the 0th index is a year
-    if(startDateSplit[0].length === 4){
-        return [sem_start,sem_end]
+    // It is YYYY/MM/DD, because the 0th index is a year or
+    //If the difference is 3 months (Fall/Winter), 1 month (Spring/Summer) or -5 months (multi-semester(Sept-Apr))
+    // and the semester starts in [1,5,7,9], Check is month is Jan,May,July or Sept
+    if(startMonth.toString().length === 4 ||
+        ((endMonth - startMonth === 3 || endMonth - startMonth === 1 || endMonth - startMonth === -5) && [1,5,7,9].indexOf(startMonth) > -1)){
+        return [sem_start, sem_end]
     } else if (startMonth > 12 || endMonth > 12 || (startYear === endYear && startMonth > endMonth)) {
-        // Date is DD/MM/YYYY because month can't be > 12
-        // So we need to change to format to MM/DD/YYYY so it will be interpreted well
-        return [[startMonth,startDay,startYear].join("/"),[endMonth,endDay,endYear].join("/")];
+        // Date is DD/MM/YYYY because month can't be > 12, so switch the month and day around
+        return [[startDay, startMonth, startYear].join("/"),[endDay, endMonth, endYear].join("/")];
 
-        //If the difference is 3 months and the semester starts in [1,5,7,9], Check is month is Jan,May,July or Sept
-    } else if ((endMonth - startMonth === 3 || endMonth - startMonth === 1) && [1,5,7,9].indexOf(startMonth) > -1) {
-        //MM/DD/YYYY it is already in the right format to nothing
-        return [sem_start,sem_end];
-
-        //If the difference is 3 months(in this case the day is in the month slot) and the semester starts in [1,5,7,9], Check is month is Jan,May,July or Sept
-    } else if ((endMonth - startMonth === 3 || endMonth - startMonth === 1) && [1,5,7,9].indexOf(startDay) > -1) {
-        // DD/MM/YYYY is the format found because the DD index [1] slot is a Month not a day, So we need to change to format to MM/DD/YYYY so it will be interpreted well
-        return [[startDay,startMonth,startYear].join("/"),[endDay,endMonth,endYear].join("/")]
-
-    } else {
-        ///Default
-        return [sem_start,sem_end]
+        //If the difference is 3 months (Fall/Winter), 1 month (Spring/Summer) or -5 months (multi-semester(Sept-Apr)),
+        // in this case the day is in the month slot and the semester starts in [1,5,7,9], Check is month is Jan,May,July or Sept
+    } else if ((endDay - startDay === 3 || endDay - startDay === 1 || endDay - startDay === -5) && [1,5,7,9].indexOf(startDay) > -1) {
+        // DD/MM/YYYY is the format found because the DD index [1] slot is a Month not a day, so switch the month and day around
+        return [[startDay, startMonth, startYear].join("/"),[endDay, endMonth, endYear].join("/")]
     }
+
+    //Default
+    return [sem_start, sem_end]
 }
 
 /**
