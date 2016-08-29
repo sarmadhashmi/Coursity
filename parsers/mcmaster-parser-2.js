@@ -66,7 +66,8 @@ function parse(text){
     var _timeDayPairLookAhead =  _ampm.exec(text) ? /(?=\b(?:[MoTuhWeFrSaS]{2,6})\s+(?:[012]?\d\:[0-5]\d[AP]M)\s+-\s+(?:[012]?\d\:[0-5]\d[AP]M)\b)/ : /(?=\b(?:[MoTuhWeFrSaS]{2,6})\s+(?:[012]?\d\:[0-5]\d)\s+-\s+(?:[012]?\d\:[0-5]\d)\b)/;
     var _courseCodeLookAhead = /(?=\b\d{5}\b)/;
     var _timeDayPairOrCourseCodeLookAhead = new RegExp(_courseCodeLookAhead.source + "|" + _timeDayPairLookAhead.source ,"g");
-    var _locationRegex = /([A-Z0-9]{2,5}\s+[A-Z0-9]{2,5})/;
+    // Check for any string, location can be "SEE CLASS NOTES" or "TBA" or maybe something else
+    var _locationRegex = /(\s[\-\w ,]+)/;
     var _profRegex = /((\b[A-Za-z]+\s)(?:[A-Za-z\-.]+\s?)+|(\b[A-Za-z]+\s))/;
     var _locationProfPair = new RegExp(_locationRegex.source + _wsRegex.source + _profRegex.source);
     var _semesterRegex = /((?:\d{2}\/\d{2}\/\d{4})|(?:\d{4}\/\d{2}\/\d{2})|(?:\d{4}-\d{2}-\d{2}))/;
