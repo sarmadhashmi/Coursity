@@ -1,7 +1,6 @@
 var ics = require('./ics-builder');
 var fs = require('fs')
     , filename = process.argv[2];
-
 /**
  * Takes in any time and converts it from a 12HR format to the 24HR format for 7:00PM is 19:00 etc
  * @param {String} time
@@ -17,51 +16,40 @@ function convertTo24Hour(time) {
     }
     return time.replace(/(AM|PM)/, '');
 }
-
 /**
  * Takes any date and turns it into the correct format, so javascript gets the right date.
  * MM/DD/YYYY is the format the javascript object reads or YYYY/MM/DD
  * @param {String} startDate
  * @param {String} endDate
- * @return {String Array} [startDate, endDate]  with format MM/DD/YYYY or YYYY/MM/DD
+ * @return {String Array} [startDate, endDate]  with format MM/DD/YYYY or YYYY/MM/DD or YYYY-MM-DD
  */
 function fixDateFormat(sem_start, sem_end) {
-    if (sem_start.indexOf('-') > -1) {
-        return [sem_start,sem_end]
-    }
-    //assume format is either YYYY/MM/DD TO START OR MM/DD/YYYY
-    startDateSplit = sem_start.split("/");
-    endDateSplit = sem_end.split("/");
+    var startDateSplit = sem_start.split("/");
+    var endDateSplit = sem_end.split("/");
 
-    startMonth = parseInt(startDateSplit[0]);
-    startDay = parseInt(startDateSplit[1]);
-    startYear = parseInt(startDateSplit[2]);
+    var startMonth = parseInt(startDateSplit[0]);
+    var startDay = parseInt(startDateSplit[1]);
+    var startYear = parseInt(startDateSplit[2]);
 
-    endMonth = parseInt(endDateSplit[0]);
-    endDay = parseInt(endDateSplit[1]);
-    endYear = parseInt(endDateSplit[2]);
+    var endMonth = parseInt(endDateSplit[0]);
+    var endDay = parseInt(endDateSplit[1]);
+    var endYear = parseInt(endDateSplit[2]);
 
-    // It is YYYY/MM/DD, because the 0th index is a year or
-    //If the difference is 3 months (Fall/Winter), 1 month (Spring/Summer) or -5 months (multi-semester(Sept-Apr))
-    // and the semester starts in [1,5,7,9], Check is month is Jan,May,July or Sept
-    if(startMonth.toString().length === 4 ||
-        ((endMonth - startMonth === 3 || endMonth - startMonth === 1 || endMonth - startMonth === -5) && [1,5,7,9].indexOf(startMonth) > -1)){
+    var monthDiff = endMonth - startMonth;
+    var dayDiff = endDay - startDay;
+    // If it contains the '-' or the first slot is YYYY it is already in correct format
+    if (sem_start.indexOf('-') > -1 || startMonth.toString().length === 4) {
         return [sem_start, sem_end]
-    } else if (startMonth > 12 || endMonth > 12 || (startYear === endYear && startMonth > endMonth)) {
-        // Date is DD/MM/YYYY because month can't be > 12, so switch the month and day around
-        return [[startDay, startMonth, startYear].join("/"),[endDay, endMonth, endYear].join("/")];
-
-        //If the difference is 3 months (Fall/Winter), 1 month (Spring/Summer) or -5 months (multi-semester(Sept-Apr)),
+    } else
+        // Date is DD/MM/YYYY because month can't be > 12, so switch the month and day around or
+        // If the difference is 3 months (Fall/Winter), 1 month (Spring/Summer) or -5 months (multi-semester(Sept-Apr)),
         // in this case the day is in the month slot and the semester starts in [1,5,7,9], Check is month is Jan,May,July or Sept
-    } else if ((endDay - startDay === 3 || endDay - startDay === 1 || endDay - startDay === -5) && [1,5,7,9].indexOf(startDay) > -1) {
-        // DD/MM/YYYY is the format found because the DD index [1] slot is a Month not a day, so switch the month and day around
-        return [[startDay, startMonth, startYear].join("/"),[endDay, endMonth, endYear].join("/")]
-    }
-
-    //Default
+        if (startMonth > 12 || endMonth > 12 || (startYear === endYear && startMonth > endMonth) ||
+    ((dayDiff === 3 || dayDiff === 1 || dayDiff === -5) && [1, 5, 7, 9].indexOf(startDay) > -1)) {
+        return [[startDay, startMonth, startYear].join("/"),[endDay, endMonth, endYear].join("/")];
+    } 
     return [sem_start, sem_end]
 }
-
 /**
  * Takes in the raw data of timetable and get all the important details including, course name, professor, times etc.
  * @param {String} text
@@ -85,7 +73,7 @@ function parse(text){
     var _semesterPairRegex = new RegExp(_semesterRegex.source +  _wsRegex.source + "-" +  _wsRegex.source +  _semesterRegex.source);
     var _sectionTypeRegex = /(\d+)\s+([A-Z]{1}\d+)\s+(?=Lecture|Tutorial|Laboratory)([A-Za-z]{3,}\b)/;
     var _dayRegex = /(Mo)|(Tu)|(We)|(Th)|(Fr)|(Sa)|(Su)/g;
-    var _weekdays = {"Mo":"Monday","Tu":"Tuesday","We":"Wednesday","Th":"Thursday","Fr":"Friday","Sa":"Saturday","Su":"Sunday"};
+    var _weekdays = {"Mo":"Monday", "Tu":"Tuesday", "We":"Wednesday", "Th":"Thursday", "Fr":"Friday", "Sa":"Saturday", "Su":"Sunday"};
     var timetable = [];
     // Breaks all the courses up. Looks at all the detail after a course name
     var courses = text.split(_courseTitleLookAhead);
