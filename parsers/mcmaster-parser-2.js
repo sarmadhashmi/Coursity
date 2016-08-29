@@ -18,20 +18,16 @@ function convertTo24Hour(time) {
     return time.replace(/(AM|PM)/, '');
 }
 
-
 /**
  * Takes any date and turns it into the correct format, so javascript gets the right date.
- * // MM/DD/YYYY is the format the javascript object reads or YYYY/MM/DD
- * @param {String} startDate,{String} endDate
- * @return {String Array} [startDate,endDate]
+ * MM/DD/YYYY is the format the javascript object reads or YYYY/MM/DD
+ * @param {String} startDate
+ * @param {String} endDate
+ * @return {String Array} [startDate,endDate]  woth format MM/DD/YYYY or YYYY/MM/DD
  */
-
-function fixDateFormat(sem_start,sem_end){
-
+function fixDateFormat(sem_start, sem_end) {
     if (sem_start.indexOf('-') > -1) {
-        startDate = sem_start;
-        endDate = sem_end;
-        return [startDate,endDate]
+        return [sem_start,sem_end]
     }
     //assume format is either YYYY/MM/DD TO START OR MM/DD/YYYY
     startDateSplit = sem_start.split("/");
@@ -46,37 +42,26 @@ function fixDateFormat(sem_start,sem_end){
     endYear = parseInt(endDateSplit[2]);
 
     // This means the format is YYYY/MM/DD, because the 0th index is a year
-    if(startDateSplit[0].length == 4 && endDateSplit[0].length == 4){
-        startDate = sem_start;
-        endDate = sem_end;
-        return [startDate,endDate]
-
-    } else if (startMonth > 12 || endMonth > 12 ||
-        (startYear === endYear && startMonth > endMonth)){
-        // It must be DD/MM/YY, because month is never >12, so switch the day and month index
+    if(startDateSplit[0].length === 4){
+        return [sem_start,sem_end]
+    } else if (startMonth > 12 || endMonth > 12 || (startYear === endYear && startMonth > endMonth)) {
+        // Date is DD/MM/YYYY because month can't be > 12
         // So we need to change to format to MM/DD/YYYY so it will be interpreted well
-        startDate = [startMonth,startDay,startYear].join("/");
-        endDate = [endMonth,endDay,endYear].join("/");
-        return [startDate,endDate];
+        return [[startMonth,startDay,startYear].join("/"),[endMonth,endDay,endYear].join("/")];
 
-        //If the different is 3 months and the semester starts in [1,5,7,9], Check is month is Jan,May,July or Sept
-    }else if ((endMonth - startMonth === 3 || endMonth - startMonth === 1) && [1,5,7,9].indexOf(startMonth) > -1) {
+        //If the difference is 3 months and the semester starts in [1,5,7,9], Check is month is Jan,May,July or Sept
+    } else if ((endMonth - startMonth === 3 || endMonth - startMonth === 1) && [1,5,7,9].indexOf(startMonth) > -1) {
         //MM/DD/YYYY it is already in the right format to nothing
-        startDate = sem_start;
-        endDate = sem_end;
-        return [startDate,endDate];
+        return [sem_start,sem_end];
 
-        //If the different is 3 months(in this case the day is in the month slot) and the semester starts in [1,5,7,9], Check is month is Jan,May,July or Sept
-    }else if ((endMonth - startMonth === 3 || endMonth - startMonth === 1) && [1,5,7,9].indexOf(startDay) > -1) {
+        //If the difference is 3 months(in this case the day is in the month slot) and the semester starts in [1,5,7,9], Check is month is Jan,May,July or Sept
+    } else if ((endMonth - startMonth === 3 || endMonth - startMonth === 1) && [1,5,7,9].indexOf(startDay) > -1) {
         // DD/MM/YYYY is the format found because the DD index [1] slot is a Month not a day, So we need to change to format to MM/DD/YYYY so it will be interpreted well
-        startDate = [startDay,startMonth,startYear].join("/");
-        endDate = [endDay,endMonth,endYear].join("/");
-        return [startDate,endDate]
-    }else{
+        return [[startDay,startMonth,startYear].join("/"),[endDay,endMonth,endYear].join("/")]
+
+    } else {
         ///Default
-        startDate = sem_start;
-        endDate = sem_end;
-        return [startDate,endDate]
+        return [sem_start,sem_end]
     }
 }
 
@@ -128,7 +113,7 @@ function parse(text){
 
             if (!locationProfPair || !time || !semester) continue;
 
-            var dateFormatFix = fixDateFormat(semester[1],semester[2]);
+            semester = fixDateFormat(semester[1], semester[2]);
             var where = locationProfPair[1];
             var professor = locationProfPair[2];
             // Changes McMasters MoTuWe format to full weekdays
@@ -140,8 +125,8 @@ function parse(text){
                 var startTimeObj = {'hour': parseInt(startTimeSplit[0], 10), 'minute': parseInt(startTimeSplit[1], 10)};
                 var endTimeSplit = convertTo24Hour(time[3]).split(":");
                 var endTimeObj = {'hour': parseInt(endTimeSplit[0], 10), 'minute': parseInt(endTimeSplit[1], 10)};
-                var sem_start = new Date(dateFormatFix[0]);
-                var sem_end = new Date(dateFormatFix[1]);
+                var sem_start = new Date(semester[0]);
+                var sem_end = new Date(semester[1]);
                 var semesterStartObj = { year: sem_start.getFullYear(), month: sem_start.getMonth(), day: sem_start.getDate()};
                 var semesterEndObj = { year: sem_end.getFullYear(), month: sem_end.getMonth(), day: sem_end.getDate()};
                 var courseSplit = course[1].split(" ");
