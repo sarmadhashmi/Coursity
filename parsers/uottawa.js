@@ -9,7 +9,7 @@ var fs = require('fs')
 // Relevant regular expressions
 var unknownValue = "N/A";
 var _locationRegex = /\b[A-Z]{3,5}\s[A-Z0-9]{2,6}\b/;
-var _courseRegex = /\b([A-Z]{3})([1-9]{1}[0-9]{3})([A-Z])?\s+(\b([A-Z.]+\s([A-Z.&]+\s?)+)\b)/;
+var _courseRegex = /\b([A-Z]{3})([1-9]{1}[0-9]{3})([A-Z])?\s+(\b([A-Z.-]+\s([A-Z.&-]+\s?)+)\b)/;
 var _courseRegexLookAhead = /(?=\b[A-Z]{3}[1-9]{1}[0-9]{3}[A-Z]?\b)/g;
 var _timeRegexLookAhead = /(?=\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+[0-9]{1,2}:[0-9]{2}\s+to\s+[0-9]{2}:[0-9]{2}\s+[A-Za-z]*\b)/g;
 var _timeRegex = /\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+([0-9]{1,2}):([0-9]{2})\s+to\s+([0-9]{2}):([0-9]{2})\s+([A-Za-z]*)\b/;
