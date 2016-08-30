@@ -1,6 +1,22 @@
 var ics = require('./ics-builder');
 var fs = require('fs')
     , filename = process.argv[2];
+var _wsRegex = /\s+/;
+var _ampm = /:\d{2}[aAPp][mM]/;
+var _courseTitleLookAhead = /(?=\b(?:\w{2,}\ \w{1,5})\ -\ (?:[^\r\n]+)\b)/g;
+var _courseCodeLookAhead = /(?=\b\d{5}\b)/;
+var _courseTitleRegex = /(?:\b(\w{2,}\ \w{1,5})\ -\ ([^\r\n]+)\b)/;
+var _dayOfWeekRegex = /([MoTuhWeFrSaS]{2,6})/;
+// Check for any string, location can be "SEE CLASS NOTES" or "TBA" or maybe something else
+var _locationRegex = /(\s[\-\w ,]+)/;
+var _profRegex = /((\b[A-Za-z]+\s)(?:[A-Za-z\-.]+\s?)+|(\b[A-Za-z]+\s))/;
+var _semesterRegex = /((?:\d{2}\/\d{2}\/\d{4})|(?:\d{4}\/\d{2}\/\d{2})|(?:\d{4}-\d{2}-\d{2}))/;
+var _locationProfPair = new RegExp(_locationRegex.source + _wsRegex.source + _profRegex.source);
+var _semesterPairRegex = new RegExp(_semesterRegex.source +  _wsRegex.source + "-" +  _wsRegex.source +  _semesterRegex.source);
+var _sectionTypeRegex = /(\d+)\s+([A-Z]{1}\d+)\s+(?=Lecture|Tutorial|Laboratory)([A-Za-z]{3,}\b)/;
+var _dayRegex = /(Mo)|(Tu)|(We)|(Th)|(Fr)|(Sa)|(Su)/g;
+var _weekdays = {"Mo":"Monday", "Tu":"Tuesday", "We":"Wednesday", "Th":"Thursday", "Fr":"Friday", "Sa":"Saturday", "Su":"Sunday"};
+
 /**
  * Takes in any time and converts it from a 12HR format to the 24HR format for 7:00PM is 19:00 etc
  * @param {String} time
@@ -18,8 +34,7 @@ function convertTo24Hour(time) {
 }
 
 /**
- * Takes any date and turns it into the correct format, so javascript gets the right date.
- * MM/DD/YYYY is the format the javascript object reads or YYYY/MM/DD
+ * Takes any date and turns it into the correct format, so javascript gets the right date. MM/DD/YYYY is the format the javascript object reads or YYYY/MM/DD
  * @param {String} startDate
  * @param {String} endDate
  * @return {String Array} [startDate, endDate]  with format MM/DD/YYYY or YYYY/MM/DD or YYYY-MM-DD
@@ -56,25 +71,11 @@ function fixDateFormat(sem_start, sem_end) {
  * @return {Object/JSON} timetable
  */
 function parse(text){
-    var _wsRegex = /\s+/;
-    var _ampm = /:\d{2}[aAPp][mM]/;
-    var _courseTitleLookAhead = /(?=\b(?:\w{2,}\ \w{1,5})\ -\ (?:[^\r\n]+)\b)/g;
-    var _courseTitleRegex = /(?:\b(\w{2,}\ \w{1,5})\ -\ ([^\r\n]+)\b)/;
-    var _dayOfWeekRegex = /([MoTuhWeFrSaS]{2,6})/;
+    //Check is there is an AM/PM, if not use other pattern
     var _timeRegex  =  _ampm.exec(text) ? /([012]?\d\:[0-5]\d[AP]M)/ : /([012]?\d\:[0-5]\d)/;
     var _timeDayPairRegex = new RegExp(_dayOfWeekRegex.source + _wsRegex.source + _timeRegex.source +  _wsRegex.source + "-" +  _wsRegex.source + _timeRegex.source);
     var _timeDayPairLookAhead =  _ampm.exec(text) ? /(?=\b(?:[MoTuhWeFrSaS]{2,6})\s+(?:[012]?\d\:[0-5]\d[AP]M)\s+-\s+(?:[012]?\d\:[0-5]\d[AP]M)\b)/ : /(?=\b(?:[MoTuhWeFrSaS]{2,6})\s+(?:[012]?\d\:[0-5]\d)\s+-\s+(?:[012]?\d\:[0-5]\d)\b)/;
-    var _courseCodeLookAhead = /(?=\b\d{5}\b)/;
     var _timeDayPairOrCourseCodeLookAhead = new RegExp(_courseCodeLookAhead.source + "|" + _timeDayPairLookAhead.source ,"g");
-    // Check for any string, location can be "SEE CLASS NOTES" or "TBA" or maybe something else
-    var _locationRegex = /(\s[\-\w ,]+)/;
-    var _profRegex = /((\b[A-Za-z]+\s)(?:[A-Za-z\-.]+\s?)+|(\b[A-Za-z]+\s))/;
-    var _locationProfPair = new RegExp(_locationRegex.source + _wsRegex.source + _profRegex.source);
-    var _semesterRegex = /((?:\d{2}\/\d{2}\/\d{4})|(?:\d{4}\/\d{2}\/\d{2})|(?:\d{4}-\d{2}-\d{2}))/;
-    var _semesterPairRegex = new RegExp(_semesterRegex.source +  _wsRegex.source + "-" +  _wsRegex.source +  _semesterRegex.source);
-    var _sectionTypeRegex = /(\d+)\s+([A-Z]{1}\d+)\s+(?=Lecture|Tutorial|Laboratory)([A-Za-z]{3,}\b)/;
-    var _dayRegex = /(Mo)|(Tu)|(We)|(Th)|(Fr)|(Sa)|(Su)/g;
-    var _weekdays = {"Mo":"Monday", "Tu":"Tuesday", "We":"Wednesday", "Th":"Thursday", "Fr":"Friday", "Sa":"Saturday", "Su":"Sunday"};
     var timetable = [];
     // Breaks all the courses up. Looks at all the detail after a course name
     var courses = text.split(_courseTitleLookAhead);
@@ -108,26 +109,22 @@ function parse(text){
 
             for (var k = 0; k < daysArray.length ; k++) {
                 var startTimeSplit = convertTo24Hour(time[2]).split(":");
-                var startTimeObj = {'hour': parseInt(startTimeSplit[0], 10), 'minute': parseInt(startTimeSplit[1], 10)};
                 var endTimeSplit = convertTo24Hour(time[3]).split(":");
-                var endTimeObj = {'hour': parseInt(endTimeSplit[0], 10), 'minute': parseInt(endTimeSplit[1], 10)};
                 var sem_start = new Date(semester[0]);
                 var sem_end = new Date(semester[1]);
-                var semesterStartObj = { year: sem_start.getFullYear(), month: sem_start.getMonth(), day: sem_start.getDate()};
-                var semesterEndObj = { year: sem_end.getFullYear(), month: sem_end.getMonth(), day: sem_end.getDate()};
                 var courseSplit = course[1].split(" ");
                 timetable.push({
                     'course_code_faculty' : courseSplit[0],
                     'course_code_number' : courseSplit[1],
                     'course_number' : currentSection[1],
                     'course_name' : course[2],
-                    'semester_start' : semesterStartObj,
-                    'semester_end' : semesterEndObj,
+                    'semester_start' : { year: sem_start.getFullYear(), month: sem_start.getMonth(), day: sem_start.getDate()},
+                    'semester_end' : { year: sem_end.getFullYear(), month: sem_end.getMonth(), day: sem_end.getDate()},
                     'where' : where,
                     'professor': professor,
                     'day' : daysArray[k],
-                    'start_time' : startTimeObj,
-                    'end_time' : endTimeObj,
+                    'start_time' : {'hour': parseInt(startTimeSplit[0], 10), 'minute': parseInt(startTimeSplit[1], 10)},
+                    'end_time' : {'hour': parseInt(endTimeSplit[0], 10), 'minute': parseInt(endTimeSplit[1], 10)},
                     'class_section' : currentSection[2],
                     'class_type' : currentSection[3]
                 });
