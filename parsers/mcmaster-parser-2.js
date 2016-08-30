@@ -7,15 +7,16 @@ var fs = require('fs')
  * @return {String} 24HR formatted time
  */
 function convertTo24Hour(time) {
-    var hours = parseInt(time.substr(0, 2));
-    if(time.indexOf('AM') != -1 && hours == 12) {
+    var hours = parseInt(time.substr(0, 2), 10);
+    if(time.indexOf('AM') > -1 && hours == 12) {
         time = time.replace('12', '0');
-    }
-    if(time.indexOf('PM')  != -1 && hours < 12) {
+    }else if(time.indexOf('PM')  > -1 && hours < 12) {
         time = time.replace(hours, (hours + 12));
     }
+
     return time.replace(/(AM|PM)/, '');
 }
+
 /**
  * Takes any date and turns it into the correct format, so javascript gets the right date.
  * MM/DD/YYYY is the format the javascript object reads or YYYY/MM/DD
@@ -27,29 +28,28 @@ function fixDateFormat(sem_start, sem_end) {
     var startDateSplit = sem_start.split("/");
     var endDateSplit = sem_end.split("/");
 
-    var startMonth = parseInt(startDateSplit[0]);
-    var startDay = parseInt(startDateSplit[1]);
-    var startYear = parseInt(startDateSplit[2]);
+    var startMonth = parseInt(startDateSplit[0], 10);
+    var startDay = parseInt(startDateSplit[1], 10);
+    var startYear = parseInt(startDateSplit[2], 10);
 
-    var endMonth = parseInt(endDateSplit[0]);
-    var endDay = parseInt(endDateSplit[1]);
-    var endYear = parseInt(endDateSplit[2]);
+    var endMonth = parseInt(endDateSplit[0], 10);
+    var endDay = parseInt(endDateSplit[1], 10);
+    var endYear = parseInt(endDateSplit[2], 10);
 
-    var monthDiff = endMonth - startMonth;
     var dayDiff = endDay - startDay;
     // If it contains the '-' or the first slot is YYYY it is already in correct format
     if (sem_start.indexOf('-') > -1 || startMonth.toString().length === 4) {
         return [sem_start, sem_end]
-    } else
-        // Date is DD/MM/YYYY because month can't be > 12, so switch the month and day around or
-        // If the difference is 3 months (Fall/Winter), 1 month (Spring/Summer) or -5 months (multi-semester(Sept-Apr)),
-        // in this case the day is in the month slot and the semester starts in [1,5,7,9], Check is month is Jan,May,July or Sept
-        if (startMonth > 12 || endMonth > 12 || (startYear === endYear && startMonth > endMonth) ||
-    ((dayDiff === 3 || dayDiff === 1 || dayDiff === -5) && [1, 5, 7, 9].indexOf(startDay) > -1)) {
+    }
+    // Date is DD/MM/YYYY as month can't be > 12, switch the MM and DD or If the difference is 3 months(Fall/Winter), 1 month(Spring/Summer) or -5 months(multi-semester(Sept-Apr)),
+    else if (startMonth > 12 || endMonth > 12 || (startYear === endYear && startMonth > endMonth) ||
+    ([1,3,-5].indexOf(dayDiff) > -1 && [1, 5, 7, 9].indexOf(startDay) > -1)) {
         return [[startDay, startMonth, startYear].join("/"),[endDay, endMonth, endYear].join("/")];
-    } 
+    }
+
     return [sem_start, sem_end]
 }
+
 /**
  * Takes in the raw data of timetable and get all the important details including, course name, professor, times etc.
  * @param {String} text
@@ -131,8 +131,10 @@ function parse(text){
                     'class_section' : currentSection[2],
                     'class_type' : currentSection[3]
                 });
-            }}
+            }
+        }
     }
+
     return timetable;
 }
 
