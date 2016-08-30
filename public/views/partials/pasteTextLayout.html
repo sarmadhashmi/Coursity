@@ -1,10 +1,31 @@
-<div class="homeWrapper homeDiv" id="homeDiv">
+<div class="homeDiv">
     <h1 class="text-center"><b>How To Guide for {{ uni }} University</b></h1>
+    <!-- Separate in to 3 base columns -->
+    <div style="width: 70%; margin:auto" class="row">
+        <div class="col-md-4">
+            <h4>Step 1</h4>
+            <img src="" alt="Step 1" width="250" height="250">
+            <span><br>Log into Mosiac, go to <strong>Student Center</strong>, then <strong>Weekly Calendar</strong> <br>
+                Click <strong>List View</strong>
+                </span>
+        </div>
+        <div class="col-md-4">
+            <h4>Step 2</h4>
+            <img src="" alt="Step 2" width="250" height="250"></span>
+            <span><br>Right-click and click <strong>Select All</strong>, to select<br> everything on the page
+                Copy all selected <br>content
+        </div>
+        <div class="col-md-4">
+            <h4>Step 3</h4>
+            <img  src="" alt="Step 3" width="250" height="250">
+            <span><br>Paste timetable in the textbox below and hit submit</span>
+        </div>
+        </div>
     <div class="row">
-        <!-- Separate in to 3 base columns -->
+
         <div id="upload" class="col-sm-12 text-center"><h1></h1>
 
-            <form ng-submit="upload(file)" id="timetable-submit" enctype="multipart/form-data">
+            <form ng-submit="upload(file)" enctype="multipart/form-data">
                 <div class="form-group">
                     <div style="padding: 5px;">
                         <div style="padding: 5px;">
@@ -12,17 +33,12 @@
                             <input style="width:50%" type="text" ng-model="calEmail" placeholder="example@placeholder.com" />
                         </div>
 
-                        <textarea style="width:50%; height: 200px" rows="20" type="text" placeholder="Schedule Here"  ng-model="rawTimetable" required />
+                        <textarea style="width:50%; height: 150px" rows="20" type="text" placeholder="Schedule Here"  ng-model="rawTimetable" required />
                     </div>
                     <button type="submit" id="submitButton" class="btn btn-default submitBtn">SUBMIT</button>
                 </div>
             </form>
         </div>
-    </div>
-    <div id="footer" class="text-center">
-        <a style="color: #ffffff" href="https://www.facebook.com/sharer/sharer.php?u=www.coursity.me"><i class="fa fa-facebook-square fa-2x"></i></a>
-        <a style="color: #ffffff" href="https://twitter.com/home?status=Hey!%20just%20added%20my%20course%20schedule%20to%20my%20devices%20using%20Coursity!%20add%20yours%20at%20www.coursity.me"><i class="fa fa-twitter-square fa-2x"></i></a>
-        <p class="text-center">Designed and Developed by <a href="https://ca.linkedin.com/in/abeomor"> Abe </a> and <a href="https://ca.linkedin.com/pub/sarmad-hashmi/86/278/521"> Sarmad</a></p>
     </div>
 </div>
 
