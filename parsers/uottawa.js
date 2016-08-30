@@ -7,7 +7,7 @@ var fs = require('fs')
   });
 
 // Relevant regular expressions
-var _locationRegex = /\b[A-Z]{3,5}\s[A-Z0-9]{2,4}\b/;
+var _locationRegex = /\b[A-Z]{3,5}\s[A-Z0-9]{2,6}\b/;
 var _courseRegex = /\b([A-Z]{3})([1-9]{1}[0-9]{3})([A-Z])?\s+(\b([A-Z.]+\s([A-Z.&]+\s?)+)\b)/;
 var _courseRegexLookAhead = /(?=\b[A-Z]{3}[1-9]{1}[0-9]{3}[A-Z]?\b)/g;
 var _timeRegexLookAhead = /(?=\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+[0-9]{1,2}:[0-9]{2}\s+to\s+[0-9]{2}:[0-9]{2}\s+[A-Za-z]*\b)/g;
@@ -44,7 +44,7 @@ function parse(text) {
       timetable.push({
         'course_code_faculty': course[1],
         'course_code_number': course[2],
-        'section': course[3],
+        'section': course[3] ? course[3] : '',
         'course_name': course[4],
         'professor': professor[0],
         'semester_start':  {
