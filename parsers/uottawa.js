@@ -7,6 +7,7 @@ var fs = require('fs')
   });
 
 // Relevant regular expressions
+var unknownValue = "N/A";
 var _locationRegex = /\b[A-Z]{3,5}\s[A-Z0-9]{2,6}\b/;
 var _courseRegex = /\b([A-Z]{3})([1-9]{1}[0-9]{3})([A-Z])?\s+(\b([A-Z.]+\s([A-Z.&]+\s?)+)\b)/;
 var _courseRegexLookAhead = /(?=\b[A-Z]{3}[1-9]{1}[0-9]{3}[A-Z]?\b)/g;
@@ -37,7 +38,7 @@ function parse(text) {
       var professor = _professorRegex.exec(classes[j]);
       var time = _timeRegex.exec(classes[j]);
       var where = _locationRegex.exec(classes[j]);
-      if (!professor || !time || !where) continue;
+      if (!time) continue;
       var sem_start = new Date(semester[1] + ' ' + semester[3]);
       var sem_end = new Date(semester[2] + ' ' + semester[3]);
       // Build object for this section and push it to the timetable array			
@@ -46,7 +47,7 @@ function parse(text) {
         'course_code_number': course[2],
         'section': course[3] ? course[3] : '',
         'course_name': course[4],
-        'professor': professor[0],
+        'professor': professor ? professor[0] : unknownValue,
         'semester_start':  {
           'year': sem_start.getFullYear(),
           'month': sem_start.getMonth(),
@@ -57,7 +58,7 @@ function parse(text) {
           'month': sem_end.getMonth(),
           'day': sem_end.getDate()
         },
-        'where': where[0],
+        'where': where ? where[0] : unknownValue,
         'day': time[1],
         'start_time': {
           'hour': parseInt(time[2], 10),
