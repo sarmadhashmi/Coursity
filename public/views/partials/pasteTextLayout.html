@@ -1,24 +1,39 @@
-<div class="howToDiv">
-    <h1 class="text-center"><b>Import your schedule from <a href="#">Mosaic</a></b></h1>
-    <br>
+<div class="wrapper howToDiv">
     <!-- Separate in to 3 base columns -->
-    <div style="width: 70%; margin:auto; text-align: center" class="row">
-        <div class="col-md-4">
+    <div ng-if="uni === 'mcmaster'" style="width: 70%; margin:auto; text-align: center" class="row">
+        <h1 class="text-center"><b>Import your schedule from <a target="_blank" href="https://epprd.mcmaster.ca/psp/prepprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL?customTab=MCM_TAB_STU_CEN&IgnoreParamTempl=customTab">Mosaic</a></b></h1>
+        <br>
+    <div class="col-md-4">
+        <span class="step">1</span>
+        <img ng-src="../../img/{{uni}}_step1.jpg" alt="Step 1" width="225" height="225">
+        <p><a target="_blank" href="https://epprd.mcmaster.ca/psp/prepprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL?customTab=MCM_TAB_STU_CEN&IgnoreParamTempl=customTab"><b>Log into Mosaic</b></a> and click <b>Weekly Schedule</b></p>
+    </div>
+    <div class="col-md-4">
+        <span class="step">2</span>
+        <img ng-src="../../img/{{uni}}_step2.jpg" alt="Step 2" width="225" height="225"></span>
+        <p>Select <a target="_blank" href="https://csprd.mcmaster.ca/psc/prcsprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSR_SSENRL_LIST.GBL"><b>list view</b></a> and your semester</p>
+    </div>
+    <div class="col-md-4">
+        <span class="step">3</span>
+        <img  ng-src="../../img/{{uni}}_step3.jpg" alt="Step 3" width="225" height="225">
+        <p><b>Select all</b>, copy and <b>paste</b> into the box below!</p>
+    </div>
+    </div>
+    <div ng-if="uni === 'uottawa'" style="width: 70%; margin:auto; text-align: center" class="row">
+        <h1 class="text-center"><b>Import your schedule from <a target="_blank" href="#">Rabaska</a></b></h1>
+        <br>
+        <div class="col-md-6">
             <span class="step">1</span>
             <img ng-src="../../img/{{uni}}_step1.jpg" alt="Step 1" width="225" height="225">
-            <p><a href="#"><b>Log into Mosaic</b></a> and click <b>Weekly Schedule</b></p>
+            <p><a target="_blank" href="#"><b>Log into Mosaic</b></a> and click <b>Weekly Schedule</b></p>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <span class="step">2</span>
             <img ng-src="../../img/{{uni}}_step2.jpg" alt="Step 2" width="225" height="225"></span>
-            <p>Select <a href="#"><b>list view</b></a> and your semester</p>
+            <p>Select <a target="_blank" href="#"><b>list view</b></a> and your semester</p>
         </div>
-        <div class="col-md-4">
-            <span class="step">3</span>
-            <img  ng-src="../../img/{{uni}}_step3.jpg" alt="Step 3" width="225" height="225">
-            <p><b>Select all</b>, copy and <b>paste</b> into the box below!</p>
-        </div>
-        </div>
+    </div>
+
     <div class="row">
 
         <div class="col-sm-12 text-center"><h1></h1>

@@ -73,33 +73,26 @@ html, body {
     font-size: 18px;
     color: #666666 !important;
 }
+@media (max-width: 720px){
+    .wrapper {
+        height: auto !important;
+    }
+}
 
-.howToDiv{
+.wrapper{
     color: #6a6a6a;
     padding-top: 10px;
     padding-bottom: 50px;
-    height:500px;
-    width: 100%;
-    /*background: url(../img/mcmaster222.jpg);
-    background-attachment: fixed;
-    background-position: bottom;
-    background-repeat: no-repeat;
-    background-size:cover;*/
-
-}
-.homeDiv{
-    color: #6a6a6a;
-    padding-top: 10px;
-    padding-bottom: 50px;
-    height:720px;
+    height:90vh;
     width: 100%;
 }
 
-.homeDiv span>a {
+
+.wrapper span>a {
     font-size: 24px;
 }
 
-.homeDiv a>img:hover {
+.wrapper a>img:hover {
     border: none #6a6a6a;
     box-shadow: 1px 1px 5px #6a6a6a;
     transition: all 100ms ease;
