@@ -53,6 +53,7 @@ html, body {
 .step{
     display: block;
     border-radius: 30px;
+    border: 1px solid #BADA55;
     width: 60px;
     height: 60px;
     position: relative;
@@ -61,7 +62,7 @@ html, body {
     margin-bottom: 20px;
     line-height: 60px;
     font-size: 30px;
-    background-color: #888b8d;
+    background-color: #56b85a;
     color: #FFF;
 }
 .howToDiv span>strong{

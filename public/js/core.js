@@ -21,9 +21,8 @@ main.config(['$routeProvider', function($routeProvider) {
 
 main.controller('MainController', ['$scope', '$routeParams' ,'$http', 'Upload', function($scope,$routeParams, $http, Upload) {
 	$scope.uni = $routeParams.uni;
-	$scope.universities = [
-		{name: 'Example', value: 'example'},
-		{name: 'McMaster', value: 'mcmaster'}, 
+	$scope.universities = [		
+		{name: 'McMaster', value: 'mcmaster'},
 		{name:'UOttawa', value: 'uottawa'}
 	];
 
@@ -33,11 +32,11 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', 'Upload', 
 					url: '/upload',
 					file: files[0],
 					fields: {
-						'university': $scope.university, 
+						'university': $scope.university,
 						'semester': $scope.semester,
 						'calEmail': $scope.calEmail,
 					}
-				}) 
+				})
 				.progress(function(evt) {
 					$( "#submitButton" ).prop('disabled', true);
 		            $scope.message = 'Uploading and converting';
@@ -46,13 +45,13 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', 'Upload', 
 					var anchor = angular.element('<a><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download</a>');
 					anchor.attr({
          				href: '/ics/' + data,
-         				target: '_blank'             			     			
+         				target: '_blank'
      				});
-     				anchor.addClass('btn');     				     				     				
+     				anchor.addClass('btn');
      				anchor.addClass('submitBtn');
 					anchor.addClass("btn-default");
 					$("#downloadDiv" ).empty();
-     				var div = angular.element(document).find('#downloadDiv').eq(0);					
+     				var div = angular.element(document).find('#downloadDiv').eq(0);
 					$( "#submitButton" ).prop('disabled', false);
 
 					div.append(anchor);
@@ -85,7 +84,7 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', 'Upload', 
 		$http.post('/feedback', { "email": $scope.email, "message": $scope.messageFeedback, "recaptcha": document.getElementById("g-recaptcha-response").value })
 		.success(function(data, status, headers, config) {
     		$scope.feedbackMessage = 'Thank you!';
-		}).error(function(data, status, headers, config) {			
+		}).error(function(data, status, headers, config) {
     		$scope.feedbackMessage = data;
 		});
 	};
@@ -132,4 +131,3 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', 'Upload', 
 		});
 	});
 }]);
-
