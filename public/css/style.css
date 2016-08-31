@@ -73,11 +73,23 @@ html, body {
     font-size: 18px;
     color: #666666 !important;
 }
+
+.dowmloadPage {
+    padding-top: 200px;
+}
+
 @media (max-width: 720px){
     .wrapper {
         height: auto !important;
     }
 }
+
+@media (max-width: 500px){
+    .dowmloadPage {
+        padding-top: 50px !important;
+    }
+}
+
 
 .wrapper{
     color: #6a6a6a;
