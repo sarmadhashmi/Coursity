@@ -1,39 +1,38 @@
-<div class="homeDiv">
-    <h1 class="text-center"><b>How To Guide for {{ uni }} University</b></h1>
+<div class="howToDiv">
+    <h1 class="text-center"><b>Import your schedule from <a href="#">Mosaic</a></b></h1>
+    <br>
     <!-- Separate in to 3 base columns -->
-    <div style="width: 70%; margin:auto" class="row">
+    <div style="width: 70%; margin:auto; text-align: center" class="row">
         <div class="col-md-4">
-            <h4>Step 1</h4>
-            <img src="" alt="Step 1" width="250" height="250">
-            <span><br>Log into Mosiac, go to <strong>Student Center</strong>, then <strong>Weekly Calendar</strong> <br>
-                Click <strong>List View</strong>
-                </span>
+            <span class="step">1</span>
+            <img ng-src="../../img/{{uni}}_step1.jpg" alt="Step 1" width="225" height="225">
+            <p><a href="#"><b>Log into Mosaic</b></a> and click <b>Weekly Schedule</b></p>
         </div>
         <div class="col-md-4">
-            <h4>Step 2</h4>
-            <img src="" alt="Step 2" width="250" height="250"></span>
-            <span><br>Right-click and click <strong>Select All</strong>, to select<br> everything on the page
-                Copy all selected <br>content
+            <span class="step">2</span>
+            <img ng-src="../../img/{{uni}}_step2.jpg" alt="Step 2" width="225" height="225"></span>
+            <p>Select <a href="#"><b>list view</b></a> and your semester</p>
         </div>
         <div class="col-md-4">
-            <h4>Step 3</h4>
-            <img  src="" alt="Step 3" width="250" height="250">
-            <span><br>Paste timetable in the textbox below and hit submit</span>
+            <span class="step">3</span>
+            <img  ng-src="../../img/{{uni}}_step3.jpg" alt="Step 3" width="225" height="225">
+            <p><b>Select all</b>, copy and <b>paste</b> into the box below!</p>
         </div>
         </div>
     <div class="row">
 
-        <div id="upload" class="col-sm-12 text-center"><h1></h1>
+        <div class="col-sm-12 text-center"><h1></h1>
 
-            <form ng-submit="upload(file)" enctype="multipart/form-data">
+            <form name="timetableForm" ng-submit="upload(file)">
                 <div class="form-group">
-                    <div style="padding: 5px;">
-                        <div style="padding: 5px;">
-                            <p class="choiceLabel">Your Email (<b>Optional</b>, Calendar file will be emailed)</p>
-                            <input style="width:50%" type="text" ng-model="calEmail" placeholder="example@placeholder.com" />
-                        </div>
+                    <div style="padding: 0px;">
+                        <p><b>Paste your timetable below</b> and let the magic happen</p>
+                        <textarea style="width:50%; height: 80px" rows="20" type="text" ng-model="rawTimetable" required />
+                    </div>
 
-                        <textarea style="width:50%; height: 150px" rows="20" type="text" placeholder="Schedule Here"  ng-model="rawTimetable" required />
+                    <div style="padding: 5px;">
+                        <p><b>Enter your email</b> and get the magical file emailed to you! <i>(Optional)</i></p>
+                        <input name="email" style="width:50%" type="email" ng-model="calEmail" />
                     </div>
                     <button type="submit" id="submitButton" class="btn btn-default submitBtn">SUBMIT</button>
                 </div>

@@ -1,8 +1,0 @@
-Step 1: http://www.uottawa.ca/en/students
-Step 2: Click on Rabaska-On line registration
-Step 3: Click "My Timetable"
-Step 4: Select a week that falls into the semester that you want the calendar for and contains all the courses that you're taking in the week.
-For example: The schedule for the week of September 20th would fall in the fall semester.
-The sechedule for the week of January 20th would fall in the winter semester.
-Step 5: Right click on page, click "Save as..." and be sure "Webpage, Complete" is selected and click save to the location you want to save it to.
-Step 6: Upload the Rabaska.html you just saved and output a beautiful ICS!

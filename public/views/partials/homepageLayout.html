@@ -1,23 +1,36 @@
 <div class="homeDiv">
-	<div style="padding-top: 200px;" class="row">
+	<div style="padding-top: 20px;" class="row">
 		<!-- Separate in to 3 base columns -->
 		<div id="upload" class="col-sm-12 text-center title"><h1></h1>
-						<div style="padding-bottom: 150px" class="dropdown">
+						<!--div style="padding-bottom: 0px" class="dropdown">
 							<button class="dropbtn">Choose University <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> </button>
 							<div class="dropdown-content">
 								<a ng-repeat="uni in universities" ng-href="/#/{{uni.value}}">{{ uni.name }}</a>
 							</div>
-						</div>
+						</div-->
+
 
 	</div>
 		<div class="row">
 			<!-- Separate in to 3 base columns -->
 			<div class="col-sm-12 text-center "><h1></h1>
-				<div>
-					<span><a href="">What the hell is this?</a></span><br>
-					<span><a href="">FAQ</a></span>
+				<h3><b>Choose University</b></h3>
+				<div style="padding: 10px 0px 20px 0px">
+					<a ng-repeat="uni in universities" ng-href="/#/{{uni.value}}"><img style="padding: 15px" ng-src="../img/{{uni.value}}.jpg" alt="Step 1" width="160" height="160"></a>
 				</div>
-
+				<span class="step">Or</span>
+				<div style="padding: 10px 0px 20px 0px"><button class="submitBtn" >Suggest your university</button></div>
 			</div>
+
+		</div>
+		<div class="row">
+			<!-- Separate in to 3 base columns -->
+			<div class="col-sm-12 text-center "><h1></h1>
+				<div>
+					<span><a href="#">Want help? Click here.</a></span><br>
+					<span><a href="#">FAQ</a></span>
+				</div>
+			</div>
+</div>
 </div>
 </div>

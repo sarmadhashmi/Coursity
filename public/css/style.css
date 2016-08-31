@@ -5,7 +5,7 @@ html, body {
     font-family: 'Roboto', sans-serif;
     width: auto;
     min-width: 366px;
-    background-image: url(../img/example.jpg);
+    /*background-image: url(../img/example.jpg);*/
     background-attachment: fixed;
     background-position: center;
     background-repeat: no-repeat;
@@ -20,7 +20,7 @@ html, body {
 }
 .submitBtn{
     font-size: 24px;
-    background-color:#56793d;
+    background-color:#56b85a;
     border: none; padding: 10px 40px 10px 40px;
     color: #ffffff;
     border-radius: 0px !important;
@@ -28,15 +28,20 @@ html, body {
 
 .downloadBtn{
     font-size: 24px;
-    background-color:#56793d;
+    background-color:#56b85a;
     border: none;
-    padding: 40px 40px 40px 40px;
+    padding: 30px 30px 30px 30px;
     color: #ffffff;
     border-radius: 0px !important;
 }
 
+.downloadBtn:hover {
+    background-color: #3e8e41;
+    color: #ffffff;
+}
+
 .submitBtn:hover {
-    background-color: #344821;
+    background-color: #3e8e41;
     color: #ffffff;
 }
 
@@ -45,11 +50,47 @@ html, body {
     font-size: 15px !important;
 }
 
-.homeDiv{
-    color: #ffffff;
+.step{
+    display: block;
+    border-radius: 30px;
+    width: 60px;
+    height: 60px;
+    position: relative;
+    left: 50%;
+    margin-left: -30px;
+    margin-bottom: 20px;
+    line-height: 60px;
+    font-size: 30px;
+    background-color: #888b8d;
+    color: #FFF;
+}
+.howToDiv span>strong{
+     color:#56b85a;
+ }
+
+.howToDiv p{
+    font-size: 18px;
+    color: #666666 !important;
+}
+
+.howToDiv{
+    color: #6a6a6a;
     padding-top: 10px;
     padding-bottom: 50px;
-    height:100%;
+    height:500px;
+    width: 100%;
+    /*background: url(../img/mcmaster222.jpg);
+    background-attachment: fixed;
+    background-position: bottom;
+    background-repeat: no-repeat;
+    background-size:cover;*/
+
+}
+.homeDiv{
+    color: #6a6a6a;
+    padding-top: 10px;
+    padding-bottom: 50px;
+    height:720px;
     width: 100%;
 }
 
@@ -57,37 +98,29 @@ html, body {
     font-size: 24px;
 }
 
+.homeDiv a>img:hover {
+    border: none #6a6a6a;
+    box-shadow: 1px 1px 5px #6a6a6a;
+    transition: all 100ms ease;
+    cursor: hand;
+}
+
+
 #small-logo{
         display: none;
     }
 
 .title h1 {
     width: 350px;
-    height: 200px;
-    background: url(../img/Logo_Course2Cal.png) no-repeat;
+    height: 160px;
+    background: url(../img/Logo_Course2Cal_New_2.png) no-repeat;
     overflow: hidden;
     text-indent: 100%;
     white-space: nowrap;
     margin: auto;
 }
 
-#uploadBody{
-    padding: 50px;
-}
 
-#uploadDiv h2{
-    margin-bottom: 30px;
-}
-
-#uploadDiv h2>sup {
-    font-size: 10px;
-    top:-2em;
-}
-
-#uniChoose{
-    font-size: 24px;
-    color: #666666 !important;
-}
 
 .choiceLabel{
     color: #FFFFFF;
@@ -95,39 +128,46 @@ html, body {
 }
 
 .choiceLabel a:hover{
-    color: #56793d;
+    color: #56b85a;
     font-weight: 400;
 }
 
-a:focus,a:hover {
-    color: #56793d !important;
-    text-decoration:none
-}
 
 #footer{
     height:auto;
     background-color: transparent;
     border: none;
-    color: white;
+    color: #6a6a6a;
     font-size: 14px;
     padding: 0px;
 }
 
 a {
-    text-decoration: none !important;
+    color: #3e8e41;
     -webkit-transition: all 225ms ease;
     -moz-transition: all 225ms ease;
     transition: all 225ms ease;
 }
 
+a:hover {
+    color: #6a6a6a; !important;
+}
 
+
+.social a {
+    color: #56b85a !important;
+}
+
+.social a:hover {
+    color: #6a6a6a; !important;
+}
 input[type=text], textarea {
     color:black;
     opacity: .9;
 }
 
 .dropbtn {
-    background-color: #4CAF50;
+    background-color: #56b85a;
     color: white;
     padding: 16px;
     font-size: 16px;
