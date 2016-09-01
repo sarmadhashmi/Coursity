@@ -5,21 +5,13 @@
 
     <div class="row">
         <div class="col-sm-12 text-center"><h1></h1>
-
-            <form name="timetableForm" ng-submit="upload(file)">
                 <div class="form-group">
-                    <div style="padding: 0px;">
-                        <p><strong>Paste your timetable below</strong> and let the magic happen</p>
-                        <textarea style="width:50%; height: 80px" rows="20" type="text" ng-model="rawTimetable" required />
-                    </div>
-
                     <div style="padding: 5px;">
                         <p><b>Enter your email</b> and get the magical file emailed to you! <i>(Optional)</i></p>
-                        <input name="email" style="width:50%" type="email" ng-model="calEmail" />
+                        <input name="email" style="width:300px;" type="email" ng-model="calEmail" />
                     </div>
                     <button type="submit" id="submitButton" class="btn btn-default submitBtn">SUBMIT</button>
                 </div>
-            </form>
         </div>
     </div>
 </div>

@@ -3,7 +3,6 @@ html, body {
     height: auto;
     margin: 0;
     font-family: 'Roboto', sans-serif;
-    overflow: hidden;
     width: auto;
     min-width: 366px;
     /*background-image: url(../img/example.jpg);*/
@@ -20,9 +19,9 @@ html, body {
     height: auto;
 }
 .submitBtn{
-    font-size: 24px;
+    font-size: 18px;
     background-color:#56b85a;
-    border: none; padding: 10px 40px 10px 40px;
+    border: none; padding: 5px 15px 5px 15px;
     color: #ffffff;
     border-radius: 0px !important;
 }
@@ -71,7 +70,7 @@ html, body {
  }
 
 .howToDiv p{
-    font-size: 18px;
+    font-size: 16px;
     color: #666666 !important;
 }
 
@@ -94,10 +93,6 @@ html, body {
 
 .wrapper{
     color: #6a6a6a;
-    padding-top: 10px;
-    padding-bottom: 50px;
-    height:90vh;
-    width: 100%;
 }
 
 
@@ -141,12 +136,14 @@ html, body {
 
 
 #footer{
-    height:auto;
-    background-color: transparent;
-    border: none;
     color: #6a6a6a;
     font-size: 14px;
-    padding: 0px;
+    left: 10px;
+    position:fixed;
+    left:0;
+    right:0;
+    bottom: 0;
+    text-align: center;
 }
 
 a {

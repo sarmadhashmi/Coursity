@@ -1,33 +1,14 @@
-<div class="wrapper">
-	<div style="padding-top: 100px;">
+<div class="container">
 		<!-- Separate in to 3 base columns -->
-		<div class="col-sm-12 text-center title"><h1></h1>
-						<!--div style="padding-bottom: 0px" class="dropdown">
-							<button class="dropbtn">Choose University <span class="glyphicon glyphicon-arrow-down" aria-hidden="true"></span> </button>
-							<div class="dropdown-content">
-								<a ng-repeat="uni in universities" ng-href="/#/{{uni.value}}">{{ uni.name }}</a>
-							</div>
-						</div-->
-
-
-	</div>
-		<div class="row">
-			<!-- Separate in to 3 base columns -->
-			<div class="col-sm-12 text-center "><h1></h1>
-				<h2 style="font-weight: 800">Pick your university</h2>
-				<div style="padding: 10px 0px 20px 0px">
-					<a ng-repeat="uni in universities" ng-href="/#/{{uni.value}}"><img style="padding: 15px" ng-src="../img/{{uni.value}}.jpg" alt="Step 1" width="160" height="160"></a>
-				</div>			
-			</div>
-
+		<div class="row title clearfix"><h1></h1>
 		</div>
 		<div class="row">
 			<!-- Separate in to 3 base columns -->
-			<div class="col-sm-12 text-center "><h1></h1>
+			<div class="col-sm-12 text-center"><h1></h1>
+				<h2 style="font-weight: 800">Pick your university</h2>
 				<div>
-					<span><a href="https://github.com/sarmadhashmi/Coursity">Want help? Click here.</a></span><br>
+					<a ng-repeat="uni in universities" ng-href="/#/{{uni.value}}"><img style="padding: 15px" ng-src="../img/{{uni.value}}.jpg" alt="Step 1" width="160" height="160"></a>
 				</div>
 			</div>
-</div>
-</div>
+		</div>
 </div>
