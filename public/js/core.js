@@ -6,24 +6,24 @@ main.config(['$routeProvider', function($routeProvider) {
 		{
 			controller: 'MainController',
 			templateUrl: 'views/partials/homepageLayout.html'
+		}).when('/:uni',
+		{
+			controller: 'MainController',
+			templateUrl: 'views/partials/pasteTextLayout.html'
+		}).when('/:uni/cal',
+		{
+			controller: 'MainController',
+			templateUrl: 'views/partials/downloadCalLayout.html'
 		})
 		.otherwise({redirectTo: '/'});
 }]);
 
 
-main.controller('MainController', ['$scope', '$http', 'Upload', function($scope, $http, Upload) {
-	
-	$scope.universities = [
-		{name: 'Example', value: 'example'},
-		{name: 'McMaster', value: 'mcmaster'}, 
+main.controller('MainController', ['$scope', '$routeParams' ,'$http', 'Upload', function($scope,$routeParams, $http, Upload) {
+	$scope.uni = $routeParams.uni;
+	$scope.universities = [		
+		{name: 'McMaster', value: 'mcmaster'},
 		{name:'UOttawa', value: 'uottawa'}
-	];
-	$scope.semesterList = [
-		{ name: 'Fall 2015', value: 'fall' }, 
-		{ name: 'Winter 2016', value: 'winter' },
-		{ name: 'Summer 2016', value: 'summer' }, 
-		{ name: 'Spring 2016', value: 'spring' }, 
-		{ name: 'Summer/Spring 2016', value: 'springsummer' }
 	];
 
 	$scope.upload = function(files) {
@@ -32,11 +32,11 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 					url: '/upload',
 					file: files[0],
 					fields: {
-						'university': $scope.university, 
+						'university': $scope.university,
 						'semester': $scope.semester,
 						'calEmail': $scope.calEmail,
 					}
-				}) 
+				})
 				.progress(function(evt) {
 					$( "#submitButton" ).prop('disabled', true);
 		            $scope.message = 'Uploading and converting';
@@ -45,13 +45,13 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 					var anchor = angular.element('<a><span class="glyphicon glyphicon-download" aria-hidden="true"></span> Download</a>');
 					anchor.attr({
          				href: '/ics/' + data,
-         				target: '_blank'             			     			
+         				target: '_blank'
      				});
-     				anchor.addClass('btn');     				     				     				
+     				anchor.addClass('btn');
      				anchor.addClass('submitBtn');
 					anchor.addClass("btn-default");
 					$("#downloadDiv" ).empty();
-     				var div = angular.element(document).find('#downloadDiv').eq(0);					
+     				var div = angular.element(document).find('#downloadDiv').eq(0);
 					$( "#submitButton" ).prop('disabled', false);
 
 					div.append(anchor);
@@ -84,7 +84,7 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 		$http.post('/feedback', { "email": $scope.email, "message": $scope.messageFeedback, "recaptcha": document.getElementById("g-recaptcha-response").value })
 		.success(function(data, status, headers, config) {
     		$scope.feedbackMessage = 'Thank you!';
-		}).error(function(data, status, headers, config) {			
+		}).error(function(data, status, headers, config) {
     		$scope.feedbackMessage = data;
 		});
 	};
@@ -101,7 +101,6 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 			});*/
 		$(document).ready(function(){
 			$.getScript( "https://www.google.com/recaptcha/api.js" );
-			$.getScript( "./dropzone.js");
 			$(this).scroll(function() {
 				var st = $(this).scrollTop();
 				if (st > 300) {
@@ -119,58 +118,16 @@ main.controller('MainController', ['$scope', '$http', 'Upload', function($scope,
 				}
 				});
 
-			$(".owl-carousel").owlCarousel({
 
-				navigation : true, // Show next and prev buttons
-				slideSpeed : 300,
-				paginationSpeed : 400,
-				singleItem:true,
-				paginationNumbers:true,
-				navigationText:["prev","next"]
-
-				// "singleItem:true" is a shortcut for:
-				// items : 1,
-				// itemsDesktop : false,
-				// itemsDesktopSmall : false,
-				// itemsTablet: false,
-				// itemsMobile : false
-
-			});
-
-		    // Opens the sidebar menu
-		    $("#menu-toggle").click(function(e) {
-		        e.preventDefault();
-		        $("#sidebar-wrapper").toggleClass("active");
-		    });
-
-		    $('.logo, .menu1, #goToHowTo').click(function(e) {
-		    	e.preventDefault();
-		    	$('html,body').animate({
-                        scrollTop: $($(this).attr('href')).offset().top
-                    }, 500);                    
-            });
-
-		    $('#video').hide();
-			$('.howTo, .howToVideo').hide();
-			$("#example").show();			
 			$('#mainBody').on('change', '#uniChoose', function() {
-				var uni = $(this).val();				
+				var uni = $scope.uni;
+				window.location.replace("#/"+ uni);
 				$('#homeDiv').fadeOut(300, function() {
 					$('#homeDiv').css({
 						"background-image": "url('../img/" + uni + ".jpg')"
 					}).fadeIn(400);
 				});
-				$('.howTo').hide();
-				$('#' + uni).show();
-				if (uni == 'mcmaster' || uni == 'uottawa') {					
-					$(".howToVideo").hide();
-					$("#" + uni + "-video").show();
-					$("#video").show();
-				}else{
-					$("#video").hide();
-				}
 			});
 		});
 	});
 }]);
-

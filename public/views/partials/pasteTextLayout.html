@@ -1,0 +1,17 @@
+<div class="wrapper howToDiv">
+    <!-- Separate in to 3 base columns -->
+    <div ng-if="uni === 'mcmaster'" ng-include="'/views/partials/mcmasterSteps.html'"></div>
+    <div ng-if="uni === 'uottawa'" ng-include="'/views/partials/uottawaSteps.html'"></div>
+
+    <div class="row">
+        <div class="col-sm-12 text-center"><h1></h1>
+                <div class="form-group">
+                    <div style="padding: 5px 0px 10px 0px;">
+                        <p><b>Enter your email</b> and get the magical file emailed to you! <i>(Optional)</i></p>
+                        <input name="email" style="width:300px;" type="email" ng-model="calEmail" />
+                    </div>
+                    <button type="submit" id="submitButton" class="btn btn-default submitBtn">SUBMIT</button>
+                </div>
+        </div>
+    </div>
+</div>
