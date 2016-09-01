@@ -3,6 +3,7 @@ html, body {
     height: auto;
     margin: 0;
     font-family: 'Roboto', sans-serif;
+    overflow: hidden;
     width: auto;
     min-width: 366px;
     /*background-image: url(../img/example.jpg);*/
