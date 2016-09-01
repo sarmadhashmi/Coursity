@@ -37,6 +37,7 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', function($
 		$scope.message = "Working hard to get your file!";
 		$scope.loading = true;
 		$scope.processing = true;
+		$("#submitButton").prop('disabled', true);
 		$http({
 		  method: 'POST',
 		  url: '/process',
