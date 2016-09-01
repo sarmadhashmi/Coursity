@@ -6,9 +6,10 @@
     "body-parser": "^1.13.3",
     "express": "^4.13.1",
     "express-rate-limit": "^1.0.3",
-    "ical-toolkit": "^1.0.9",    
+    "ical-toolkit": "^1.0.9",
     "nodemailer": "^1.4.0",
     "nodemailer-wellknown": "^0.1.0",
+    "shortid": "^2.2.6",
     "validator": "^4.0.2",
     "winston": "^1.0.1"
   }

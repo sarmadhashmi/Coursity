@@ -1,6 +1,3 @@
-var ics = require('./ics-builder');
-var fs = require('fs')
-    , filename = process.argv[2];
 var _wsRegex = /\s+/;
 var _ampm = /:\d{2}[aAPp][mM]/;
 var _courseTitleLookAhead = /(?=\b(?:\w{2,}\ \w{1,5})\ -\ (?:[^\r\n]+)\b)/g;
@@ -70,7 +67,7 @@ function fixDateFormat(sem_start, sem_end) {
  * @param {String} text
  * @return {Object/JSON} timetable
  */
-function parse(text){
+function parse(text) {
     //Check is there is an AM/PM, if not use other pattern
     var _timeRegex  =  _ampm.exec(text) ? /([012]?\d\:[0-5]\d[AP]M)/ : /([012]?\d\:[0-5]\d)/;
     var _timeDayPairRegex = new RegExp(_dayOfWeekRegex.source + _wsRegex.source + _timeRegex.source +  _wsRegex.source + "-" +  _wsRegex.source + _timeRegex.source);
@@ -134,10 +131,5 @@ function parse(text){
 
     return timetable;
 }
-
-fs.readFile(filename, 'utf8', function(err, data) {
-    if (err) throw err;
-    console.log(ics.buildICS(parse(data)));
-});
 
 module.exports.parse = parse;

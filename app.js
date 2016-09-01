@@ -7,8 +7,8 @@ var bodyParser = require('body-parser');
 var validator = require('validator');
 var https = require('https');
 var os = require("os");
-var parserFactory = require('./parsers/main.js');
-var semesterConfig = require('./config/semesters.json');
+var shortid = require('shortid');
+var icsBuilder = require('./parsers/ics-builder.js');
 var config = require('./config/config.json');
 var wellknown = require('nodemailer-wellknown');
 var RateLimit = require('express-rate-limit');
@@ -61,10 +61,11 @@ var sendEmail = function(email, file, req) {
 	transporter.sendMail({
 		from: 'coursitycal@gmail.com',
 		to: email,
-		subject: 'Your Weekly Schedule',
-		html: "<p>Hi,</p> <p>Here's your </p>" +
+		subject: 'Your timetable from Coursity',
+		html: "<p>Hi,</p> <p>Attached is your " +
 			"<a href= 'http://" + req.get('host') + "/ics/" + file +
-			"'>timetable</a>!<p>Cheers, <br> Coursity Team</p>",
+			"'>magical file</a> aka timetable! Go ahead and try importing it somewhere.</p>" +
+			"<p>Cheers, <br> Coursity Team</p>",
 		attachments: [
 			{   // utf-8 string as an attachment
 				filename: "your_timetable.ics",
@@ -93,86 +94,72 @@ var app = express();
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
-	//console.log(req.get('host'));
 	winston.info('User connected: ' + req.connection.remoteAddress || 'localhost');
 	res.sendFile(__dirname + '/public/views/index.html');
 });
 var icsFolder = __dirname + '/public/ics/';
-var tempFolder = __dirname + '/temp/';
 
-app.use('/upload', limiter);
+app.use('/process', limiter);
 
-app.post('/upload', function(req, res) {
-	if (!req.files || req.files.file.mimetype !== 'text/html') {
-		var msg = 'Invalid file type uploaded. Only .HTML files';
-		metricsIncrement('invalid_file_uploaded');
-		winston.error(msg);
-		return res.status(404).send(msg);
-	}
+app.post('/process', function(req, res) {
 
 	var university = req.body.university;
-	var semester = req.body.semester;
 	var calEmail = req.body.calEmail;
-	var filename = req.files.file.name;
-
-	var config, start_date, end_date;
-	if (semesterConfig[university] && semesterConfig[university][semester]) {
-		config = semesterConfig[university][semester];
-		start_date = config['start_date'];
-		end_date = config['end_date'];
-		end_date = new Date(end_date[0], end_date[1], end_date[2], 23, 30, 0);
-	} else {
-		var msg = 'Invalid university or semester provided';
-		metricsIncrement('invalid_uni_provided');
-		winston.error(msg);
-		return res.status(404).send(msg);
+	var timetable = req.body.timetable;
+	if (!req.body.university) {
+		return res.status(404).send("No university provided.");
 	}
-	winston.info('Getting parser for ' + university + ' for semester  ' + semester);
+	if (!req.body.timetable) {
+		return res.status(404).send("No timetable provided.");
+	}
+	winston.info('Getting parser for ' + university);
 	async.waterfall([
 		function(callback) {
-			parserFactory.getParser(university, callback);
+			switch (university) {
+				case "uottawa":
+					return callback(null, require('./parsers/uottawa.js'));
+				case "mcmaster":
+					return callback(null, require('./parsers/mcmaster.js'));
+				default:
+					callback("No parser with the name was found: " + university);
+			}
 		},
-		function(convertToCal, callback) {
-			var icsFile = filename.split(".")[0] + ".ics";
-			convertToCal(tempFolder + filename, start_date, end_date, icsFolder, icsFile, callback);
+		function(parser, callback) {
+			var filename = shortid.generate() + '.ics';
+			fs.writeFile(
+				icsFolder + filename,
+				icsBuilder.buildICS(parser.parse(timetable)),
+				function(err) {
+					if (err) {
+						return callback(err);
+					}
+					callback(null, filename);
+				});
 		},
-		function(fileName, callback) {
-			fs.unlink(tempFolder + filename, function() {
-				callback(null, fileName);
-			});
-		},
-	], function(err, fileName) {
+	], function(err, filename) {
 		if (err) {
 			winston.error(err);
 			res.status(404).send(err);
-		} else if (!fileName) {
-			var msg = 'Invalid university provided or parser not found: ' + university;
-			metricsIncrement('no_parser_found');
-			winston.error(msg);
-			res.status(404).send(msg);
 		} else {
-			winston.info('Piping file ' + fileName + ' to response.');
-			fs.readFile(icsFolder + fileName, 'utf8', function (err,data) {
+			winston.info('Piping file ' + filename + ' to response.');
+			fs.readFile(icsFolder + filename, 'utf8', function (err, data) {
 				if (err) {
 					return res.status(404).send(err);
 				}
 				var icsContentChecker = data.indexOf("BEGIN:VEVENT") > -1;
 				if (!icsContentChecker) {
-					fs.unlink(icsFolder + fileName, function(err) {
+					fs.unlink(icsFolder + filename, function(err) {
 						if (!err) {
-							winston.info("File deleted: " + fileName);
+							winston.info("File deleted: " + filename);
 						}
-						var msg = 'No events found in your schedule, try again and make sure you follow the steps correctly and';
-						if (university === 'mcmaster'){
-							msg = msg + " Use the Calendar link in the HOW-TO Section below"
-						}
+						var msg = 'No events found in your schedule, try again and make sure you follow the steps correctly!';
 						winston.error(msg);
 						res.status(404).send(msg);
-				    	metricsIncrement('no_events_found');
+				    metricsIncrement('no_events_found');
 					});
 				} else {
-						if (calEmail) sendEmail(calEmail, fileName, req);
-						res.status(200).send(fileName);
+						if (calEmail) sendEmail(calEmail, filename, req);
+						res.status(200).send(filename);
 						metricsIncrement(university + '_completed');
 					}
 				});
@@ -181,6 +168,6 @@ app.post('/upload', function(req, res) {
 });
 
 app.use(express.static(__dirname + '/public'));
-app.listen(3000, function() {
-	winston.info("Started server at http://localhost:80.");
+app.listen(config.port, function() {
+	winston.info("Started server at http://localhost:" + config.port);
 });

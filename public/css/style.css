@@ -153,7 +153,7 @@ html, body {
     color: #6a6a6a;
     font-size: 14px;
     padding: 0px;
-    position:absolute;
+    position:relative;
     bottom: 10px;
     text-align: center;
     width: 100%;
@@ -192,4 +192,3 @@ input[type=text], textarea {
     border: none;
     cursor: pointer;
 }
-
