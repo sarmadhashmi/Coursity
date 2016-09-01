@@ -77,7 +77,7 @@ html, body {
     color: #666666 !important;
 }
 
-.dowmloadPage {
+.downloadPage {
     padding-top: 200px;
 }
 
@@ -96,7 +96,7 @@ html, body {
 }
 
 @media (max-width: 500px){
-    .dowmloadPage {
+    .downloadPage {
         padding-top: 50px !important;
     }
 }
