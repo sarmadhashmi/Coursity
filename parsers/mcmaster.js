@@ -1,3 +1,4 @@
+var locationLongName = require('../config/mcmaster-location-dict.json');
 var _wsRegex = /\s+/;
 var _ampm = /:\d{2}[aAPp][mM]/;
 var _courseTitleLookAhead = /(?=\b(?:\w{2,}\ \w{1,5})\ -\ (?:[^\r\n]+)\b)/g;
@@ -110,6 +111,8 @@ function parse(text) {
                 var sem_start = new Date(semester[0]);
                 var sem_end = new Date(semester[1]);
                 var courseSplit = course[1].split(" ");
+                var whereSplit = where.split(" ");
+                whereSplit[0] = locationLongName[whereSplit[0].trim()] ? locationLongName[whereSplit[0].trim()] : whereSplit[0];
                 timetable.push({
                     'course_code_faculty' : courseSplit[0],
                     'course_code_number' : courseSplit[1],
@@ -117,7 +120,7 @@ function parse(text) {
                     'course_name' : course[2],
                     'semester_start' : { year: sem_start.getFullYear(), month: sem_start.getMonth(), day: sem_start.getDate()},
                     'semester_end' : { year: sem_end.getFullYear(), month: sem_end.getMonth(), day: sem_end.getDate()},
-                    'where' : where,
+                    'where' : whereSplit.join(" "),
                     'professor': professor,
                     'day' : daysArray[k],
                     'start_time' : {'hour': parseInt(startTimeSplit[0], 10), 'minute': parseInt(startTimeSplit[1], 10)},
