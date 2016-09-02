@@ -1,10 +1,10 @@
 <div class="wrapper ">
-    <h2 class="text-center dowmloadPage">Click button to download your calendar</h2>
-    <div>
+    <h2 class="text-center downloadPage">Click button to download your calendar</h2>
+    <div class="row">
         <!-- Separate in to 3 base columns -->
         <div style="padding:35px 0px 50px 0px" class="col-sm-12 text-center"><h1></h1>
             <!-- fa fa-calendar fa-4x -->
-             <a class="btn downloadBtn btn-default" ng-href="#"><span style="color: #fff" class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+             <a class="btn downloadBtn btn-default" ng-href="/ics/{{calLink}}"><span style="color: #fff" class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
             </div>
         <div style="padding-bottom: 50px"  class="col-sm-12 text-center">
             <span><a data-toggle="modal" data-target="#importToDevice">How to put on Phone/Laptop Calendar</a></span><br>
@@ -26,7 +26,7 @@
                 <div class="row text-center">
                 <div class="col-md-6">
                     <span class="step">1</span>
-                    <p><a ng-href="#">Download</a> the calendar file</p>
+                    <p><a ng-href="/ics/{{calLink}}">Download</a> the calendar file</p>
                 </div>
                 <div class="col-md-6">
                     <span class="step">2</span>

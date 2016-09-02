@@ -1,11 +1,3 @@
-var ics = require('./ics-builder');
-var fs = require('fs')
-  , filename = process.argv[2];
-  fs.readFile(filename, 'utf8', function(err, data) {
-      if (err) throw err;
-      console.log(ics.buildICS(parse(data)));
-  });
-
 // Relevant regular expressions
 var unknownValue = "N/A";
 var _locationRegex = /\b[A-Z]{3,5}\s[A-Z0-9]{2,6}\b/;
@@ -41,7 +33,7 @@ function parse(text) {
       if (!time) continue;
       var sem_start = new Date(semester[1] + ' ' + semester[3]);
       var sem_end = new Date(semester[2] + ' ' + semester[3]);
-      // Build object for this section and push it to the timetable array			
+      // Build object for this section and push it to the timetable array
       timetable.push({
         'course_code_faculty': course[1],
         'course_code_number': course[2],
