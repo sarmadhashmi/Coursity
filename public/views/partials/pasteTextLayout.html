@@ -12,7 +12,7 @@
                         <input name="email" style="width:300px;" type="email" ng-model="calEmail" />
                         <p ng-show="submitTimetable.email.$invalid" style="color: red" class="text-danger">Enter a valid email.</p>
                     </div>
-                    <div ng-show="loading"><p><i ng-show="processing" class='fa fa-spinner fa-spin '></i> {{message}}</p></div>
+                    <div ng-show="loading || error"><p><i ng-show="processing" class='fa fa-spinner fa-spin '></i> {{message}}</p></div>
                     <button type="submit" id="submitButton" ng-click="process()" class="btn btn-default submitBtn"> SUBMIT</button>
                     </form>
                 </div>

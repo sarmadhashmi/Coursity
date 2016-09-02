@@ -1,5 +1,4 @@
 html, body {
-    width:100vw;
     height: 100vh !important;
     margin: 0px;
     padding: 0px;
@@ -76,10 +75,6 @@ html, body {
     color: #666666;
 }
 
-.downloadPage {
-    padding-top: 200px;
-}
-
 @media (max-width: 720px){
     .wrapper {
         height: 100% !important;
@@ -101,10 +96,7 @@ html, body {
 }
 
 .wrapper{
-    color: #6a6a6a;
-    padding-top: 10px;
-    padding-bottom: 50px;
-    width: 100vw;
+    color: #6a6a6a
 }
 
 

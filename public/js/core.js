@@ -34,6 +34,12 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', function($
 	};
 
 	$scope.process = function() {
+		if (!$scope.uni) return;
+		if (!$scope.timetable) {
+			$scope.error = true;
+			$scope.message = "No timetable provided!";
+			return;
+		}
 		$scope.message = "Working hard to get your file!";
 		$scope.loading = true;
 		$scope.processing = true;
@@ -47,8 +53,9 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', function($
 				'calEmail': $scope.calEmail
 			}
 		}).then(function successCallback(data) {
+			if (!data || !data.data) return;
 			$scope.loading = false;
-			window.location.replace("#/downloadCal/"+ data.data);
+			window.location.replace("#/download/"+ data.data.split('.')[0]);
 		  }, function errorCallback(data) {
 			$scope.processing = false;
 			$("#submitButton").prop('disabled', false);
