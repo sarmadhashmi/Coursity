@@ -1,0 +1,22 @@
+<div class="wrapper howToDiv">
+    <!-- Separate in to 3 base columns -->
+    <div ng-if="uni === 'mcmaster'" ng-include="'/views/partials/mcmasterSteps.html'"></div>
+    <div ng-if="uni === 'uottawa'" ng-include="'/views/partials/uottawaSteps.html'"></div>
+
+    <div class="row">
+        <div class="col-sm-12 text-center"><h1></h1>
+                <div class="form-group">
+                    <form name="submitTimetable">
+                    <div style="padding: 5px 0px 10px 0px;">
+                        <p><b>Enter your email</b> and get the magical file emailed to you! <i>(Optional)</i></p>
+                        <input name="email" style="width:300px;" type="email" ng-model="calEmail" />
+                        <p ng-show="submitTimetable.email.$invalid" style="color: red" class="text-danger">Enter a valid email.</p>
+                    </div>
+                    <div ng-show="loading  || error"><p><i ng-show="processing" class='fa fa-spinner fa-spin '></i> {{message}}</p></div>
+                        <button class="btn btn-default submitBtn"><a style="color: #fff; text-decoration: none" href="/#/">GO BACK</a></button>
+                    <button type="submit" id="submitButton" ng-click="process()" class="btn btn-default submitBtn"> SUBMIT</button>
+                    </form>
+                </div>
+        </div>
+    </div>
+</div>

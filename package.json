@@ -1,20 +1,15 @@
 {
   "name": "Course2Cal",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "dependencies": {
     "async": "^1.4.0",
     "body-parser": "^1.13.3",
-    "cheerio": "^0.19.0",
-    "connect-busboy": "0.0.2",
-    "datejs": "0.0.2",
     "express": "^4.13.1",
     "express-rate-limit": "^1.0.3",
     "ical-toolkit": "^1.0.9",
-    "jquery": "^1.0.1",
-    "moment": "^2.10.3",
-    "multer": "^0.1.8",
     "nodemailer": "^1.4.0",
     "nodemailer-wellknown": "^0.1.0",
+    "shortid": "^2.2.6",
     "validator": "^4.0.2",
     "winston": "^1.0.1"
   }

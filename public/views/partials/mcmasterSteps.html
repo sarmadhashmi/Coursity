@@ -1,0 +1,22 @@
+<h1 class="text-center"><b>Import your schedule from <a target="_blank" href="https://epprd.mcmaster.ca/psp/prepprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL?customTab=MCM_TAB_STU_CEN&IgnoreParamTempl=customTab">Mosaic</a></b></h1>
+<div style="width: 75%; margin:auto; text-align: center" class="row howTo">
+    <div class="col-md-4">
+        <span class="step">1</span>
+        <p><a target="_blank" href="https://epprd.mcmaster.ca/psp/prepprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSS_STUDENT_CENTER.GBL?customTab=MCM_TAB_STU_CEN&IgnoreParamTempl=customTab"><b>Log into Mosaic</b></a> </br>(this might take a while...)</p>
+        <img ng-src="../../img/{{uni}}_step1.jpg" alt="Step 1">
+
+    </div>
+    <div class="col-md-4">
+        <span class="step">2</span>
+        <p>Open your <a target="_blank" href="https://csprd.mcmaster.ca/psc/prcsprd/EMPLOYEE/HRMS_LS/c/SA_LEARNER_SERVICES.SSR_SSENRL_LIST.GBL"><b>timetable (click me!)</br></b></a> and <b> copy</b> everything</p>
+        <img ng-src="../../img/{{uni}}_step3.jpg" alt="Step 2"></span>
+
+    </div>
+    <div class="col-md-4">
+        <span class="step">3</span>
+        <div style="padding: 0px;">
+            <p><strong>Paste</strong> your timetable <strong style="color: #56b85a">below</strong> </br>and let the magic happen</p>
+            <textarea placeholder="Paste timetable here" style=" height: 225px; width: 225px" rows="20" type="text" ng-model="uottawa_timetable" ng-change="setTimetable(uottawa_timetable)" required />
+        </div>
+    </div>
+</div>

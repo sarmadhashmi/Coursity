@@ -1,0 +1,43 @@
+<div class="wrapper ">
+    <h3 class="text-center downloadPage">Your calendar file is ready! Click the big green button below to download it.</h3>
+    <div class="row">
+        <!-- Separate in to 3 base columns -->
+        <div style="padding:35px 0px 50px 0px" class="col-sm-12 text-center"><h1></h1>
+            <!-- fa fa-calendar fa-4x -->
+             <a class="btn downloadBtn btn-default" ng-href="/ics/{{calLink}}.ics"><span style="color: #fff" class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+            </div>
+        <div style="padding:0px 0px 50px 0px" class="col-sm-12 text-center">
+            <button class="btn btn-default submitBtn"><a style="color: #fff; text-decoration: none;" href="/#/">PROCESS ANOTHER TIMETABLE</a></button>
+        </div>
+            <div style="padding-bottom: 50px"  class="col-sm-12 text-center">
+
+            <span><a data-toggle="modal" data-target="#importToDevice">How to import to Phone/Laptop Calendar</a></span><br>
+            <span><a target="_blank" href="https://support.google.com/calendar/answer/37118?hl=en">How to import to Google Calendar</a></span><br>
+        </div>
+         </div>
+ </div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="importToDevice" tabindex="-1" role="dialog" aria-labelledby="importToDeviceLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="importToDeviceLabel">How to import calendar file to your phone/laptop</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row text-center">
+                <div class="col-md-6">
+                    <span class="step">1</span>
+                    <p><a ng-href="/ics/{{calLink}}.ics">Download</a> the calendar file</p>
+                </div>
+                <div class="col-md-6">
+                    <span class="step">2</span>
+                    <p>Open the calendar file on the your phone/laptop</p>
+                </div>
+            </div></div>
+            </div>
+        </div>
+    </div>
+</div>

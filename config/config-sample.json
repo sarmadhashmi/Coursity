@@ -1,4 +1,5 @@
 {
+	"port": 80,
 	"type": "gmail",
 	"user": "something@something.com",
 	"pass": "password"

@@ -1,0 +1,18 @@
+<h1 class="text-center"><b>Import your schedule from <a target="_blank" href="https://uozone2.uottawa.ca">uoZone</a></b></h1>
+<div style="width: 75%; margin:auto; text-align: center" class="row howTo">
+    <div class="col-md-4">
+        <span class="step">1</span>
+        <p>Log into <strong><a target="_blank" href="https://uozone2.uottawa.ca">uoZone</a></strong> </br>(this might take a while...)</p>
+        <img ng-src="../../img/{{uni}}_step1.jpg" alt="Step 1">
+    </div>
+    <div class="col-md-4">
+        <span class="step">2</span>
+        <p>Open your <strong><a target="_blank" href="https://uozone2.uottawa.ca/apps/course_schedule">timetable (click me!)</a></strong> </br>and copy everything</p>
+        <img ng-src="../../img/{{uni}}_step2.jpg" alt="Step 2" ></span>
+    </div>
+    <div class="col-md-4">
+        <span class="step">3</span>
+                    <p><strong>Paste</strong> your timetable <strong style="color: #56b85a">below</strong> </br>and let the magic happen</p>
+                    <textarea placeholder="Paste timetable here" style="width:225px; height: 225px;" type="text" ng-model="mcmaster_timetable" ng-change="setTimetable(mcmaster_timetable)"required />
+    </div>
+</div>
