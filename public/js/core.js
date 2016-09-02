@@ -40,7 +40,7 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', function($
 			$scope.message = "No timetable provided!";
 			return;
 		}
-		$scope.message = "Working hard to get your file!";
+		$scope.message = "Working hard to process your timetable!";
 		$scope.loading = true;
 		$scope.processing = true;
 		$("#submitButton").prop('disabled', true);

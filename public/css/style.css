@@ -88,6 +88,9 @@ html, body {
     }
 
 }
+.downloadPage {
+    padding-top: 50px !important;
+}
 
 @media (max-width: 500px){
     .downloadPage {
