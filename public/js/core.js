@@ -48,7 +48,7 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', function($
 			}
 		}).then(function successCallback(data) {
 			$scope.loading = false;
-			window.location.replace("#/downloadCal/"+ data.data);
+			window.location.replace("#/download/"+ data.data);
 		  }, function errorCallback(data) {
 			$scope.processing = false;
 			$("#submitButton").prop('disabled', false);
