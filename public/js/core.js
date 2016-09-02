@@ -10,7 +10,7 @@ main.config(['$routeProvider', function($routeProvider) {
 		{
 			controller: 'MainController',
 			templateUrl: 'views/partials/pasteTextLayout.html'
-		}).when('/downloadCal/:calLink',
+		}).when('/download/:calLink',
 		{
 			controller: 'MainController',
 			templateUrl: 'views/partials/downloadCalLayout.html'
