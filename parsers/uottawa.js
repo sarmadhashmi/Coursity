@@ -1,3 +1,4 @@
+var locationLongName = require('../config/uottawa-location-dict.json');
 // Relevant regular expressions
 var unknownValue = "N/A";
 var _locationRegex = /\b[A-Z]{3,5}\s[A-Z0-9]{2,6}\b/;
@@ -33,11 +34,23 @@ function parse(text) {
       if (!time) continue;
       var sem_start = new Date(semester[1] + ' ' + semester[3]);
       var sem_end = new Date(semester[2] + ' ' + semester[3]);
+      var whereSplit = where ? where[0].split(' ') : null;
+      var locationObject = whereSplit ? locationLongName[whereSplit[0]] : null;
+      var long_name = where ? where[0] : unknownValue;
+      var address = unknownValue;
+      var city = unknownValue;
+      var province = unknownValue;
+      if (locationObject) {
+        long_name = locationObject.long_name;
+        address = locationObject.address;
+        city = locationObject.city;
+        province = locationObject.province;
+      }
       // Build object for this section and push it to the timetable array
       timetable.push({
         'course_code_faculty': course[1],
         'course_code_number': course[2],
-        'section': course[3] ? course[3] : '',
+        'class_section': course[3] ? course[3] : '',
         'course_name': course[4],
         'professor': professor ? professor[0] : unknownValue,
         'semester_start':  {
@@ -51,6 +64,11 @@ function parse(text) {
           'day': sem_end.getDate()
         },
         'where': where ? where[0] : unknownValue,
+        'address': address,
+        'city': city,
+        'province': province,
+        'where_long_name' : long_name,
+        'where_room_number': whereSplit ? whereSplit[1] : unknownValue,
         'day': time[1],
         'start_time': {
           'hour': parseInt(time[2], 10),
