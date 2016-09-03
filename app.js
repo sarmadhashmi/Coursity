@@ -156,6 +156,7 @@ app.post('/process', function(req, res) {
 						}
 						var msg = 'No events found in your schedule, try again and make sure you follow the steps correctly!';
 						winston.error(msg);
+						winston.error('Text data that caused no_events_found: ' + timetable);
 						res.status(404).send(msg);
 				    metricsIncrement('no_events_found');
 					});
