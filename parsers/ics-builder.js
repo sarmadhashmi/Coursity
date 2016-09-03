@@ -41,7 +41,7 @@ function buildICS(timetable) {
       start: class_start,
       end: class_end,
         alarms: [10],
-      summary: curr['course_code_faculty'] + " " + curr['course_code_number'] + " " + curr['course_name'],
+      summary: curr['course_code_faculty'] + " " + curr['course_code_number'] + " " + curr['class_type'],
       floating: true,
       repeating: {
         freq: 'WEEKLY',
@@ -49,8 +49,10 @@ function buildICS(timetable) {
         wkst: 'MO',
         until: semester_end
       },
+        url: curr['url'],
       location: curr['where'],
-      description: curr['course_code_faculty'] + " " + curr['course_code_number'] + " " +  curr['course_name']
+      description: "Course Name: " + curr['course_name'] +" " + curr['class_section'].trim() +
+                    "\nProfessor: " + curr["professor"].trim() + "\nWhere: " + curr['where_long_name'].trim()
     });
   }
   return builder.toString();
