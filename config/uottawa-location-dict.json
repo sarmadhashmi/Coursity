@@ -1,0 +1,218 @@
+{
+  "MNO": {
+    "long_name": "Minto Sports Complex",
+    "address": "801 King Edward Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "SCS": {
+    "long_name": "Minto Sports Complex",
+    "address": "801 King Edward Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "SITE": {
+    "long_name": "School of Electrical Engineering and Computer Science",
+    "address": "800 King Edward Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "CBY": {
+    "long_name": "Colonel By Hall",
+    "address": "161 Louis Pasteur Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "ARC": {
+    "long_name": "Advanced Research Complex",
+    "address": "25 Templeton Street",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "MCD":  {
+    "long_name": "MacDonald Hall",
+    "address": "150 Louis Pasteur Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "MRN":  {
+    "long_name": "Marion Hall",
+    "address": "140 Louis Pasteur Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "LPR":  {
+    "long_name": "Louis Pasteur",
+    "address": "141 Louis Pasteur Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "DRO":  {
+    "long_name": "D'Iorio Hall",
+    "address": "10 Marie-Curie Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "BSC":  {
+    "long_name": "Biosciences",
+    "address": "30 Marie-Curie Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "GNN":  {
+    "long_name": "Gendron Hall",
+    "address": "30 Marie-Curie Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "CRG":  {
+    "long_name": "CAREG - Biosciences Complex",
+    "address": "20 Marie-Curie Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "LMX":  {
+    "long_name": "Lamoureux Hall",
+    "address": "145 Jean-Jacques Lussier Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "VNR":  {
+    "long_name": "Vanier Hall",
+    "address": "136 Jean-Jacques Lussier Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "FSS":  {
+    "long_name": "Social Sciences Building",
+    "address": "120 University Street",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "MNT":  {
+    "long_name": "Montpetit Hall",
+    "address": "125 University Street",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "UCU":  {
+    "long_name": "University Centre",
+    "address": "85 University Street",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "MRT":  {
+    "long_name": "Morisset Hall",
+    "address": "65 University Street",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "FTX":  {
+    "long_name": "Fauteux Hall",
+    "address": "57 Louis Pasteur Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "PRZ":  {
+    "long_name": "Perez Hall",
+    "address": "50 University Street",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "SMD":  {
+    "long_name": "Simard Hall",
+    "address": "60 University Street",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "MHN": {
+    "long_name": "Hamelin Hall",
+    "address": "70 Laurier Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "TBT":  {
+    "long_name": "Tabaret Hall",
+    "address": "550 Cumberland Street",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "DMS": {
+    "long_name": "Desmarais Building",
+    "address": "55 Laurier Avenue East",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "SMN": {
+    "long_name": "Academic Hall",
+    "address": "133 Seraphin Marion Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "HGN": {
+    "long_name": "Hagen Hall",
+    "address": "115 Seraphin Marion Private",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "STT": {
+    "long_name": "1 Stewart",
+    "address": "1 Stewart Street",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "LEES": {
+    "long_name": "Lees",
+    "address": "200 Lees Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "LEE": {
+    "long_name": "Lees",
+    "address": "200 Lees Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "LEE A": {
+    "long_name": "Lees",
+    "address": "200 Lees Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "LEE B": {
+    "long_name": "Lees",
+    "address": "200 Lees Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "LEE C": {
+    "long_name": "Lees",
+    "address": "200 Lees Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "LEE D": {
+    "long_name": "Lees",
+    "address": "200 Lees Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "LEE E": {
+    "long_name": "Lees",
+    "address": "200 Lees Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "RGN": {
+    "long_name": "Roger Guindon Hall",
+    "address": "451 Smyth Road",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
+  "EMBA": {
+    "long_name": "Executive MBA Program",
+    "address": "World Exchange Plaza, 45 O'Connor Street",
+    "city": "Ottawa",
+    "province": "Ontario"
+  }
+}
