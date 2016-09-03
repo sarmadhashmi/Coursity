@@ -1,6 +1,7 @@
 var locationLongName = require('../config/mcmaster-location-dict.json');
 var _wsRegex = /\s+/;
 var _ampm = /:\d{2}[aAPp][mM]/;
+var unknownValue = "N/A";
 var _courseTitleLookAhead = /(?=\b(?:\w{2,}\ \w{1,5})\ -\ (?:[^\r\n]+)\b)/g;
 var _courseCodeLookAhead = /(?=\b\d{5}\b)/;
 var _courseTitleRegex = /(?:\b(\w{2,}\ \w{1,5})\ -\ ([^\r\n]+)\b)/;
@@ -111,23 +112,37 @@ function parse(text) {
                 var sem_start = new Date(semester[0]);
                 var sem_end = new Date(semester[1]);
                 var courseSplit = course[1].split(" ");
-                var whereSplit = where.split(" ");
-                whereSplit[0] = locationLongName[whereSplit[0].trim()] ? locationLongName[whereSplit[0].trim()] : whereSplit[0];
+                var whereSplit = where ? where.split(" ") : null;
+                var locationObject = whereSplit ? locationLongName[whereSplit[0].trim()] : null;
+                var long_name = where ? where.trim() : unknownValue;
+                var address = unknownValue;
+                var city = unknownValue;
+                var province = unknownValue;
+                if (locationObject) {
+                    long_name = locationObject.long_name;
+                    address = locationObject.address;
+                    city = locationObject.city;
+                    province = locationObject.province;
+                }
+                // Build object for this section and push it to the timetable array
                 timetable.push({
                     'course_code_faculty' : courseSplit[0],
                     'course_code_number' : courseSplit[1],
-                    'course_number' : currentSection[1],
+                    'course_number' : currentSection[1] ? currentSection[1] : "",
                     'course_name' : course[2],
                     'semester_start' : { year: sem_start.getFullYear(), month: sem_start.getMonth(), day: sem_start.getDate()},
                     'semester_end' : { year: sem_end.getFullYear(), month: sem_end.getMonth(), day: sem_end.getDate()},
-                    'where' : where.trim(),
-                    'where_long_name' : whereSplit[0],
-                    'where_room_number': whereSplit[1],
-                    'professor': professor,
+                    'where' : where ? where.trim() : unknownValue,
+                    'address': address,
+                    'city': city,
+                    'province': province,
+                    'where_long_name' : long_name,
+                    'where_room_number': whereSplit ? whereSplit[1] : unknownValue,
+                    'professor': professor ? professor : unknownValue,
                     'day' : daysArray[k],
                     'start_time' : {'hour': parseInt(startTimeSplit[0], 10), 'minute': parseInt(startTimeSplit[1], 10)},
                     'end_time' : {'hour': parseInt(endTimeSplit[0], 10), 'minute': parseInt(endTimeSplit[1], 10)},
-                    'class_section' : currentSection[2],
+                    'class_section' : currentSection[2] ? currentSection[2] : "",
                     'class_type' : currentSection[3]
                 });
             }

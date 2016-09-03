@@ -49,7 +49,8 @@ function buildICS(timetable) {
         wkst: 'MO',
         until: semester_end
       },
-        url: "https://www.google.ca/maps/place/"+ curr['where_long_name'].split(" ").join("+"),
+        url: "https://www.google.ca/maps/place/"+ curr['where_long_name'].split(" ").join("+")
+             +"+"+ curr["address"].split(" ").join("+") +"+"+ curr["city"] +"+"+ curr["province"] ,
       location: curr['where'],
       description: "Course Name: " + curr['course_name'] +" " + curr['class_section'].trim() +
                     "\nProfessor: " + curr["professor"].trim() + "\nWhere: " + curr['where_long_name'].trim()
