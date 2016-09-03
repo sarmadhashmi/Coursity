@@ -67,6 +67,7 @@ function parse(text) {
         'address': address,
         'city': city,
         'province': province,
+        'url': "https://www.google.ca/maps/place/"+ address.split(" ").join("+") +"+"+ city +"+"+ province,
         'where_long_name' : long_name,
         'where_room_number': whereSplit ? whereSplit[1] : unknownValue,
         'day': time[1],

@@ -138,6 +138,7 @@ function parse(text) {
                     'province': province,
                     'where_long_name' : long_name,
                     'where_room_number': whereSplit ? whereSplit[1] : unknownValue,
+                    'url': "https://www.google.ca/maps/place/"+ long_name.split(" ").join("+") +"+"+ address.split(" ").join("+") +"+"+ city +"+"+ province,
                     'professor': professor ? professor : unknownValue,
                     'day' : daysArray[k],
                     'start_time' : {'hour': parseInt(startTimeSplit[0], 10), 'minute': parseInt(startTimeSplit[1], 10)},

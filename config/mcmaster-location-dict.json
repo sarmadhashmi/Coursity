@@ -13,31 +13,31 @@
     },
   "CNH": {
       "long_name":"Chester New Hall",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "DBAC": {
-      "long_name":"David Braley Sport Centre",
+      "long_name":"David Braley Sport Medicine and Rehabilitation Centre",
       "address":"1280 Main St W",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "DSB": {
-      "long_name":"Degroote School Of Business",
-      "address":"1280 Main St W",
+      "long_name":"Michael G. DeGroote School of Business ",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "GH": {
       "long_name":"Gilmour Hall",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "HH": {
       "long_name":"Hamilton Hall",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
@@ -49,7 +49,7 @@
     },
   "IWC": {
       "long_name":"Ivor Wynne Centre",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
@@ -61,7 +61,7 @@
     },
   "KTH": {
       "long_name":"Kenneth Taylor Hall",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
@@ -72,68 +72,68 @@
       "province":"Ontario"
     },
   "MDCL": {
-      "long_name":"Michael DeGroote Centre",
+      "long_name":"Michael DeGroote Centre for Learning and Discovery",
       "address":"1280 Main St W",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "LSB": {
       "long_name":"Life Sciences Building",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "UH": {
       "long_name":"University Hall",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "TSH": {
       "long_name":"Togo Salmon Hall",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "IAHS": {
       "long_name":"Institute For Applied Health Sciences",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "PC": {
       "long_name":"Psychology Building",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "GSB": {
       "long_name":"General Sciences Building",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "ADL": {
       "long_name":"Applied Dynamics Laboratory",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "C": {
       "long_name":"Commons Building",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "CRL": {
       "long_name":"Communications Research Laboratory",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "CUC": {
       "long_name":"E.T. Clarke Centre",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
@@ -145,25 +145,25 @@
     },
   "HSC": {
       "long_name":"Health Sciences Centre",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "REAC": {
       "long_name":"Nuclear Reactor",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "NRB": {
       "long_name":"Nuclear Research Building",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     },
   "TA": {
       "long_name":"Tandem Accelerator Building",
-      "address":"1280 Main St W",
+      "address":"",
       "city":"Hamilton",
       "province":"Ontario"
     }
