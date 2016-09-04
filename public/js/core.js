@@ -62,4 +62,22 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', function($
 			$scope.message = data.data;
 		  });
 	};
+
+	// Metrics stuff
+	$scope.processedTotal = $scope.processedTotal || "N/A";
+	var getMetrics = function() {
+		$http({
+			method: 'GET',
+			url: '/metrics'
+		}).then(function successCallback(data) {
+					if (!data || !data.data) return;
+					$scope.processedTotal = data.data.timetables_processed;
+			}, function errorCallback(data) {
+				console.log(data);
+					$scope.processedTotal = $scope.processedTotal || "N/A";
+			});
+	};
+	// Update metrics every 5 seconds
+	setInterval(getMetrics, 5000);
+	getMetrics();
 }]);
