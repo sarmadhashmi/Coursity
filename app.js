@@ -32,7 +32,18 @@ var metricsIncrement = function(metricsName, callback) {
     		if (callback) callback();
     	});
 	});
-}
+};
+
+var aggregateMetrics = function(metrics, callback) {
+	fs.readFile(metricsFile, function (err, data) {
+    	var json = JSON.parse(data);
+			var total = 0;
+			metrics.forEach(function(metricsName) {
+				total += json.hasOwnProperty(metricsName) ? json[metricsName] : 0;
+			});
+    	callback(total);
+	});
+};
 
 // Add logging
 try {
@@ -163,10 +174,28 @@ app.post('/process', function(req, res) {
 						if (calEmail) sendEmail(calEmail, filename, req);
 						res.status(200).send(filename);
 						metricsIncrement(university + '_completed');
+						metricsSoFar++;
 					}
 				});
 			}
 	});
+});
+
+// Every 5 minutes, update the metrics
+var metricsSoFar = 0;
+var aggregateUniMetrics = function() {
+	aggregateMetrics(['mcmaster_completed', 'uottawa_completed'],
+		function(total) {
+			metricsSoFar = total;
+	});
+};
+setInterval(aggregateUniMetrics, 300000);
+aggregateUniMetrics();
+
+app.get('/metrics', function(req, res) {
+	res.status(200).send(JSON.stringify({
+		"timetables_processed" : metricsSoFar
+	}));
 });
 
 app.use(express.static(__dirname + '/public'));
