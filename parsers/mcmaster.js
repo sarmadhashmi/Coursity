@@ -8,7 +8,7 @@ var _courseTitleRegex = /(?:\b(\w{2,}\ \w{1,5})\ -\ ([^\r\n]+)\b)/;
 var _dayOfWeekRegex = /([MoTuhWeFrSaS]{2,6})/;
 // Check for any string, location can be "SEE CLASS NOTES" or "TBA" or maybe something else
 var _locationRegex = /(\s[\-\w\/ ,]+)/;
-var _profRegex = /((?:(\b[A-Za-z\-.,]+\s)(?:[A-Za-z\-.,]+\s?)|(\b[A-Za-z\-.,]+\s))+)/;
+var _profRegex = /((?:(\b[A-Za-z\-., ]+\s)(?:[A-Za-z\-., ]+\s?)|(\b[A-Za-z\-., ]+\s))+)/;
 var _semesterRegex = /((?:\d{2}\/\d{2}\/\d{4})|(?:\d{4}\/\d{2}\/\d{2})|(?:\d{4}-\d{2}-\d{2}))/;
 var _locationProfPair = new RegExp(_locationRegex.source + _wsRegex.source + _profRegex.source);
 var _semesterPairRegex = new RegExp(_semesterRegex.source +  _wsRegex.source + "-" +  _wsRegex.source +  _semesterRegex.source);
