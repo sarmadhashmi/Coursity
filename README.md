@@ -6,6 +6,13 @@ Here are the three steps: Pick your university, paste your timetable, press subm
 ## What the hell is an ICS file?
 Good question! Simply put, it's a file which stores a bunch of events. That's it! When you import this file to a device or service that supports it, it takes those events and puts them in its calendar. In our case, those events are your lectures, labs and tutorials. If you have any more questions, feel free to message us!
 
+## It's not working for me, what do I do?
+The most common problem we see is that people usually don't copy the whole page or they leave out details that we need to process your timetable. To avoid this, go to the timetable page and simply press Command+A or CTRL+A to select EVERYTHING on the page. Paste that into the Coursity textarea and press submit! If it still doesn't work, make sure you're copying from the correct page. 
+
+When in doubt, re-read the steps and click on the links provided in the steps!
+
+If problems persist, feel free to email us at coursityislove@gmail.com.
+
 ## Who are we?
 Two students that are passionate about developing applications to make the lives of everyone easier. We are:
 
