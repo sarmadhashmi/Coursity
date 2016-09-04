@@ -86,7 +86,7 @@ var sendEmail = function(email, file, req) {
 var limiter = RateLimit({
         // window, delay, and max apply per-ip unless global is set to true
         windowMs: 1800000, // miliseconds - how long to keep records of requests in memory -- set to 30 minutes
-        max: 50, // max number of recent connections during `window` miliseconds before (temporarily) bocking the user.
+        max: 15, // max number of recent connections during `window` miliseconds before (temporarily) bocking the user.
         global: false, // if true, IP address is ignored and setting is applied equally to all requests
         message: 'What the hell man, why you tryin to make so many requests?'
 });
