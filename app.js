@@ -155,8 +155,7 @@ app.post('/process', function(req, res) {
 							winston.info("File deleted: " + filename);
 						}
 						var msg = 'No events found in your schedule, try again and make sure you follow the steps correctly!';
-						winston.error(msg);
-						winston.error('Text data that caused no_events_found: ' + timetable);
+						winston.error(msg, { error_timetable: timetable, university:university });
 						res.status(404).send(msg);
 				    metricsIncrement('no_events_found');
 					});
