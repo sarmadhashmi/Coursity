@@ -46,7 +46,7 @@ main.controller('HomepageController', ['$scope', '$http', function($scope, $http
 }]);
 
 main.controller('MainController', ['$scope', '$routeParams' ,'$http', '$location', function($scope,$routeParams, $http, $location) {
-	$scope.uni = $location.path();
+	$scope.uni = $location.path().substring(1);
 	$scope.calLink = $routeParams.calLink;
 	$scope.timetable = '';
 	$scope.calEmail = '';
