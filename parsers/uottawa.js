@@ -110,9 +110,7 @@ function parse(text) {
         'class_type': time[6]
       });
     }
-  }
-  console.log(timetable);
-  console.log(timetable.length);
+  }  
   return timetable;
 }
 

@@ -15,6 +15,7 @@ main.config(['$routeProvider', function($routeProvider) {
 			templateUrl: 'views/partials/uottawaSteps.html'
 		}).when('/download/:calLink',
 		{
+			controller: 'MainController',
 			templateUrl: 'views/partials/downloadCalLayout.html'
 		})
 		.otherwise({redirectTo: '/'});
