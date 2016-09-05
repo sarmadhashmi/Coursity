@@ -1,33 +1,55 @@
 var main = angular.module('main', ['ngRoute']);
-//var domain = document.URL
 main.config(['$routeProvider', function($routeProvider) {
 	$routeProvider
 		.when('/',
 		{
-			controller: 'MainController',
+			controller: 'HomepageController',
 			templateUrl: 'views/partials/homepageLayout.html'
-		}).when('/:uni',
+		}).when('/mcmaster',
 		{
 			controller: 'MainController',
-			templateUrl: 'views/partials/pasteTextLayout.html'
+			templateUrl: 'views/partials/mcmasterSteps.html'
+		}).when('/uottawa',
+		{
+			controller: 'MainController',
+			templateUrl: 'views/partials/uottawaSteps.html'
 		}).when('/download/:calLink',
 		{
-			controller: 'MainController',
 			templateUrl: 'views/partials/downloadCalLayout.html'
 		})
 		.otherwise({redirectTo: '/'});
 }]);
 
-
-main.controller('MainController', ['$scope', '$routeParams' ,'$http', function($scope,$routeParams, $http) {
-	$scope.uni = $routeParams.uni;
-	$scope.calLink = $routeParams.calLink;
-	$scope.timetable = '';
-	$scope.calEmail = '';
+main.controller('HomepageController', ['$scope', '$http', function($scope, $http) {
 	$scope.universities = [
 		{name: 'McMaster', value: 'mcmaster'},
 		{name:'UOttawa', value: 'uottawa'}
 	];
+
+	// Metrics stuff
+	$scope.processedTotal = $scope.processedTotal || "N/A";
+	var getMetrics = function() {
+		$http({
+			method: 'GET',
+			url: '/metrics'
+		}).then(function successCallback(data) {
+					if (!data || !data.data) return;
+					$scope.processedTotal = data.data.timetables_processed;
+			}, function errorCallback(data) {
+				console.log(data);
+					$scope.processedTotal = $scope.processedTotal || "N/A";
+			});
+	};
+	// Update metrics every 5 seconds
+	setInterval(getMetrics, 5000);
+	getMetrics();
+}]);
+
+main.controller('MainController', ['$scope', '$routeParams' ,'$http', '$location', function($scope,$routeParams, $http, $location) {
+	$scope.uni = $location.path();
+	$scope.calLink = $routeParams.calLink;
+	$scope.timetable = '';
+	$scope.calEmail = '';
 
 	$scope.setTimetable = function(timetable) {
 		$scope.timetable = timetable;
@@ -62,22 +84,4 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', function($
 			$scope.message = data.data;
 		  });
 	};
-
-	// Metrics stuff
-	$scope.processedTotal = $scope.processedTotal || "N/A";
-	var getMetrics = function() {
-		$http({
-			method: 'GET',
-			url: '/metrics'
-		}).then(function successCallback(data) {
-					if (!data || !data.data) return;
-					$scope.processedTotal = data.data.timetables_processed;
-			}, function errorCallback(data) {
-				console.log(data);
-					$scope.processedTotal = $scope.processedTotal || "N/A";
-			});
-	};
-	// Update metrics every 5 seconds
-	setInterval(getMetrics, 5000);
-	getMetrics();
 }]);
