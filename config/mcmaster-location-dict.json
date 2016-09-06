@@ -166,6 +166,11 @@
       "address":"",
       "city":"Hamilton",
       "province":"Ontario"
-    }
-
+    },
+  "LRW": {
+    "long_name":"L.R. Wilson Hall",
+    "address":"",
+    "city":"Hamilton",
+    "province":"Ontario"
+  }
 }
