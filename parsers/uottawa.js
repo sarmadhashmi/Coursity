@@ -17,6 +17,8 @@ var _infowebSemesterRegex = /([A-Z]{1}[a-z]{2,8}\s[0-9]{1,2})\s-\s([A-Z]{1}[a-z]
 /**
  * Returns a timetable array consisting of class section objects which
  * are parsed and generated from the raw uOttawa timetable text.
+ * There are two parsers: one for mobile devices (InfoWeb) and one for
+ * desktop (uoZone).
  * @param {String} text Raw timetable text.
  * @return {Object[]} Returns an array of JSON objects for each parsed class
  *                    section.
@@ -110,7 +112,7 @@ function parse(text) {
         'class_type': time[6]
       });
     }
-  }  
+  }
   return timetable;
 }
 

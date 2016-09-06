@@ -6,7 +6,7 @@ function dayOfWeekAsInteger(day) {
 }
 
 // Given a timetable return raw ICS
-function buildICS(timetable) {
+function buildICS(timetable, alarmsOrNot) {
   var builder = icalToolkit.createIcsFileBuilder();
   builder.tzid = 'america/toronto';
   builder.method = 'PUBLISH';
@@ -40,7 +40,7 @@ function buildICS(timetable) {
     builder.events.push({
       start: class_start,
       end: class_end,
-        alarms: [10],
+      alarms: alarmsOrNot ? [10] : null,
       summary: curr['course_code_faculty'] + " " + curr['course_code_number'] + " " + curr['class_type'],
       floating: true,
       repeating: {

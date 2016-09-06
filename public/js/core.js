@@ -73,7 +73,8 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', '$location
 			data: {
 				'university': $scope.uni,
 				'timetable': $scope.timetable,
-				'calEmail': $scope.calEmail
+				'calEmail': $scope.calEmail,
+				'alarms': $scope.alarms
 			}
 		}).then(function successCallback(data) {
 			if (!data || !data.data) return;

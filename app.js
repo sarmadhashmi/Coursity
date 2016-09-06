@@ -119,6 +119,7 @@ app.post('/process', function(req, res) {
 	var university = req.body.university;
 	var calEmail = req.body.calEmail;
 	var timetable = req.body.timetable;
+	var alarms = req.body.alarms;
 	if (!req.body.university) {
 		return res.status(404).send("No university provided.");
 	}
@@ -141,7 +142,7 @@ app.post('/process', function(req, res) {
 			var filename = shortid.generate() + '.ics';
 			fs.writeFile(
 				icsFolder + filename,
-				icsBuilder.buildICS(parser.parse(timetable)),
+				icsBuilder.buildICS(parser.parse(timetable), alarms),
 				function(err) {
 					if (err) {
 						return callback(err);
