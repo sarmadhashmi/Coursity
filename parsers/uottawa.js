@@ -10,7 +10,7 @@ var _timeRegex = /\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s
 var _infowebTimeRegexLookAhead = /(?=\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+[A-Z\(\)0-9]+\s+[0-9]{1,2}:[0-9]{2}-[0-9]{2}:[0-9]{2}\b)/g;
 var _infowebTimeRegex = /\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+([A-Z]+)(?:[\(\)0-9]+)?\s+([0-9]{1,2}):([0-9]{2})-([0-9]{2}):([0-9]{2})\b/;
 var _infowebProfessorRegex = /\bProf:\s+([A-Za-z\-.,\s]*)\s+(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b/;
-var _professorRegex = /\b(?:[A-Z]{3,5}\s[A-Z0-9]{2,6})\s+([A-Za-z\-.]+( [A-Za-z\-.]+)*)\b/;
+var _professorRegex = /\b(?:[A-Z]{3,5}\s[A-Z0-9]{2,6})\s+((?!System Requirements)[A-Za-z\-.]+( [A-Za-z\-.]+)*)\b/;
 var _semesterRegex = /([0-9]{2}\s[A-Z]{1}[a-z]{2,8})\sto\s([0-9]{2}\s[A-Z]{1}[a-z]{2,8})\s([0-9]{4})/;
 var _infowebSemesterRegex = /([A-Z]{1}[a-z]{2,8}\s[0-9]{1,2})\s-\s([A-Z]{1}[a-z]{2,8}\s[0-9]{1,2})/;
 
