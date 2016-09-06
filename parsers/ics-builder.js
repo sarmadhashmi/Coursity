@@ -6,7 +6,7 @@ function dayOfWeekAsInteger(day) {
 }
 
 // Given a timetable return raw ICS
-function buildICS(timetable) {
+function buildICS(timetable, alarmsOrNot) {
   var builder = icalToolkit.createIcsFileBuilder();
   builder.tzid = 'america/toronto';
   builder.method = 'PUBLISH';
@@ -16,31 +16,31 @@ function buildICS(timetable) {
     var curr = timetable[i];
     var day_index = dayOfWeekAsInteger(curr['day']);
     // Get the class start time and end time on the first day after the semester starts
-    var class_start = new Date(Date.UTC(curr['semester_start']['year'], 
-                 curr['semester_start']['month'], 
+    var class_start = new Date(Date.UTC(curr['semester_start']['year'],
+                 curr['semester_start']['month'],
                  curr['semester_start']['day'],
                  curr['start_time']['hour'],
                  curr['start_time']['minute'], 0, 0));
     // Go to the first day after semester start (e.g: first Mon, tue, wed, etc)
     class_start.setDate(class_start.getDate() - class_start.getDay() + day_index);
-    
-    var class_end = new Date(Date.UTC(curr['semester_start']['year'], 
-                 curr['semester_start']['month'], 
+
+    var class_end = new Date(Date.UTC(curr['semester_start']['year'],
+                 curr['semester_start']['month'],
                  curr['semester_start']['day'],
                  curr['end_time']['hour'],
                  curr['end_time']['minute'], 0, 0));
     class_end.setDate(class_end.getDate() - class_end.getDay() + day_index);
 
     // Semester ends at 12 am on the last day
-    var semester_end = new Date(Date.UTC(curr['semester_end']['year'], 
-        curr['semester_end']['month'], 
+    var semester_end = new Date(Date.UTC(curr['semester_end']['year'],
+        curr['semester_end']['month'],
         curr['semester_end']['day'], 24, 60, 0, 0));
 
     // Build the event object and push it to the builder
     builder.events.push({
       start: class_start,
       end: class_end,
-        alarms: [10],
+      alarms: alarmsOrNot ? [10] : null,
       summary: curr['course_code_faculty'] + " " + curr['course_code_number'] + " " + curr['class_type'],
       floating: true,
       repeating: {
@@ -52,7 +52,8 @@ function buildICS(timetable) {
         url: curr['url'],
       location: curr['where'],
       description: "Course Name: " + curr['course_name'] +" " + curr['class_section'].trim() +
-                    "\nProfessor: " + curr["professor"].trim() + "\nWhere: " + curr['where_long_name'].trim()
+                    "\nProfessor: " + curr["professor"].trim() + "\nWhere: " + curr['where_long_name'].trim() +
+                    "\nMap: " + curr['url']
     });
   }
   return builder.toString();

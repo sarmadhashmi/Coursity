@@ -17,6 +17,12 @@
     "city": "Ottawa",
     "province": "Ontario"
   },
+  "STE": {
+    "long_name": "School of Electrical Engineering and Computer Science",
+    "address": "800 King Edward Avenue",
+    "city": "Ottawa",
+    "province": "Ontario"
+  },
   "CBY": {
     "long_name": "Colonel By Hall",
     "address": "161 Louis Pasteur Private",
