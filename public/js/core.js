@@ -23,8 +23,8 @@ main.config(['$routeProvider', function($routeProvider) {
 
 main.controller('HomepageController', ['$scope', '$http', function($scope, $http) {
 	$scope.universities = [
-		{name: 'McMaster', value: 'mcmaster'},
-		{name:'UOttawa', value: 'uottawa'}
+		{name: 'McMaster', value: 'mcmaster'}
+	//	{name:'UOttawa', value: 'uottawa'}
 	];
 
 	// Metrics stuff
@@ -55,8 +55,8 @@ main.controller('MainController', ['$scope', '$routeParams' ,'$http', '$location
 	$scope.setTimetable = function(timetable) {
 		$scope.timetable = timetable;
 	};
-
-	$scope.process = function() {
+	
+$scope.process = function() {
 		if (!$scope.uni) return;
 		if (!$scope.timetable) {
 			$scope.error = true;
