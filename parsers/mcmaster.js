@@ -95,9 +95,10 @@ function parse(text) {
             var semester = _semesterPairRegex.exec(classes[j]);
             var section = _sectionTypeRegex.exec(classes[j]);
             // Check is the current classes segment is a section if it is update the current Section
+
             currentSection = section ? section : currentSection;
 
-            if (!locationProfPair || !time || !semester) continue;
+            if (!currentSection || !locationProfPair || !time || !semester) continue;
 
             semester = fixDateFormat(semester[1], semester[2]);
             var where = locationProfPair[1];
