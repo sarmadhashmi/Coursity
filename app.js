@@ -202,6 +202,6 @@ app.get('/metrics', function(req, res) {
 });
 
 app.use(express.static(__dirname + '/public'));
-app.listen(process.env.port || config.port, function() {
-	winston.info("Started server at http://localhost:" + (process.env.port || config.port));
+app.listen(process.env.PORT || config.port, function() {
+	winston.info("Started server at http://localhost:" + (process.env.PORT || config.port));
 });
