@@ -1,119 +1,157 @@
 var locationLongName = require('../config/uottawa-location-dict.json');
-// Relevant regular expressions
+var _wsRegex = /\s+/;
+var _ampm = /:\d{2}[aAPp][mM]/;
 var unknownValue = "N/A";
-var _locationRegex = /\b([A-Z]{3,5})\s([A-Z0-9]{2,6})\b/;
-var _infoWebLocationRegex = /\b([A-Z]{3,5})\s+Room:\s+([A-Z0-9]{2,6})\b/;
-var _courseRegex = /\b([A-Z]{3})([1-9]{1}[0-9]{3})\s?([A-Za-z])?\s+(\b([A-Za-z.-]+\s?([A-Za-z.&-]+\s?)*)\b)/;
-var _courseRegexLookAhead = /(?=\b[A-Z]{3}[1-9]{1}[0-9]{3}\s?[A-Z]?\b)/g;
-var _timeRegexLookAhead = /(?=\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+[0-9]{1,2}:[0-9]{2}\s+to\s+[0-9]{2}:[0-9]{2}\s+[A-Za-z]*\b)/g;
-var _timeRegex = /\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+([0-9]{1,2}):([0-9]{2})\s+to\s+([0-9]{2}):([0-9]{2})\s+([A-Za-z]*)\b/;
-var _infowebTimeRegexLookAhead = /(?=\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+[A-Z\(\)0-9]+\s+[0-9]{1,2}:[0-9]{2}-[0-9]{2}:[0-9]{2}\b)/g;
-var _infowebTimeRegex = /\b(Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\s+([A-Z]+)(?:[\(\)0-9]+)?\s+([0-9]{1,2}):([0-9]{2})-([0-9]{2}):([0-9]{2})\b/;
-var _infowebProfessorRegex = /\bProf:\s+([A-Za-z\-.,\s]*)\s+(?:Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday)\b/;
-var _professorRegex = /\b(?:[A-Z]{3,5}\s[A-Z0-9]{2,6})\s+((?!System Requirements)[A-Za-z\-.]+( [A-Za-z\-.]+)*)\b/;
-var _semesterRegex = /([0-9]{2}\s[A-Z]{1}[a-z]{2,8})\sto\s([0-9]{2}\s[A-Z]{1}[a-z]{2,8})\s([0-9]{4})/;
-var _infowebSemesterRegex = /([A-Z]{1}[a-z]{2,8}\s[0-9]{1,2})\s-\s([A-Z]{1}[a-z]{2,8}\s[0-9]{1,2})/;
+var _courseTitleLookAhead = /(?=\b(?:\w{2,}\ \w{1,5})\ -\ (?:[^\r\n]+)\b)/g;
+var _courseCodeLookAhead = /(?=\b\d{5}\b)/;
+var _courseTitleRegex = /(?:\b(\w{2,}\ \w{1,5})\ -\ ([^\r\n]+)\b)/;
+var _dayOfWeekRegex = /([MoTuhWeFrSaS]{2,6})/;
+// Check for any string, location can be "SEE CLASS NOTES" or "TBA" or maybe something else
+var _locationRegex = /(\s[\-\w\/ ,]+)/;
+var _profRegex = /((?:(\b[A-Za-z\-., ]+\s)(?:[A-Za-z\-., ]+\s?)|(\b[A-Za-z\-., ]+\s))+)/;
+var _semesterRegex = /((?:\d{2}\/\d{2}\/\d{4})|(?:\d{4}\/\d{2}\/\d{2})|(?:\d{4}-\d{2}-\d{2}))/;
+var _locationProfPair = new RegExp(_locationRegex.source + _wsRegex.source + _profRegex.source);
+var _semesterPairRegex = new RegExp(_semesterRegex.source +  _wsRegex.source + "-" +  _wsRegex.source +  _semesterRegex.source);
+var _sectionTypeRegex = /(\d+)\s+([A-Z]{1}\d+)\s+(?=Lecture|Tutorial|Laboratory)([A-Za-z]{3,}\b)/;
+var _dayRegex = /(Mo)|(Tu)|(We)|(Th)|(Fr)|(Sa)|(Su)/g;
+var _weekdays = {"Mo":"Monday", "Tu":"Tuesday", "We":"Wednesday", "Th":"Thursday", "Fr":"Friday", "Sa":"Saturday", "Su":"Sunday"};
 
 /**
- * Returns a timetable array consisting of class section objects which
- * are parsed and generated from the raw uOttawa timetable text.
- * There are two parsers: one for mobile devices (InfoWeb) and one for
- * desktop (uoZone).
- * @param {String} text Raw timetable text.
- * @return {Object[]} Returns an array of JSON objects for each parsed class
- *                    section.
+ * Takes in any time and converts it from a 12HR format to the 24HR format for 7:00PM is 19:00 etc
+ * @param {String} time
+ * @return {String} 24HR formatted time
+ */
+function convertTo24Hour(time) {
+    var hours = parseInt(time.substr(0, 2), 10);
+    if(time.indexOf('AM') > -1 && hours == 12) {
+        time = time.replace('12', '0');
+    }else if(time.indexOf('PM')  > -1 && hours < 12) {
+        time = time.replace(hours, (hours + 12));
+    }
+
+    return time.replace(/(AM|PM)/, '');
+}
+
+/**
+ * Takes any date and turns it into the correct format, so javascript gets the right date. MM/DD/YYYY is the format the javascript object reads or YYYY/MM/DD
+ * @param {String} startDate
+ * @param {String} endDate
+ * @return {String Array} [startDate, endDate]  with format MM/DD/YYYY or YYYY/MM/DD or YYYY-MM-DD
+ */
+function fixDateFormat(sem_start, sem_end) {
+    var startDateSplit = sem_start.split("/");
+    var endDateSplit = sem_end.split("/");
+
+    var startMonth = parseInt(startDateSplit[0], 10);
+    var startDay = parseInt(startDateSplit[1], 10);
+    var startYear = parseInt(startDateSplit[2], 10);
+
+    var endMonth = parseInt(endDateSplit[0], 10);
+    var endDay = parseInt(endDateSplit[1], 10);
+    var endYear = parseInt(endDateSplit[2], 10);
+
+    var dayDiff = endDay - startDay;
+    // If it contains the '-' or the first slot is YYYY it is already in correct format
+    if (sem_start.indexOf('-') > -1 || startMonth.toString().length === 4) {
+        return [sem_start, sem_end]
+    }
+    // Date is DD/MM/YYYY as month can't be > 12, switch the MM and DD or If the difference is 3 months(Fall/Winter), 1 month(Spring/Summer) or -5 months(multi-semester(Sept-Apr)),
+    else if (startMonth > 12 || endMonth > 12 || (startYear === endYear && startMonth > endMonth) ||
+    ([1,3,-5].indexOf(dayDiff) > -1 && [1, 5, 7, 9].indexOf(startDay) > -1)) {
+        return [[startDay, startMonth, startYear].join("/"),[endDay, endMonth, endYear].join("/")];
+    }
+
+    return [sem_start, sem_end]
+}
+
+/**
+ * Takes in the raw data of timetable and get all the important details including, course name, professor, times etc.
+ * @param {String} text
+ * @return {Object/JSON} timetable
  */
 function parse(text) {
-  var timetable = [];
-  // Split lines by course code
-  var courses = text.split(_courseRegexLookAhead);
-  for (var i = 0; i < courses.length; i++) {
-    var infoweb = false;
-    var courseText = courses[i];
-    var semester = _semesterRegex.exec(courseText);
-    var course = _courseRegex.exec(courseText);
-    if (!course) continue;
-    var professor, where, time;
-    if (!semester) {
-       semester = _infowebSemesterRegex.exec(courseText);
-       professor = _infowebProfessorRegex.exec(courseText);
-       infoweb = true;
-    }
-    if (!semester) continue;
-    // Split lines by class sections
-    var classes = courseText.split(infoweb ? _infowebTimeRegexLookAhead : _timeRegexLookAhead);
-    for (var j = 0; j < classes.length; j++) {
-      if (infoweb) {
-        time = _infowebTimeRegex.exec(classes[j]);
-        where = _infoWebLocationRegex.exec(classes[j]);
-        if (time) {
-          var section = time[2];
-          time.splice(2, 1);
-          time.splice(6, 0, section);
+    //Check is there is an AM/PM, if not use other pattern
+    var _timeRegex  =  _ampm.exec(text) ? /([012]?\d\:[0-5]\d[AP]M)/ : /([012]?\d\:[0-5]\d)/;
+    var _timeDayPairRegex = new RegExp(_dayOfWeekRegex.source + _wsRegex.source + _timeRegex.source +  _wsRegex.source + "-" +  _wsRegex.source + _timeRegex.source);
+    var _timeDayPairLookAhead =  _ampm.exec(text) ? /(?=\b(?:[MoTuhWeFrSaS]{2,6})\s+(?:[012]?\d\:[0-5]\d[AP]M)\s+-\s+(?:[012]?\d\:[0-5]\d[AP]M)\b)/ : /(?=\b(?:[MoTuhWeFrSaS]{2,6})\s+(?:[012]?\d\:[0-5]\d)\s+-\s+(?:[012]?\d\:[0-5]\d)\b)/;
+    var _timeDayPairOrCourseCodeLookAhead = new RegExp(_courseCodeLookAhead.source + "|" + _timeDayPairLookAhead.source ,"g");
+    var timetable = [];
+    // Breaks all the courses up. Looks at all the detail after a course name
+    var courses = text.split(_courseTitleLookAhead);
+
+    for (var i = 0; i < courses.length; i++) {
+        var courseText = courses[i];
+        var course = _courseTitleRegex.exec(courseText);
+        // Breaks all classes up, looks at all the details after the Course Code or time in a course
+        var classes = courseText.split(_timeDayPairOrCourseCodeLookAhead);
+
+        if (!course) continue;
+
+        var currentSection = _sectionTypeRegex.exec(courseText);
+
+        for (var j = 0; j < classes.length; j++) {
+            var locationProfPair = _locationProfPair.exec(classes[j]);
+            var time = _timeDayPairRegex.exec(classes[j]);
+            var semester = _semesterPairRegex.exec(classes[j]);
+            var section = _sectionTypeRegex.exec(classes[j]);
+            // Check is the current classes segment is a section if it is update the current Section
+
+            currentSection = section ? section : currentSection;
+
+            if (!currentSection || !locationProfPair || !time || !semester) continue;
+
+            semester = fixDateFormat(semester[1], semester[2]);
+            var where = locationProfPair[1];
+            var professor = locationProfPair[2];
+            // Changes McMasters MoTuWe format to full weekdays
+            var days = time[1].replace(_dayRegex, function fullWeekday(x){return _weekdays[x] + ",";});
+            var daysArray = days.substring(0, days.length-1).split(",");
+
+            for (var k = 0; k < daysArray.length ; k++) {
+                var startTimeSplit = convertTo24Hour(time[2]).split(":");
+                var endTimeSplit = convertTo24Hour(time[3]).split(":");
+                var sem_start = new Date(semester[0]);
+                var sem_end = new Date(semester[1]);
+                var courseSplit = course[1].split(" ");
+                var whereSplit = where ? where.split(" ") : null;
+                var locationObject = whereSplit ? locationLongName[whereSplit[0].trim()] : null;
+                var long_name = where ? where.trim() : unknownValue;
+                var address = unknownValue;
+                var city = unknownValue;
+                var province = unknownValue;
+                if (locationObject) {
+                    long_name = locationObject.long_name;
+                    address = locationObject.address;
+                    city = locationObject.city;
+                    province = locationObject.province;
+                }
+                // Build object for this section and push it to the timetable array
+                timetable.push({
+                    'course_code_faculty' : courseSplit[0],
+                    'course_code_number' : courseSplit[1],
+                    'course_number' : currentSection[1] ? currentSection[1] : "",
+                    'course_name' : course[2],
+                    'semester_start' : { year: sem_start.getFullYear(), month: sem_start.getMonth(), day: sem_start.getDate()},
+                    'semester_end' : { year: sem_end.getFullYear(), month: sem_end.getMonth(), day: sem_end.getDate()},
+                    'where' : where ? where.trim() : unknownValue,
+                    'address': address,
+                    'city': city,
+                    'province': province,
+                    'where_long_name' : long_name,
+                    'where_room_number': whereSplit ? whereSplit[1] : unknownValue,
+                    'url': "https://www.google.ca/maps/place/"+ long_name.split(" ").join("+") +"+"+ address.split(" ").join("+") +"+"+ city +"+"+ province,
+                    'professor': professor ? professor : unknownValue,
+                    'day' : daysArray[k],
+                    'start_time' : {'hour': parseInt(startTimeSplit[0], 10), 'minute': parseInt(startTimeSplit[1], 10)},
+                    'end_time' : {'hour': parseInt(endTimeSplit[0], 10), 'minute': parseInt(endTimeSplit[1], 10)},
+                    'class_section' : currentSection[2] ? currentSection[2] : "",
+                    'class_type' : currentSection[3]
+                });
+            }
         }
-        var today = new Date();
-        var curr_month = today.getMonth();
-        var curr_year = today.getFullYear();
-        var sem_month = new Date(semester[1].split(' ')[0] + ' 2016').getMonth();
-        if (sem_month < curr_month) curr_year++;
-        semester.splice(3, 0, curr_year);
-      } else {
-        professor = _professorRegex.exec(classes[j]);
-        where = _locationRegex.exec(classes[j]);
-        time =_timeRegex.exec(classes[j]);
-      }
-      if (!time) continue;
-      var sem_start = new Date(semester[1] + ' ' + semester[3]);
-      var sem_end = new Date(semester[2] + ' ' + semester[3]);
-      var locationObject = where ? locationLongName[where[1]] : null;
-      var long_name = where ? where[0] : unknownValue;
-      var address = unknownValue;
-      var city = unknownValue;
-      var province = unknownValue;
-      if (locationObject) {
-        long_name = locationObject.long_name;
-        address = locationObject.address;
-        city = locationObject.city;
-        province = locationObject.province;
-      }
-      // Build object for this section and push it to the timetable array
-      timetable.push({
-        'course_code_faculty': course[1],
-        'course_code_number': course[2],
-        'class_section': course[3] ? course[3] : '',
-        'course_name': course[4],
-        'professor': professor ? professor[1] : unknownValue,
-        'semester_start':  {
-          'year': sem_start.getFullYear(),
-          'month': sem_start.getMonth(),
-          'day': sem_start.getDate()
-        },
-        'semester_end': {
-          'year': sem_end.getFullYear(),
-          'month': sem_end.getMonth(),
-          'day': sem_end.getDate()
-        },
-        'where': where ? where[1] + ' ' + where[2]: unknownValue,
-        'address': address,
-        'city': city,
-        'province': province,
-        'url': "https://www.google.ca/maps/place/"+ address.split(" ").join("+") +"+"+ city +"+"+ province,
-        'where_long_name' : long_name,
-        'where_room_number': where ? where[2] : unknownValue,
-        'day': time[1],
-        'start_time': {
-          'hour': parseInt(time[2], 10),
-          'minute': parseInt(time[3], 10)
-        },
-        'end_time': {
-          'hour': parseInt(time[4], 10),
-          'minute': parseInt(time[5], 10)
-        },
-        'class_type': time[6]
-      });
     }
-  }
-  return timetable;
+
+    return timetable;
 }
 
 module.exports.parse = parse;

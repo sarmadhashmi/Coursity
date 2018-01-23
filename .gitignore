@@ -3,3 +3,5 @@ node_modules/
 ics/
 temp/
 config/config.json
+.DS_Store	
+metrics.json
