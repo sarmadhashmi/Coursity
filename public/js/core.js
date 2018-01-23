@@ -23,8 +23,8 @@ main.config(['$routeProvider', function($routeProvider) {
 
 main.controller('HomepageController', ['$scope', '$http', function($scope, $http) {
 	$scope.universities = [
-		{name: 'McMaster', value: 'mcmaster'}
-	//	{name:'UOttawa', value: 'uottawa'}
+		{name: 'McMaster', value: 'mcmaster'},
+		{name:'UOttawa', value: 'uottawa'}
 	];
 
 	// Metrics stuff
