@@ -9,7 +9,9 @@ var https = require('https');
 var os = require("os");
 var shortid = require('shortid');
 var icsBuilder = require('./parsers/ics-builder.js');
-var config = require('./config/config.json');
+if (fs.existsSync('./config/config.json')) {
+    var config = require('./config/config.json');
+}
 var wellknown = require('nodemailer-wellknown');
 var RateLimit = require('express-rate-limit');
 // Metrics stuff
@@ -65,8 +67,8 @@ var transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: config.user,
-        pass: config.pass
+        user: process.env.user || config.user,
+        pass: process.env.pass || config.pass
     }
 });
 
@@ -200,6 +202,6 @@ app.get('/metrics', function(req, res) {
 });
 
 app.use(express.static(__dirname + '/public'));
-app.listen(config.port, function() {
-	winston.info("Started server at http://localhost:" + config.port);
+app.listen(process.env.port || config.port, function() {
+	winston.info("Started server at http://localhost:" + (process.env.port || config.port));
 });
