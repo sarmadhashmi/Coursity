@@ -15,36 +15,38 @@ if (fs.existsSync('./config/config.json')) {
 var wellknown = require('nodemailer-wellknown');
 var RateLimit = require('express-rate-limit');
 // Metrics stuff
-var metricsFile = __dirname + '/metrics.json';
-fs.readFile(metricsFile, function (err, data) {
-	if (err) {
-		fs.writeFile(metricsFile, '{}');
-	}
-});
+// var metricsFile = __dirname + '/metrics.json';
+// fs.readFile(metricsFile, function (err, data) {
+// 	if (err) {
+// 		fs.writeFile(metricsFile, '{}');
+// 	}
+// });
 
 var metricsIncrement = function(metricsName, callback) {
-	fs.readFile(metricsFile, function (err, data) {
-    	var json = JSON.parse(data);
-    	if (json.hasOwnProperty(metricsName)) {
-    		json[metricsName]++;
-    	} else {
-    		json[metricsName] = 1;
-    	}
-    	fs.writeFile(metricsFile, JSON.stringify(json, null, 4), function(err) {
-    		if (callback) callback();
-    	});
-	});
+	if (callback) callback();
+	// fs.readFile(metricsFile, function (err, data) {
+ //    	var json = JSON.parse(data);
+ //    	if (json.hasOwnProperty(metricsName)) {
+ //    		json[metricsName]++;
+ //    	} else {
+ //    		json[metricsName] = 1;
+ //    	}
+ //    	fs.writeFile(metricsFile, JSON.stringify(json, null, 4), function(err) {
+ //    		if (callback) callback();
+ //    	});
+	// });
 };
 
 var aggregateMetrics = function(metrics, callback) {
-	fs.readFile(metricsFile, function (err, data) {
-    	var json = JSON.parse(data);
-			var total = 0;
-			metrics.forEach(function(metricsName) {
-				total += json.hasOwnProperty(metricsName) ? json[metricsName] : 0;
-			});
-    	callback(total);
-	});
+	if (callback) callback();
+	// fs.readFile(metricsFile, function (err, data) {
+ //    	var json = JSON.parse(data);
+	// 		var total = 0;
+	// 		metrics.forEach(function(metricsName) {
+	// 			total += json.hasOwnProperty(metricsName) ? json[metricsName] : 0;
+	// 		});
+ //    	callback(total);
+	// });
 };
 
 // Add logging
@@ -177,7 +179,6 @@ app.post('/process', function(req, res) {
 						if (calEmail) sendEmail(calEmail, filename, req);
 						res.status(200).send(filename);
 						metricsIncrement(university + '_completed');
-						metricsSoFar++;
 					}
 				});
 			}
@@ -185,21 +186,21 @@ app.post('/process', function(req, res) {
 });
 
 // Every 5 minutes, update the metrics
-var metricsSoFar = 0;
-var aggregateUniMetrics = function() {
-	aggregateMetrics(['mcmaster_completed', 'uottawa_completed'],
-		function(total) {
-			metricsSoFar = total;
-	});
-};
-setInterval(aggregateUniMetrics, 300000);
-aggregateUniMetrics();
+// var metricsSoFar = 0;
+// var aggregateUniMetrics = function() {
+// 	aggregateMetrics(['mcmaster_completed', 'uottawa_completed'],
+// 		function(total) {
+// 			metricsSoFar = total;
+// 	});
+// };
+// setInterval(aggregateUniMetrics, 300000);
+// aggregateUniMetrics();
 
-app.get('/metrics', function(req, res) {
-	res.status(200).send(JSON.stringify({
-		"timetables_processed" : metricsSoFar
-	}));
-});
+// app.get('/metrics', function(req, res) {
+// 	res.status(200).send(JSON.stringify({
+// 		"timetables_processed" : metricsSoFar
+// 	}));
+// });
 
 app.use(express.static(__dirname + '/public'));
 app.listen(process.env.PORT || config.port, function() {

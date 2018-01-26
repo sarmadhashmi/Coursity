@@ -29,7 +29,7 @@ main.controller('HomepageController', ['$scope', '$http', function($scope, $http
 
 	// Metrics stuff
 	$scope.processedTotal = $scope.processedTotal || "N/A";
-	var getMetrics = function() {
+	/*var getMetrics = function() {
 		$http({
 			method: 'GET',
 			url: '/metrics'
@@ -43,7 +43,7 @@ main.controller('HomepageController', ['$scope', '$http', function($scope, $http
 	};
 	// Update metrics every 5 seconds
 	setInterval(getMetrics, 5000);
-	getMetrics();
+	getMetrics();*/
 }]);
 
 main.controller('MainController', ['$scope', '$routeParams' ,'$http', '$location', function($scope,$routeParams, $http, $location) {
