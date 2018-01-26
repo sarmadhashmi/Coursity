@@ -32,18 +32,34 @@ Become organized starting today. Read more about us here.">
     ga('create', 'UA-83583215-1', 'auto');
     ga('send', 'pageview');
 
+   
+
   </script>
 </head>
 <body>
   <div id="mainBody" ng-view></div> <!--Inject views into here -->
   <div id="footer" class="text-center">
-    <div class="social">
-    <a style="color: #ffffff" href="https://www.facebook.com/sharer/sharer.php?u=https://coursity.herokuapp.com"><i class="fa fa-facebook-square fa-2x"></i></a>
-    <a style="color: #ffffff" href="https://twitter.com/home?status=Hey!%20just%20added%20my%20course%20schedule%20to%20my%20devices%20using%20Coursity!%20add%20yours%20at%20https://coursity.herokuapp.com"><i class="fa fa-twitter-square fa-2x"></i></a>
-      <a style="color: #ffffff" href="mailto:coursitycal@gmail.com"><i class="fa fa-envelope fa-2x"></i></a>
+    <div id="fb-root"></div>
+    <script> (function(d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = "https://connect.facebook.net/en_US/all.js#xfbml=1";
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+    </script>
+    Like or share us on Facebook:<br />
+    <div class="fb-like text-center" 
+      data-href="https://www.facebook.com/coursity/" 
+      data-layout="button_count" 
+      data-action="like"
+      data-size="large" 
+      data-share="true"
+      data-show-faces="true">
     </div>
-      <span><a href="https://github.com/sarmadhashmi/Coursity">Want help? Click here.</a></span>
-      <p class="text-center">Created by <a href="https://ca.linkedin.com/in/abeomor"> Abe </a> and <a href="https://www.linkedin.com/in/sarmad-hashmi"> Sarmad</a></p>
+    <br />
+    <span><a href="https://github.com/sarmadhashmi/Coursity">Want help? Click here.</a></span>
+    <p class="text-center">Created by <a href="https://ca.linkedin.com/in/abeomor"> Abe </a> and <a href="https://www.linkedin.com/in/sarmad-hashmi"> Sarmad</a></p>
   </div>
 </body>
 
