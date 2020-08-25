@@ -1,0 +1,181 @@
+GO!
+
+Abrah  Omorogbe
+
+
+Search
+
+Plan
+
+Enroll
+
+My Academics
+
+
+
+
+my class schedule
+
+add
+
+drop
+
+swap
+
+term information
+
+
+My Class Schedule
+List View
+Weekly Calendar View
+Select Display Option
+change term
+2016 Fall | Undergraduate | McMaster University
+Collapse section Class Schedule Filter Options Class Schedule Filter Options
+filter
+Show Enrolled Classes
+Show Dropped Classes
+Show Waitlisted Classes
+COMMERCE 2BC3 - Hum Res & Labr Relat
+Status	Units	Grading	Grade	Deadlines
+Enrolled
+3.00
+Graded
+
+Academic Calendar Deadlines
+Class Nbr	Section	Component	Days & Times	Room	Instructor	Start/End Date
+14555
+C02
+Lecture
+TuWeFr 9:30  - 10:20 
+MDCL 1309
+Aaron Schat
+2016/09/06 - 2016/12/07
+COMMERCE 3FA3 - Managerial Finance
+Status	Units	Grading	Grade	Deadlines
+Enrolled
+3.00
+Graded
+
+Academic Calendar Deadlines
+Class Nbr	Section	Component	Days & Times	Room	Instructor	Start/End Date
+12899
+C01
+Lecture
+Tu 4:30  - 5:20 
+MDCL 1102
+Staff
+2016/09/06 - 2016/12/07
+
+
+
+MoTh 3:30  - 4:20 
+MDCL 1102
+Staff
+2016/09/06 - 2016/12/07
+ECON 2X03 - Appld Business Ec.
+Status	Units	Grading	Grade	Deadlines
+Enrolled
+3.00
+Graded
+
+Academic Calendar Deadlines
+Class Nbr	Section	Component	Days & Times	Room	Instructor	Start/End Date
+14227
+T02
+Tutorial
+We 10:30  - 11:20 
+CNH B107
+Anastasios Papanastasiou
+2016/09/06 - 2016/12/07
+14228
+C03
+Lecture
+MoWeTh 4:30  - 5:20 
+TSH B105
+Anastasios Papanastasiou
+2016/09/06 - 2016/12/07
+
+
+MoWeTh 4:30  - 5:20 
+TSH B105
+Anastasios Papanastasiou
+2016/09/06 - 2016/12/07
+ENGNMGT 4A03 - Innovation:Project Dvlp&Mgmt
+Status	Units	Grading	Grade	Deadlines
+Enrolled
+3.00
+Graded
+
+
+
+Academic Calendar Deadlines
+Class Nbr	Section	Component	Days & Times	Room	Instructor	Start/End Date
+12026
+C01
+Lecture
+Mo 9:30  - 11:20 
+BSB B103
+Glen Crossley
+2016/09/06 - 2016/12/07
+
+
+
+Th 9:30  - 23:20 
+BSB B103
+Glen Crossley
+2016/09/06 - 2016/12/07
+SFWRENG 4AA4 - Real Time Systems
+Status	Units	Grading	Grade	Deadlines
+Enrolled
+4.00
+Graded
+
+Academic Calendar Deadlines
+Class Nbr	Section	Component	Days & Times	Room	Instructor	Start/End Date
+12411
+C01
+Lecture
+MoWe 11:30  - 12:20 
+ITB AB102
+Asghar Bokhari
+2016/09/06 - 2016/12/07
+
+Fr 1:30  - 2:20 
+ITB AB102
+Staff
+2016/09/06 - 2016/12/07
+12415
+L04
+Laboratory
+Fr 2:30  - 5:20 
+ITB 134
+Staff
+2016/09/06 - 2016/12/07
+SFWRENG 4HC3 - Human Computer Interfaces
+Status	Units	Grading	Grade	Deadlines
+Enrolled
+3.00
+Graded
+
+Academic Calendar Deadlines
+Class Nbr	Section	Component	Days & Times	Room	Instructor	Start/End Date
+12406
+C01
+Lecture
+MoWeTh 5:30  - 6:20 
+HH 302
+Ad  Lenarcic
+2016/09/06 - 2016/12/07
+12407
+T01
+Tutorial
+We 3:30  - 4:20 
+ITB 235
+Staff
+2016/09/06 - 2016/12/07
+Printer Friendly Page
+ 	Search	 	 	 	Plan	 	 	 	Enroll	 	 	 	My Academics
+ 	My Class Schedule	 	 	 	Add	 	 	 	Drop	 	 	 	Swap	 	 	 	Term Information
+GO!
+
